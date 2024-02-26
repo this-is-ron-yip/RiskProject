@@ -4,28 +4,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Map : MonoBehaviour
 {
     public Transform[] childObjects;
-    public int playerTurn; 
+    public int playerTurn;
     public int playerCount = 2;
     public List<Player> players = new List<Player>();
     public List<Transform> territories = new List<Transform>();
     public Dictionary<Transform, List<Transform>> adjacencyList = new Dictionary<Transform, List<Transform>>();
 
-    
+
     private void OnValidate()
     {
         playerTurn = 1; //start with player 1
+        playerCount = StaticData.playerCount;
 
         //functions to fill up the fields with appropriate data
         FillTerritoriesList();
         FillAdjacencyList();
         FillPlayersList();
 
-        //RunTestCode(); //testing if the adjacency list stores the right contents
     }
+
+    private void Start()
+    {
+        SetupGame();
+    }
+
+    private void SetupGame()
+    {
+        throw new NotImplementedException();
+    }
+
 
     private void FillPlayersList()
     {
@@ -45,22 +57,6 @@ public class Map : MonoBehaviour
         }
         listOfAdjTerrs.Add(null);
         return listOfAdjTerrs;
-    }
-
-    private void RunTestCode()
-    {
-        //just debugging
-        int count = 0;
-        foreach (var pair in adjacencyList)
-        {
-            Debug.Log("Territory: " + pair.Key.gameObject.tag);
-
-            foreach (var adjTerr in pair.Value)
-            {
-                Debug.Log("AdjacentTerritory: " + adjTerr.gameObject.tag);
-            }
-
-        }
     }
 
     public void OnDrawGizmos()
