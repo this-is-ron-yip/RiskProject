@@ -14,6 +14,6 @@ public class PlayerTurnHUD : MonoBehaviour
     // Call this method when the player's turn changes
     public void UpdatePlayerTurnUI(int currentPlayer)
     {
-        
+        playerTurnText.text = $"Player's Turn: {currentPlayer}";
     }
 }

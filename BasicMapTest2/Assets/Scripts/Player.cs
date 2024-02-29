@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        playerNumber = Convert.ToInt32(this.gameObject.tag.Split()[1]); //declaring the player number
     }
 
     private void Update()

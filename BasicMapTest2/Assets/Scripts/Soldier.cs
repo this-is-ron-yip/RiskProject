@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Army : MonoBehaviour
+public class Soldier : MonoBehaviour
 {
     public bool isMoving;
     public float speed = 5f;
     public int playerNumber;
-    public string armyType;
     
     private Transform target;
     private Transform currentTerritoryPos;
@@ -18,8 +17,6 @@ public class Army : MonoBehaviour
     {
         DeclarePlayerNumber();
         DeclareStartPos();
-
-        Transform exampleTerritory = GameObject.FindGameObjectWithTag("Asia").transform;
     }
 
     private void DeclareStartPos()
@@ -33,7 +30,6 @@ public class Army : MonoBehaviour
                 currentTerritoryPos = GameObject.FindGameObjectWithTag("Europe").transform;
                 break;
         }
-
     }
 
     private void DeclarePlayerNumber()
