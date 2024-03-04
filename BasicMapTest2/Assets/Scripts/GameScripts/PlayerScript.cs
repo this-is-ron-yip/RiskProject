@@ -11,10 +11,54 @@ public class PlayerScript : MonoBehaviour
     public GameObject armyPrefab;
     public List<TerritoryScript> territoriesOwned = new List<TerritoryScript>();
     public List<GameObject> armies = new List<GameObject>();
+    enum ArmyTypes { Infantry, Cavalry, Artillery }
+    
+
+    private void Start()
+    {
+        isTurn = false;
+    }
 
     private void Update()
     {
-        MovePieceUnderCorrectConditions();
+        if (isTurn)
+        {
+            StartCoroutine(CheckIfTerritoryClickedOn());
+        }
+    }
+
+    private IEnumerator CheckIfTerritoryClickedOn()
+    {
+        //ERROR: after mouse is clicked, this method keeps looping for 999+ times for some reason
+        //dont forget to set territory as occupied once its been clicked on
+
+        yield return StartCoroutine(WaitForMouseClick());
+        // Create a ray from the camera to the mouse cursor
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Debug.Log("TARGET HIT");
+
+        // Perform the raycast
+        if (Physics.Raycast(ray, out hit))
+        {
+            // Check if the raycast hit a tile
+            GameObject clickedObject = hit.transform.gameObject;
+            string clickedTileTag = clickedObject.tag;
+            Debug.Log("Clicked on tile with tag: " + clickedTileTag);
+            SpawnArmyPiece(ArmyTypes.Infantry, clickedObject.transform.position);
+            isTurn = false;
+        }
+    }
+
+    private IEnumerator WaitForMouseClick()
+    {
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+    } 
+    
+
+    private void SpawnArmyPiece(ArmyTypes armyType, Vector3 position)
+    {
+        Debug.Log("SPAWNING ARMY PIECE");
     }
 
     private void MovePieceUnderCorrectConditions()

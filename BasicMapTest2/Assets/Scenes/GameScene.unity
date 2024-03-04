@@ -968,6 +968,9 @@ MonoBehaviour:
   - {fileID: 1525302318}
   - {fileID: 2077155352}
   playerPrefab: {fileID: 8898816300779238917, guid: 811b6ababe70ee4418118aa6cbcd94d1, type: 3}
+  infantryPrefab: {fileID: 0}
+  cavalryPrefab: {fileID: 0}
+  artillaryPrefab: {fileID: 0}
   playerTurn: 0
   playerCount: 3
   players: []

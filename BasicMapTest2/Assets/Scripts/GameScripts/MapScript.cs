@@ -8,6 +8,9 @@ public class MapScript : MonoBehaviour
 {
     public Transform[] childObjects;
     public GameObject playerPrefab;
+    public GameObject infantryPrefab;
+    public GameObject cavalryPrefab;
+    public GameObject artillaryPrefab;
     public int playerTurn;
     public int playerCount = 3;
     public List<PlayerScript> players = new List<PlayerScript>();
@@ -26,8 +29,8 @@ public class MapScript : MonoBehaviour
         diceRoller = GetComponent<DiceRollerScript>(); //initialising the diceRoller
         CreatePlayers();
         UpdateHud();
-        //write code here to wait 1 second for all the other classes to finish executing their startup code
-        AssignStartTerritories();
+
+        StartCoroutine(AssignStartTerritories());
     }
 
     private void Update()
@@ -68,16 +71,28 @@ public class MapScript : MonoBehaviour
         return listOfAdjTerrs;
     }
 
-    private void AssignStartTerritories()
+    private IEnumerator AssignStartTerritories()
     {
-        diceRoller.OnDiceRolled += HandleDiceRollResult;
+        //TO BE CODED NEXT: 
+
+        diceRoller.OnDiceRolled += HandleDiceRollResult; //assigning the OnDiceRolled event to the HandleDiceResult method 
         diceResults = new int[playerCount];
-
-        StartCoroutine(RollDiceForAllPlayers());
-
-        // The following still needs to be coded:
+        
+        yield return StartCoroutine(RollDiceForAllPlayers());
 
         //Whoever lands highest gets to start choosing first
+        int highestNumIndex = diceResults[0];
+        for (int i = 1; i < diceResults.Length; i++)
+        {
+            if (diceResults[i] > diceResults[i - 1])
+            {
+                highestNumIndex = i;
+            }
+        }
+        playerTurn = highestNumIndex + 1;
+
+        yield return StartCoroutine(InitialiseStartingInfantry());
+
         //START LOOP:
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
         //Instanciate army object and place it on the territory
@@ -87,6 +102,19 @@ public class MapScript : MonoBehaviour
         //IF all territories are occupied, endLoop. ELSE:
         //next player's turn to place a piece. restart loop(maybe change the playerTurn bool inside this class and the player class?)
         //END LOOP
+    }
+
+    private IEnumerator InitialiseStartingInfantry()
+    {
+        Debug.Log($"Player {playerTurn}, choose a territory to place 1 infantry on.");
+        PlayerScript player = players[playerTurn - 1];
+        player.isTurn = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+
+    private IEnumerator WaitForPlayerToDoMove(PlayerScript player)
+    {
+        yield return new WaitUntil(() => !player.isTurn);
     }
 
     private IEnumerator RollDiceForAllPlayers()
