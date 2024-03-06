@@ -33,6 +33,7 @@ TagManager:
   - EastAmerica
   - WestAmerica
   - NorthAfrica
+  - Deck
   layers:
   - Default
   - TransparentFX
