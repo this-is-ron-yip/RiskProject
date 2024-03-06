@@ -31,7 +31,7 @@ public class DeckScript : MonoBehaviour
 
     public void DrawCard(){
          // if the deck is empty, return error message
-         // otherwise, return card? figure out how die roll works.
+         // otherwise, return card? figure this out.
             if(!canDraw){
                 Debug.Log("Not allowed to draw card.");
             }

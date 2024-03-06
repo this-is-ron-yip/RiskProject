@@ -105,6 +105,8 @@ public class PlayerScript : MonoBehaviour
         //we want the player to be able to select a country, and select a different country if we want to interract with that other country.
         //If the 2nd selected country is ours, we want to deselect the first country, and select the second country
         //If the second country is not ours, then we want to attack that country (if that coutntry is adj to the first country)
+        // Note: the map contains the territories, which contain armies. Meaning we should probably handle
+        // Moving armies across the board in the map script.
     }
 
     public void GivePlayerArmies(int _infCount, int _cavCount, int _artilCount)
@@ -117,7 +119,7 @@ public class PlayerScript : MonoBehaviour
     }
 
     public int GetArmyCountTotal(){
-        // TODO: I think it would be clearer to store as the number of peices, rathere than 
+        // TODO: I think it would be clearer to store as the number of pieces, rather than 
         // the number of infantry they represent. We can always just call this function
         // if we want the total number
         return infCount+cavCount+artilCount;
