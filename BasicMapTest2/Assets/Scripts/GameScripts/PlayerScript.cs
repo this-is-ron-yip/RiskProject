@@ -68,6 +68,18 @@ public class PlayerScript : MonoBehaviour
                     clickHandled = true; // TODO: Move this to the proper handler
                 }
             }
+            else if(clickedObject.GetComponent<DeckScript>() != null){
+                if(gameStage == "SETUP"){
+                    Debug.Log("Action not allowed.");
+                    clickHandled = true;
+                }
+                else if(gameStage == "PLAY"){
+                    // Call a different handler. But for now, we can test with calling
+                    // directly on draw card
+                    clickedObject.GetComponent<DeckScript>().DrawCard();
+                    clickHandled = true; // TODO: Move this to the proper handler
+                }
+            }
             else {
                 // replace with other game object possibilities. Like dice, for esample.
                 Debug.Log("This is not a territory.");

@@ -11,11 +11,8 @@ public class DeckScript : MonoBehaviour
 {
     private Queue<Card> deck = new Queue<Card>(); // the actual deck of cards
 
-    public bool canDraw = false; // Flag to control when rolling is allowed
-    public bool isDrawComplete = false; // Flag to indicate that a roll has finished
-
-    // Define an event that other scripts can subscribe to, to get the card
-    public event Action<Card> OnCardDrawn;
+    // TODO: change back to false when your'e done testing
+    public bool canDraw = true; // Flag to control when rolling is allowed
 
     // Start is called before the first frame update
     void Start()
@@ -29,36 +26,32 @@ public class DeckScript : MonoBehaviour
     {
     } */
 
-    public void DrawCard(){
+    // Returns null if the action is not allowed or if the deck is empty
+    public Card DrawCard(){
          // if the deck is empty, return error message
          // otherwise, return card? figure this out.
-            if(!canDraw){
-                Debug.Log("Not allowed to draw card.");
-            }
-            else if (deck.Count != 0)
-            {
-                // draw the card
-                Card result = deck.Dequeue();
-                // Implement dice roll animation here if needed
+        if(!canDraw)
+        {
+            Debug.Log("Not allowed to draw card.");
+        }
+        else if (deck.Count != 0)
+        {
+            // draw the card
+            Card result = deck.Dequeue();
 
-                // Trigger the event with the card draw
-                OnCardDrawn?.Invoke(result);
-
-                // Indicate that the roll is complete
-                isDrawComplete = true;
-
-                // Reset canRoll to ensure dice can't be rolled again until explicitly allowed
-                canDraw = false;
-
-                Debug.Log($"Player drew the " + result.territory_id + "-" + result.troop_type + " card");
-            }
-            else{
-                Debug.Log("The deck is empty. Can not draw card.");
-            }
+            Debug.Log($"Player drew the " + result.territory_id + "-" + result.troop_type + " card");
+            return result;
+        }
+        else
+        {
+            Debug.Log("The deck is empty. Can not draw card.");
+        }
+        return null;
     }
 
     // instantiate unshuffled deck
     public void InitializeDeck(){
+        Debug.Log("Initializeing deck");
         // create unshuffled deck
         List<Card> unshuffled_deck = GetUnshuffledDeck();
 
@@ -88,8 +81,6 @@ public class DeckScript : MonoBehaviour
     public void AllowDraw(int playerNumber) // default parameter in case you don't want to specify
     {
         canDraw = true;
-        isDrawComplete = false; // Might need to change based on how we implement
-        Debug.Log($"Player {playerNumber}, click draw card button to draw a card");
     }
 
     // Method to prevent dice rolling, if needed

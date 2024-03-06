@@ -125,6 +125,8 @@ public class MapScript : MonoBehaviour
         //TODO
             // Instanciate army object and place it on the territory
             // Update hud
+        // TODO: is this the right place to put this line?
+        yield return StartCoroutine(EnterGamePlay());
     }
 
     private IEnumerator InitialiseStartingInfantry()
@@ -203,6 +205,32 @@ public class MapScript : MonoBehaviour
             curr_player.infCount--;
             Debug.Log(territory_id + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
             curr_player.clickHandled = true; // we can now poll for other clicks
+        }
+    }
+
+    // TODO: complete this function!
+    private IEnumerator EnterGamePlay(){
+        Debug.Log("Entered game play!");
+
+        int playerTurn = startingPlayer;
+
+        // TODO: delete this loop later — used for testing only
+        for(int i = 0; i < 15; i++){
+            // update player and give them the turn
+            PlayerScript player = players[playerTurn - 1];
+            player.isTurn = true;
+            // wait for player to finish turn
+            yield return StartCoroutine(WaitForPlayerToDoMove(player));
+            
+            // update the player 
+            if(playerTurn == playerCount){
+                // cycle back to start of player list
+                playerTurn = 1;
+            }
+            else{
+                // otherwise, simply move to the next player
+                playerTurn++;
+            }
         }
     }
 
