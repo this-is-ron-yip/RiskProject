@@ -31,11 +31,11 @@ public class DeckScript : MonoBehaviour
     } */
 
     public void DrawCard(){
-         Debug.Log($"Deck has reached draw card function");
-         // if the deck is empty, return false
+         // if the deck is empty, return error message
          // otherwise, return card? figure out how die roll works.
 
-        if (canDraw && deck.Count != 0)
+        // if (canDraw && deck.Count != 0)
+        if(deck.Count != 0) // FOR TESTING ONLY. TODO(sophiakrugler): replace with the above if condition later
             {
                 // draw the card
                 Card result = deck.Dequeue();
@@ -49,6 +49,11 @@ public class DeckScript : MonoBehaviour
 
                 // Reset canRoll to ensure dice can't be rolled again until explicitly allowed
                 canDraw = false;
+
+                Debug.Log($"Player drew the " + result.territory_id + "-" + result.troop_type + " card");
+            }
+            else{
+                Debug.Log("The deck is empty. Can not draw card.");
             }
     }
 
