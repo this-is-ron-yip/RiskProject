@@ -81,10 +81,10 @@ public class MapScript : MonoBehaviour
         yield return StartCoroutine(RollDiceForAllPlayers());
 
         //Whoever lands highest gets to start choosing first
-        int highestNumIndex = diceResults[0];
+        int highestNumIndex = 0;
         for (int i = 1; i < diceResults.Length; i++)
         {
-            if (diceResults[i] > diceResults[i - 1])
+            if (diceResults[i] > diceResults[highestNumIndex])
             {
                 highestNumIndex = i;
             }

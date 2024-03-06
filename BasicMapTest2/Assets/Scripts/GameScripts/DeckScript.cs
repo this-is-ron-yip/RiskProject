@@ -70,8 +70,6 @@ public class DeckScript : MonoBehaviour
 
             // add it to the front of the queue
             deck.Enqueue(next);
-            Debug.Log("Just added card with territory: " + next.territory_id + " and troop type: " +
-                    next.troop_type);
         }
         Debug.Log("reached end of deck init");
     }
