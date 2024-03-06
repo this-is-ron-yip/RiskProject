@@ -11,6 +11,8 @@ public class PlayerScript : MonoBehaviour
     public GameObject armyPrefab;
     public List<TerritoryScript> territoriesOwned = new List<TerritoryScript>();
     public List<GameObject> armies = new List<GameObject>();
+    public List<Card> cardsInHand = new List<Card>();
+    public List<Card> cardsPlayed = new List<Card>();
     enum ArmyTypes { Infantry, Cavalry, Artillery }
     
 
