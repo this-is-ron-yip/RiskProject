@@ -14,11 +14,13 @@ public class PlayerScript : MonoBehaviour
     public List<Card> cardsInHand = new List<Card>();
     public List<Card> cardsPlayed = new List<Card>();
 
+    public static string gameStage = "SETUP"; // or: PLAY or: FINISHED
+
     public bool clickHandled = true; // use for handling one click at a time
 
     // Define an event that other scripts can subscribe to, to get the player id
     // The int is the player id, the string is the territory_id
-    public event Action<int, string> OnPlayerClaimedTerritory;
+    public event Action<int, string> OnPlayerClaimedTerritoryAtStart;
     enum ArmyTypes { Infantry, Cavalry, Artillery }
     
 
@@ -31,18 +33,18 @@ public class PlayerScript : MonoBehaviour
     {
         if (isTurn && Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(CheckIfTerritoryClickedOn());
+            StartCoroutine(CheckWhatWasClickedOn());
         }
     }
 
-    private IEnumerator CheckIfTerritoryClickedOn()
+    private IEnumerator CheckWhatWasClickedOn()
     {
         // yield return StartCoroutine(WaitForMouseClick());
         // Create a ray from the camera to the mouse cursor
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        // Perform the raycast
+        // Perform the raycast, to see if something was hit
         if (Physics.Raycast(ray, out hit))
         {
             // Check if the raycast hit a tile
@@ -50,16 +52,32 @@ public class PlayerScript : MonoBehaviour
             string clickedTileTag = clickedObject.tag;
             Debug.Log("Clicked on tile with tag: " + clickedTileTag);
 
-            // TODO: check that the tag matches a territory, and multiplex which handler is called
-            // For example, if they click on a game piece we should use a different handler
-
             // the handler will reset clickHandled
             clickHandled = false;
-            SpawnArmyPiece(ArmyTypes.Infantry, clickedObject.transform.position);
-            OnPlayerClaimedTerritory?.Invoke(playerNumber, clickedTileTag);
-            isTurn = false;
+
+            // Determine which handler to call on 
+            if(clickedObject.GetComponent<TerritoryScript>() != null){
+                if(gameStage == "SETUP"){
+                    // TODO: Spawnarmypiece should be called later, after error checking
+                    SpawnArmyPiece(ArmyTypes.Infantry, clickedObject.transform.position);
+                    OnPlayerClaimedTerritoryAtStart?.Invoke(playerNumber, clickedTileTag);
+                }
+                else if(gameStage == "PLAY"){
+                    // Call a different handler. Player is choosing a territory to attack
+                    // or choosing a territory to attack from.
+                    clickHandled = true; // TODO: Move this to the proper handler
+                }
+            }
+            else {
+                // replace with other game object possibilities. Like dice, for esample.
+                Debug.Log("This is not a territory.");
+                clickHandled = true; // TODO: Move this to the proper handler
+            }
+              
+            isTurn = false; // Player relinquishes its turn. Map decides whether to give the turn
+            // back to the player (in the case that the player's turn isn't actually complete)
         }
-        
+
         // wait until the click is handled (updated by handler)
         yield return new WaitUntil(ClickIsHandled);
     }
@@ -67,7 +85,6 @@ public class PlayerScript : MonoBehaviour
     // TODO: delete if we don't end up using this elsewhere
     private IEnumerator WaitForMouseClick()
     {
-        // yield return new WaitUntil(clickIsHandled);
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
     } 
 

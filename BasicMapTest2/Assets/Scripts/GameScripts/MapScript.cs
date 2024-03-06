@@ -13,6 +13,7 @@ public class MapScript : MonoBehaviour
     public GameObject artillaryPrefab;
     public int playerTurn;
     public int playerCount = 3;
+    public int startingPlayer = -1;
     public List<PlayerScript> players = new List<PlayerScript>();
     public List<Transform> territories = new List<Transform>();
     private DiceRollerScript diceRoller;
@@ -73,8 +74,6 @@ public class MapScript : MonoBehaviour
 
     private IEnumerator AssignStartTerritories()
     {
-        //TO BE CODED NEXT: 
-
         diceRoller.OnDiceRolled += HandleDiceRollResult; //assigning the OnDiceRolled event to the HandleDiceResult method 
         diceResults = new int[playerCount];
         
@@ -90,8 +89,9 @@ public class MapScript : MonoBehaviour
             }
         }
         playerTurn = highestNumIndex + 1;
+        startingPlayer = playerTurn; // for future reference
 
-        int territories_left = 6; // TODO: change to 41, but for testing, use smaller number
+        int territories_left = 6; // TODO: change to 42, but for testing, use smaller number
 
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
         while(territories_left > 0){
@@ -99,12 +99,6 @@ public class MapScript : MonoBehaviour
             int player_starting_territories = players[playerTurn - 1].territoriesOwned.Count;
 
             yield return StartCoroutine(InitialiseStartingInfantry());
-            //TODO
-                // Instanciate army object and place it on the territory
-                // Update hud
-            //done in the handleterritoryclaimed function: 
-                // update "occupiedBy" field in territory class of respective territory
-                // update "ownedTerritories field in player class of respective player
 
             // check that the claiming was successful by checking the player's territory count
             // if it wasn't, don't update anything and try again
@@ -126,7 +120,11 @@ public class MapScript : MonoBehaviour
                 playerTurn++;
             }
         }
-    
+        PlayerScript.gameStage = "PLAY"; // done with set up!
+
+        //TODO
+            // Instanciate army object and place it on the territory
+            // Update hud
     }
 
     private IEnumerator InitialiseStartingInfantry()
@@ -171,10 +169,13 @@ public class MapScript : MonoBehaviour
     }
 
     // Update territory members
-    // TODO: may want to update this function later, if we use it for the actual game play
-    // and not just game set up
-    private void HandleTerritoryClaimed(int player_id, string territory_id){
+    private void HandleTerritoryClaimedAtStart(int player_id, string territory_id){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
+        if(PlayerScript.gameStage != "SETUP"){
+            // ERROR: this function should only be called in the setup stage
+            curr_player.clickHandled = true;
+            return;
+        }
 
         // Find the territory by territory_id aka tag. If not found, do nothing
         TerritoryScript claimed_territory = GameObject.FindWithTag(territory_id).GetComponent<TerritoryScript>();
@@ -197,7 +198,7 @@ public class MapScript : MonoBehaviour
             curr_player.territoriesOwned.Add(claimed_territory);
 
             // Add one to the troops on this territory, since this function is only used at the start 
-            // of the game. If we want to reuse for later, generalize functionality.
+            // of the game. TODO: Create a similar, but more general function for typical gameplay
             claimed_territory.armyCount++;
             curr_player.infCount--;
             Debug.Log(territory_id + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
@@ -220,7 +221,7 @@ public class MapScript : MonoBehaviour
             newPlayerScript.GivePlayerArmies(infCount, 0, 0);
 
             // Add listener for when player claims or attacks a territory
-            newPlayerScript.OnPlayerClaimedTerritory += HandleTerritoryClaimed;
+            newPlayerScript.OnPlayerClaimedTerritoryAtStart += HandleTerritoryClaimedAtStart;
             players.Add(newPlayerScript);
         }
 
