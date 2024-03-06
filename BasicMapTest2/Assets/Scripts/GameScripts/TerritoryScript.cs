@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class TerritoryScript : MonoBehaviour
 {
-    public string name { get; set; }
-    public int armyCount { get; set; }
-    public string occupiedBy;
+    public string territory_id { get; set; }
+    public int armyCount { get; set; } = 0;
+    public int occupiedBy = -1;
     [field: SerializeField] public List<Transform> adjacentCountries { get; set; }
 
     private void OnValidate()
@@ -18,7 +18,6 @@ public class TerritoryScript : MonoBehaviour
     private void FillAdjTerritoriesList()
     {
         adjacentCountries.Clear();
-        int count = 0;
         switch (this.gameObject.tag)
         {
             case "Canada":

@@ -20,7 +20,6 @@ public class DeckScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       Debug.Log($"Deck has reached start function");
        // initialize the deck
        InitializeDeck();
     }
@@ -33,9 +32,10 @@ public class DeckScript : MonoBehaviour
     public void DrawCard(){
          // if the deck is empty, return error message
          // otherwise, return card? figure out how die roll works.
-
-        // if (canDraw && deck.Count != 0)
-        if(deck.Count != 0) // FOR TESTING ONLY. TODO(sophiakrugler): replace with the above if condition later
+            if(!canDraw){
+                Debug.Log("Not allowed to draw card.");
+            }
+            else if (deck.Count != 0)
             {
                 // draw the card
                 Card result = deck.Dequeue();
@@ -71,7 +71,6 @@ public class DeckScript : MonoBehaviour
             // add it to the front of the queue
             deck.Enqueue(next);
         }
-        Debug.Log("reached end of deck init");
     }
 
     public List<Card> GetUnshuffledDeck(){
@@ -89,7 +88,7 @@ public class DeckScript : MonoBehaviour
     public void AllowDraw(int playerNumber) // default parameter in case you don't want to specify
     {
         canDraw = true;
-        isDrawComplete = false; // Ensure the roll is set to not complete when allowing a new roll
+        isDrawComplete = false; // Might need to change based on how we implement
         Debug.Log($"Player {playerNumber}, click draw card button to draw a card");
     }
 

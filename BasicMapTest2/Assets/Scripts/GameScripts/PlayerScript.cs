@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    public int infCount, cavCount, artilCount, armyCountTotal;
+    public int infCount, cavCount, artilCount;
     public int playerNumber;
     public bool isTurn = false;
     public GameObject armyPrefab;
@@ -13,6 +13,12 @@ public class PlayerScript : MonoBehaviour
     public List<GameObject> armies = new List<GameObject>();
     public List<Card> cardsInHand = new List<Card>();
     public List<Card> cardsPlayed = new List<Card>();
+
+    public bool clickHandled = true; // use for handling one click at a time
+
+    // Define an event that other scripts can subscribe to, to get the player id
+    // The int is the player id, the string is the territory_id
+    public event Action<int, string> OnPlayerClaimedTerritory;
     enum ArmyTypes { Infantry, Cavalry, Artillery }
     
 
@@ -23,7 +29,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        if (isTurn)
+        if (isTurn && Input.GetMouseButtonDown(0))
         {
             StartCoroutine(CheckIfTerritoryClickedOn());
         }
@@ -31,14 +37,10 @@ public class PlayerScript : MonoBehaviour
 
     private IEnumerator CheckIfTerritoryClickedOn()
     {
-        //ERROR: after mouse is clicked, this method keeps looping for 999+ times for some reason
-        //dont forget to set territory as occupied once its been clicked on
-
-        yield return StartCoroutine(WaitForMouseClick());
+        // yield return StartCoroutine(WaitForMouseClick());
         // Create a ray from the camera to the mouse cursor
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        Debug.Log("TARGET HIT");
 
         // Perform the raycast
         if (Physics.Raycast(ray, out hit))
@@ -47,20 +49,37 @@ public class PlayerScript : MonoBehaviour
             GameObject clickedObject = hit.transform.gameObject;
             string clickedTileTag = clickedObject.tag;
             Debug.Log("Clicked on tile with tag: " + clickedTileTag);
+
+            // TODO: check that the tag matches a territory, and multiplex which handler is called
+            // For example, if they click on a game piece we should use a different handler
+
+            // the handler will reset clickHandled
+            clickHandled = false;
             SpawnArmyPiece(ArmyTypes.Infantry, clickedObject.transform.position);
+            OnPlayerClaimedTerritory?.Invoke(playerNumber, clickedTileTag);
             isTurn = false;
         }
+        
+        // wait until the click is handled (updated by handler)
+        yield return new WaitUntil(ClickIsHandled);
     }
 
+    // TODO: delete if we don't end up using this elsewhere
     private IEnumerator WaitForMouseClick()
     {
+        // yield return new WaitUntil(clickIsHandled);
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
     } 
+
+    private bool ClickIsHandled(){
+        return clickHandled;
+    }
     
 
     private void SpawnArmyPiece(ArmyTypes armyType, Vector3 position)
     {
         Debug.Log("SPAWNING ARMY PIECE");
+        // TODO: place army on the given position
     }
 
     private void MovePieceUnderCorrectConditions()
@@ -76,8 +95,14 @@ public class PlayerScript : MonoBehaviour
         infCount += _infCount;
         cavCount += _cavCount;
         artilCount += _artilCount;
-        armyCountTotal = infCount+cavCount+artilCount;
 
         //Update any necessary Huds
+    }
+
+    public int GetArmyCountTotal(){
+        // TODO: I think it would be clearer to store as the number of peices, rathere than 
+        // the number of infantry they represent. We can always just call this function
+        // if we want the total number
+        return infCount+cavCount+artilCount;
     }
 }

@@ -91,17 +91,42 @@ public class MapScript : MonoBehaviour
         }
         playerTurn = highestNumIndex + 1;
 
-        yield return StartCoroutine(InitialiseStartingInfantry());
+        int territories_left = 6; // TODO: change to 41, but for testing, use smaller number
 
-        //START LOOP:
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
-        //Instanciate army object and place it on the territory
-        //Update hud
-        //update "occupiedBy" field in territory class of respective territory
-        //update "ownedTerritories field in player class of respective player
-        //IF all territories are occupied, endLoop. ELSE:
-        //next player's turn to place a piece. restart loop(maybe change the playerTurn bool inside this class and the player class?)
-        //END LOOP
+        while(territories_left > 0){
+            Debug.Log("Territories left: " + territories_left);
+            int player_starting_territories = players[playerTurn - 1].territoriesOwned.Count;
+
+            yield return StartCoroutine(InitialiseStartingInfantry());
+            //TODO
+                // Instanciate army object and place it on the territory
+                // Update hud
+            //done in the handleterritoryclaimed function: 
+                // update "occupiedBy" field in territory class of respective territory
+                // update "ownedTerritories field in player class of respective player
+
+            // check that the claiming was successful by checking the player's territory count
+            // if it wasn't, don't update anything and try again
+            int player_ending_territories = players[playerTurn - 1].territoriesOwned.Count;
+            if(player_ending_territories == player_starting_territories){
+                continue;
+            }
+
+            // update remanaining territories
+            territories_left--;
+
+            // update next player's turn: 
+            if(playerTurn == playerCount){
+                // cycle back to start of player list
+                playerTurn = 1;
+            }
+            else{
+                // otherwise, simply move to the next player
+                playerTurn++;
+            }
+        }
+    
     }
 
     private IEnumerator InitialiseStartingInfantry()
@@ -145,6 +170,41 @@ public class MapScript : MonoBehaviour
         Debug.Log($"Player {playerTurn} rolled: {result}");
     }
 
+    // Update territory members
+    // TODO: may want to update this function later, if we use it for the actual game play
+    // and not just game set up
+    private void HandleTerritoryClaimed(int player_id, string territory_id){
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
+
+        // Find the territory by territory_id aka tag. If not found, do nothing
+        TerritoryScript claimed_territory = GameObject.FindWithTag(territory_id).GetComponent<TerritoryScript>();
+        
+        // Update the territory's owner
+        if(claimed_territory == null){
+            Debug.Log("Tag does not match a known territory");
+            curr_player.clickHandled = true;
+            return;
+        }
+        if(claimed_territory.occupiedBy != -1){
+            Debug.Log("Territory already claimed. Occupied by Player " + claimed_territory.occupiedBy + ". Returning from handler");
+            // someone else is occupying, do nothing
+            curr_player.clickHandled = true;
+            return;
+        }
+        else{
+            // add territory to player list:
+            claimed_territory.occupiedBy = player_id;
+            curr_player.territoriesOwned.Add(claimed_territory);
+
+            // Add one to the troops on this territory, since this function is only used at the start 
+            // of the game. If we want to reuse for later, generalize functionality.
+            claimed_territory.armyCount++;
+            curr_player.infCount--;
+            Debug.Log(territory_id + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
+            curr_player.clickHandled = true; // we can now poll for other clicks
+        }
+    }
+
     private void CreatePlayers()
     {
         playerCount = StaticData.playerCount; //StaticData is a class I made inside the MainMenu Scene (used for transferring data between scenes)
@@ -158,6 +218,9 @@ public class MapScript : MonoBehaviour
             newPlayerScript.playerNumber = i+1;
             int infCount = 50 - (playerCount * 5);
             newPlayerScript.GivePlayerArmies(infCount, 0, 0);
+
+            // Add listener for when player claims or attacks a territory
+            newPlayerScript.OnPlayerClaimedTerritory += HandleTerritoryClaimed;
             players.Add(newPlayerScript);
         }
 
