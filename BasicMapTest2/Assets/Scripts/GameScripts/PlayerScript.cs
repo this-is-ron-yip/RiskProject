@@ -16,8 +16,6 @@ public class PlayerScript : MonoBehaviour
 
     public static string gameStage = "SETUP"; // or: PLAY or: FINISHED
 
-    public bool clickHandled = true; // use for handling one click at a time
-
     // Define an event that other scripts can subscribe to, to get the player id
     // The int is the player id, the string is the territory_id
     public event Action<int, string> OnPlayerClaimedTerritoryAtStart;
@@ -39,7 +37,6 @@ public class PlayerScript : MonoBehaviour
 
     private IEnumerator CheckWhatWasClickedOn()
     {
-        // yield return StartCoroutine(WaitForMouseClick());
         // Create a ray from the camera to the mouse cursor
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -52,8 +49,6 @@ public class PlayerScript : MonoBehaviour
             string clickedTileTag = clickedObject.tag;
             Debug.Log("Clicked on tile with tag: " + clickedTileTag);
 
-            // the handler will reset clickHandled
-            clickHandled = false;
 
             // Determine which handler to call on 
             if(clickedObject.GetComponent<TerritoryScript>() != null){
@@ -65,43 +60,28 @@ public class PlayerScript : MonoBehaviour
                 else if(gameStage == "PLAY"){
                     // Call a different handler. Player is choosing a territory to attack
                     // or choosing a territory to attack from.
-                    clickHandled = true; // TODO: Move this to the proper handler
                 }
             }
             else if(clickedObject.GetComponent<DeckScript>() != null){
                 if(gameStage == "SETUP"){
                     Debug.Log("Action not allowed.");
-                    clickHandled = true;
                 }
                 else if(gameStage == "PLAY"){
                     // Call a different handler. But for now, we can test with calling
                     // directly on draw card
                     clickedObject.GetComponent<DeckScript>().DrawCard();
-                    clickHandled = true; // TODO: Move this to the proper handler
                 }
             }
             else {
                 // replace with other game object possibilities. Like dice, for esample.
                 Debug.Log("This is not a territory.");
-                clickHandled = true; // TODO: Move this to the proper handler
             }
               
             isTurn = false; // Player relinquishes its turn. Map decides whether to give the turn
             // back to the player (in the case that the player's turn isn't actually complete)
         }
 
-        // wait until the click is handled (updated by handler)
-        yield return new WaitUntil(ClickIsHandled);
-    }
-
-    // TODO: delete if we don't end up using this elsewhere
-    private IEnumerator WaitForMouseClick()
-    {
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-    } 
-
-    private bool ClickIsHandled(){
-        return clickHandled;
+        yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
     }
     
 

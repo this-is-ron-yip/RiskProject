@@ -120,6 +120,17 @@ public class MapScript : MonoBehaviour
                 playerTurn++;
             }
         }
+
+        /* TODO: impelemnet last stage of set up:
+
+        "After all 42 territories are claimed, each player in turn places one
+        additional army onto any territory he or she already occupies. Continue
+        in this way until everyone has run out of armies. There is no limit to the
+        number of armies you may place onto a single territory"
+        
+        */
+
+
         PlayerScript.gameStage = "PLAY"; // done with set up!
 
         //TODO
@@ -175,7 +186,6 @@ public class MapScript : MonoBehaviour
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
         if(PlayerScript.gameStage != "SETUP"){
             // ERROR: this function should only be called in the setup stage
-            curr_player.clickHandled = true;
             return;
         }
 
@@ -185,13 +195,11 @@ public class MapScript : MonoBehaviour
         // Update the territory's owner
         if(claimed_territory == null){
             Debug.Log("Tag does not match a known territory");
-            curr_player.clickHandled = true;
             return;
         }
         if(claimed_territory.occupiedBy != -1){
             Debug.Log("Territory already claimed. Occupied by Player " + claimed_territory.occupiedBy + ". Returning from handler");
             // someone else is occupying, do nothing
-            curr_player.clickHandled = true;
             return;
         }
         else{
@@ -204,7 +212,6 @@ public class MapScript : MonoBehaviour
             claimed_territory.armyCount++;
             curr_player.infCount--;
             Debug.Log(territory_id + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
-            curr_player.clickHandled = true; // we can now poll for other clicks
         }
     }
 
