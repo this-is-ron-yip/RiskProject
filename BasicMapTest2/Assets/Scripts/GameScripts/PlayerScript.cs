@@ -13,12 +13,19 @@ public class PlayerScript : MonoBehaviour
     public List<GameObject> armies = new List<GameObject>();
     public List<Card> cardsInHand = new List<Card>();
     public List<Card> cardsPlayed = new List<Card>();
-
-    public static string gameStage; // = CLAIM_TERRITORIES, FINISH_PLACING_ARMIES, PLAY or FINISHED
+    // Create a set of booleans to dictate legal and illegal actions for this player.
+    // MapScript will modify these permissions during game play
+    private bool canClaimTerritoryAtStart = false;
+    private bool canPlaceArmyAtStart = false;
+    private bool canDraw = false;
+    private bool canRoll = false;
+    private bool canTurnInCards = false;
+    private bool canSelectAttackFrom = false;
+    private bool canSelectAttackWho = false;
 
     // Define an event that other scripts can subscribe to, to get the player id
-    // The int is the player id, the string is the territory_id
-    public event Action<int, GameObject> OnPlayerClaimedTerritoryAtStart; // TODO: pass game object instead of string
+    // The int is the player id, the object is the object they clicked on
+    public event Action<int, GameObject> OnPlayerClaimedTerritoryAtStart;
     public event Action<int, GameObject> OnPlayerPlacesArmiesAtStart;
     enum ArmyTypes { Infantry, Cavalry, Artillery }
     
@@ -53,19 +60,19 @@ public class PlayerScript : MonoBehaviour
 
             // Determine which handler to call on 
             if(clickedObject.GetComponent<TerritoryScript>() != null){
-                if(gameStage == MapScript.CLAIM_TERRITORIES_STAGE){
+                if(canClaimTerritoryAtStart){
                     OnPlayerClaimedTerritoryAtStart?.Invoke(playerNumber, clickedObject);
                 }
-                else if(gameStage == MapScript.FINISH_PLACING_ARMIES_STAGE){
+                else if(canPlaceArmyAtStart){
                     OnPlayerPlacesArmiesAtStart?.Invoke(playerNumber, clickedObject);
                 }
-                else if(gameStage == MapScript.GAME_PLAY_STAGE){
+                else {
                     // Call a different handler. Player is choosing a territory to attack
                     // or choosing a territory to attack from.
                 }
             }
             else if(clickedObject.GetComponent<DeckScript>() != null){
-                if(gameStage == MapScript.GAME_PLAY_STAGE){
+                if(canDraw){
                     // Call a different handler. But for now, we can test with calling
                     // directly on draw card
                     clickedObject.GetComponent<DeckScript>().DrawCard();
@@ -84,13 +91,6 @@ public class PlayerScript : MonoBehaviour
         }
 
         yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
-    }
-    
-
-    private void SpawnArmyPiece(ArmyTypes armyType, Vector3 position)
-    {
-        Debug.Log("SPAWNING ARMY PIECE");
-        // TODO: place army on the given position
     }
 
     private void MovePieceUnderCorrectConditions()
@@ -117,5 +117,75 @@ public class PlayerScript : MonoBehaviour
         // the number of infantry they represent. We can always just call this function
         // if we want the total number
         return infCount+cavCount+artilCount;
+    }
+
+    public bool CanClaimTerritoryAtStart(){
+        return canClaimTerritoryAtStart;
+    }
+    public bool CanPlaceArmyAtStart(){
+        return canPlaceArmyAtStart;
+    }
+    public bool CanDraw(){
+        return canDraw;
+    }
+    public bool CanRoll(){
+        return canRoll;
+    }
+    public bool CanTurnInCards(){
+        return canTurnInCards;
+    }
+    public bool CanSelectAttackFrom(){
+        return canSelectAttackFrom;
+    }
+
+    public bool CanSelectAttackWho(){
+        return canSelectAttackWho;
+    }
+    public void AllowClaimTerritoryAtStart(){
+        canClaimTerritoryAtStart = true;
+    }
+    public void AllowPlaceArmyAtStart(){
+        canPlaceArmyAtStart = true;
+    }
+    public void AllowDraw(){
+        canDraw = true;
+    }
+    public void AllowRoll(){
+        canRoll = true;
+    }
+    public void AllowTurnInCards(){
+        canTurnInCards = true;
+    }
+    public void AllowSelectAttackFrom(){
+        canSelectAttackFrom = true;
+    }
+    public void AllowSelectAttackWho(){
+        canSelectAttackWho = true;
+    }
+    public void PreventClaimTerritoryAtStart(){
+        canClaimTerritoryAtStart = false;
+    }
+    public void PreventPlaceArmyAtStart(){
+        canPlaceArmyAtStart = false;
+    }
+    public void PreventDraw(){
+        canDraw = false;
+    }
+    public void PreventRoll(){
+        canRoll = false;
+    }
+    public void PreventTurnInCards(){
+        canTurnInCards = false;
+    }
+    public void PreventSelectAttackFrom(){
+        canSelectAttackFrom = false;
+    }
+    public void PreventSelectAttackWho(){
+        canSelectAttackWho = false;
+    }
+    public void ResetAllPermissions(){
+        canDraw = false;
+        canRoll = false;
+        canTurnInCards = false;
     }
 }

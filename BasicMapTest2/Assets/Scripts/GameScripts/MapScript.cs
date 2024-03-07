@@ -22,9 +22,9 @@ public class MapScript : MonoBehaviour
     enum ArmyTypes { Infantry, Cavalry, Artillery }
 
     // Define static variables to avoid bugs:
-    public static String CLAIM_TERRITORIES_STAGE = "CLAIM_TERRITORIES";
-    public static String FINISH_PLACING_ARMIES_STAGE = "FINISH_PLACING_ARMIES";
-    public static String GAME_PLAY_STAGE = "PLAY"; // TODO: add more stages depending on implementation
+    // public static String CLAIM_TERRITORIES_STAGE = "CLAIM_TERRITORIES";
+    // public static String FINISH_PLACING_ARMIES_STAGE = "FINISH_PLACING_ARMIES";
+    // public static String GAME_PLAY_STAGE = "PLAY"; // TODO: add more stages depending on implementation
 
     private void OnValidate()
     {
@@ -98,12 +98,13 @@ public class MapScript : MonoBehaviour
         startingPlayer = playerTurn; // for future reference
 
         // Enetered new game stage
-        PlayerScript.gameStage = "CLAIM_TERRITORIES";
-
         int territories_left = 10; // TODO: change to 42, but for testing, use smaller number
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
         while(territories_left > 0){
             Debug.Log("Territories left: " + territories_left);
+            players[playerTurn - 1].AllowClaimTerritoryAtStart();
+
+            // store in temp variable for later reference
             int player_starting_territories = players[playerTurn - 1].territoriesOwned.Count;
 
             yield return StartCoroutine(InitialiseStartingInfantry());
@@ -117,6 +118,9 @@ public class MapScript : MonoBehaviour
 
             // update remanaining territories
             territories_left--;
+
+            // Revoke permission
+            players[playerTurn - 1].PreventClaimTerritoryAtStart();
 
             // update next player's turn: 
             if(playerTurn == playerCount){
@@ -137,9 +141,12 @@ public class MapScript : MonoBehaviour
         number of armies you may place onto a single territory"
         
         */
-        PlayerScript.gameStage = FINISH_PLACING_ARMIES_STAGE;
-        // Change game stage
+    
+        // Entered next phase of the game
         while(players[playerTurn - 1].GetArmyCountTotal() != 0){
+            players[playerTurn - 1].AllowPlaceArmyAtStart();
+            
+            // Store in temp variable for later reference
             int player_starting_armies = players[playerTurn - 1].GetArmyCountTotal();
 
             yield return StartCoroutine(InitialiseStartingInfantry());
@@ -150,6 +157,10 @@ public class MapScript : MonoBehaviour
             if(player_ending_armies == player_starting_armies){
                 continue;
             }
+
+            // Revoke permission
+            players[playerTurn - 1].PreventPlaceArmyAtStart();
+
             // update next player's turn: 
             if(playerTurn == playerCount){
                 // cycle back to start of player list
@@ -160,9 +171,6 @@ public class MapScript : MonoBehaviour
                 playerTurn++;
             }
         }
-
-
-        PlayerScript.gameStage = GAME_PLAY_STAGE; // done with set up!
 
         //TODO
             // Instanciate army object and place it on the territory
@@ -214,10 +222,6 @@ public class MapScript : MonoBehaviour
     // Update territory members
     private void HandleTerritoryClaimedAtStart(int player_id, GameObject territory){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
-        if(PlayerScript.gameStage != "CLAIM_TERRITORIES"){
-            // ERROR: this function should only be called in the claime territories stage
-            return;
-        }
 
         // Find the territory by territory_id aka tag. If not found, do nothing
         TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
@@ -249,11 +253,6 @@ public class MapScript : MonoBehaviour
 
     private void HandleFinishPlacingArmiesAtStart(int player_id, GameObject territory){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
-        
-        if(PlayerScript.gameStage != FINISH_PLACING_ARMIES_STAGE){
-            // ERROR: this function should only be called in the finish placing armies stage
-            return;
-        }
 
         // Find the territory by territory_id aka tag. If not found, do nothing
         TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
@@ -288,6 +287,11 @@ public class MapScript : MonoBehaviour
             // update player and give them the turn
             PlayerScript player = players[playerTurn - 1];
             player.isTurn = true;
+
+            // TODO: set permissions after figuring out game implementaiton. 
+            // For now, let's just allow them to draw a card: 
+            player.AllowDraw();
+
             // wait for player to finish turn
             yield return StartCoroutine(WaitForPlayerToDoMove(player));
             
