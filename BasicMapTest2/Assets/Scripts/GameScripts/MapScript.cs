@@ -20,6 +20,11 @@ public class MapScript : MonoBehaviour
     public int[] diceResults;
     public Dictionary<Transform, List<Transform>> adjacencyList = new Dictionary<Transform, List<Transform>>();
 
+    // Define static variables to avoid bugs:
+    public static String CLAIM_TERRITORIES_STAGE = "CLAIM_TERRITORIES";
+    public static String FINISH_PLACING_ARMIES_STAGE = "FINISH_PLACING_ARMIES";
+    public static String GAME_PLAY_STAGE = "PLAY";
+
     private void OnValidate()
     {
         FillTerritoriesList();
@@ -91,8 +96,10 @@ public class MapScript : MonoBehaviour
         playerTurn = highestNumIndex + 1;
         startingPlayer = playerTurn; // for future reference
 
-        int territories_left = 6; // TODO: change to 42, but for testing, use smaller number
+        // Enetered new game stage
+        PlayerScript.gameStage = "CLAIM_TERRITORIES";
 
+        int territories_left = 10; // TODO: change to 42, but for testing, use smaller number
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
         while(territories_left > 0){
             Debug.Log("Territories left: " + territories_left);
@@ -121,7 +128,7 @@ public class MapScript : MonoBehaviour
             }
         }
 
-        /* TODO: impelemnet last stage of set up:
+        /* Impelemnet last stage of set up:
 
         "After all 42 territories are claimed, each player in turn places one
         additional army onto any territory he or she already occupies. Continue
@@ -129,6 +136,29 @@ public class MapScript : MonoBehaviour
         number of armies you may place onto a single territory"
         
         */
+        PlayerScript.gameStage = FINISH_PLACING_ARMIES_STAGE;
+        // Change game stage
+        while(players[playerTurn - 1].GetArmyCountTotal() != 0){
+            int player_starting_armies = players[playerTurn - 1].GetArmyCountTotal();
+
+            yield return StartCoroutine(InitialiseStartingInfantry());
+
+            // check that the placing army was successful by checking the player's army count
+            // if it wasn't, don't update anything and try again
+            int player_ending_armies = players[playerTurn - 1].GetArmyCountTotal();
+            if(player_ending_armies == player_starting_armies){
+                continue;
+            }
+            // update next player's turn: 
+            if(playerTurn == playerCount){
+                // cycle back to start of player list
+                playerTurn = 1;
+            }
+            else{
+                // otherwise, simply move to the next player
+                playerTurn++;
+            }
+        }
 
 
         PlayerScript.gameStage = "PLAY"; // done with set up!
@@ -136,7 +166,6 @@ public class MapScript : MonoBehaviour
         //TODO
             // Instanciate army object and place it on the territory
             // Update hud
-        // TODO: is this the right place to put this line?
         yield return StartCoroutine(EnterGamePlay());
     }
 
@@ -184,8 +213,8 @@ public class MapScript : MonoBehaviour
     // Update territory members
     private void HandleTerritoryClaimedAtStart(int player_id, string territory_id){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
-        if(PlayerScript.gameStage != "SETUP"){
-            // ERROR: this function should only be called in the setup stage
+        if(PlayerScript.gameStage != "CLAIM_TERRITORIES"){
+            // ERROR: this function should only be called in the claime territories stage
             return;
         }
 
@@ -212,6 +241,36 @@ public class MapScript : MonoBehaviour
             claimed_territory.armyCount++;
             curr_player.infCount--;
             Debug.Log(territory_id + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
+        }
+    }
+
+    private void HandleFinishPlacingArmiesAtStart(int player_id, GameObject territory){
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
+        
+        if(PlayerScript.gameStage != "FINISH_PLACING_ARMIES"){
+            // ERROR: this function should only be called in the finish placing armies stage
+            return;
+        }
+
+        // Find the territory by territory_id aka tag. If not found, do nothing
+        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
+        
+        // Update the territory's owner
+        if(claimed_territory == null){
+            Debug.Log("Tag does not match a known territory");
+            return;
+        }
+        if(claimed_territory.occupiedBy != player_id){
+            Debug.Log(claimed_territory.tag + " is not claimed by this player.");
+            // only allowed to add to already claimed territories
+            return;
+        }
+        else{
+            // Add one to the troops on this territory, since this function is only used at the start 
+            // of the game. TODO: Create a similar, but more general function for typical gameplay
+            claimed_territory.armyCount++;
+            curr_player.infCount--;
+            Debug.Log(claimed_territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
         }
     }
 
@@ -253,10 +312,13 @@ public class MapScript : MonoBehaviour
             PlayerScript newPlayerScript = newPlayer.GetComponent<PlayerScript>();
             newPlayerScript.playerNumber = i+1;
             int infCount = 50 - (playerCount * 5);
+            // TODO: DELETE LATER, give less armies for testing
+            infCount = 5;
             newPlayerScript.GivePlayerArmies(infCount, 0, 0);
 
             // Add listener for when player claims or attacks a territory
             newPlayerScript.OnPlayerClaimedTerritoryAtStart += HandleTerritoryClaimedAtStart;
+            newPlayerScript.OnPlayerPlacesArmiesAtStart += HandleFinishPlacingArmiesAtStart;
             players.Add(newPlayerScript);
         }
 

@@ -14,11 +14,12 @@ public class PlayerScript : MonoBehaviour
     public List<Card> cardsInHand = new List<Card>();
     public List<Card> cardsPlayed = new List<Card>();
 
-    public static string gameStage = "SETUP"; // or: PLAY or: FINISHED
+    public static string gameStage; // = CLAIM_TERRITORIES, FINISH_PLACING_ARMIES, PLAY or FINISHED
 
     // Define an event that other scripts can subscribe to, to get the player id
     // The int is the player id, the string is the territory_id
-    public event Action<int, string> OnPlayerClaimedTerritoryAtStart;
+    public event Action<int, string> OnPlayerClaimedTerritoryAtStart; // TODO: pass game object instead of string
+    public event Action<int, GameObject> OnPlayerPlacesArmiesAtStart;
     enum ArmyTypes { Infantry, Cavalry, Artillery }
     
 
@@ -52,29 +53,35 @@ public class PlayerScript : MonoBehaviour
 
             // Determine which handler to call on 
             if(clickedObject.GetComponent<TerritoryScript>() != null){
-                if(gameStage == "SETUP"){
+                if(gameStage == MapScript.CLAIM_TERRITORIES_STAGE){
                     // TODO: Spawnarmypiece should be called later, after error checking
                     SpawnArmyPiece(ArmyTypes.Infantry, clickedObject.transform.position);
                     OnPlayerClaimedTerritoryAtStart?.Invoke(playerNumber, clickedTileTag);
+                    // TODO: change to passing the object ninstead of the tag, so that we 
+                    // can spawn the army in the right place.
                 }
-                else if(gameStage == "PLAY"){
+                else if(gameStage == MapScript.FINISH_PLACING_ARMIES_STAGE){
+                    Debug.Log("Entered finish placing if statement in player");
+                    OnPlayerPlacesArmiesAtStart?.Invoke(playerNumber, clickedObject);
+                }
+                else if(gameStage == MapScript.GAME_PLAY_STAGE){
                     // Call a different handler. Player is choosing a territory to attack
                     // or choosing a territory to attack from.
                 }
             }
             else if(clickedObject.GetComponent<DeckScript>() != null){
-                if(gameStage == "SETUP"){
-                    Debug.Log("Action not allowed.");
-                }
-                else if(gameStage == "PLAY"){
+                if(gameStage == MapScript.GAME_PLAY_STAGE){
                     // Call a different handler. But for now, we can test with calling
                     // directly on draw card
                     clickedObject.GetComponent<DeckScript>().DrawCard();
                 }
+                else{
+                    Debug.Log("Action not allowed.");
+                }
             }
             else {
                 // replace with other game object possibilities. Like dice, for esample.
-                Debug.Log("This is not a territory.");
+                Debug.Log("This is not a valid click.");
             }
               
             isTurn = false; // Player relinquishes its turn. Map decides whether to give the turn
