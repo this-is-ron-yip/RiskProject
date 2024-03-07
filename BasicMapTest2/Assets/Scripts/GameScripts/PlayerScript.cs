@@ -18,16 +18,17 @@ public class PlayerScript : MonoBehaviour
     private bool canClaimTerritoryAtStart = false;
     private bool canPlaceArmyAtStart = false;
     private bool canDraw = false;
-    private bool canRoll = false; // TODO: probably split this into more specific permissoins
-                                // Depending on the game implementation
+    private bool canRollToStart = false;
     private bool canTurnInCards = false;
     private bool canSelectAttackFrom = false;
     private bool canSelectAttackWho = false;
+    // TODO: add more permissoins for different actions
 
     // Define an event that other scripts can subscribe to, to get the player id
     // The int is the player id, the object is the object they clicked on
     public event Action<int, GameObject> OnPlayerClaimedTerritoryAtStart;
     public event Action<int, GameObject> OnPlayerPlacesArmiesAtStart;
+    public event Action<int, GameObject> OnRollDiceAtStart;
     enum ArmyTypes { Infantry, Cavalry, Artillery }
     
 
@@ -88,8 +89,9 @@ public class PlayerScript : MonoBehaviour
                 }
             }
             else if(clickedObject.GetComponent<DiceRollerScript>() != null){
-                if(canRoll){
-                    // TODO: Call handler.
+                if(canRollToStart){
+                    // Call handler.
+                    OnRollDiceAtStart?.Invoke(playerNumber, clickedObject);
                 }
                 else{
                     Debug.Log("Illegal click.");
@@ -142,8 +144,8 @@ public class PlayerScript : MonoBehaviour
     public bool CanDraw(){
         return canDraw;
     }
-    public bool CanRoll(){
-        return canRoll;
+    public bool CanRollToStart(){
+        return canRollToStart;
     }
     public bool CanTurnInCards(){
         return canTurnInCards;
@@ -164,8 +166,8 @@ public class PlayerScript : MonoBehaviour
     public void AllowDraw(){
         canDraw = true;
     }
-    public void AllowRoll(){
-        canRoll = true;
+    public void AllowRollToStart(){
+        canRollToStart = true;
     }
     public void AllowTurnInCards(){
         canTurnInCards = true;
@@ -185,8 +187,8 @@ public class PlayerScript : MonoBehaviour
     public void PreventDraw(){
         canDraw = false;
     }
-    public void PreventRoll(){
-        canRoll = false;
+    public void PreventRollToStart(){
+        canRollToStart = false;
     }
     public void PreventTurnInCards(){
         canTurnInCards = false;
@@ -198,8 +200,12 @@ public class PlayerScript : MonoBehaviour
         canSelectAttackWho = false;
     }
     public void ResetAllPermissions(){
+        canClaimTerritoryAtStart = false;
+        canPlaceArmyAtStart = false;
         canDraw = false;
-        canRoll = false;
+        canRollToStart = false;
         canTurnInCards = false;
+        canSelectAttackFrom = false;
+        canSelectAttackWho = false;
     }
 }

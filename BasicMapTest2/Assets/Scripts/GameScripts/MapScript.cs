@@ -11,7 +11,7 @@ public class MapScript : MonoBehaviour
     public GameObject infantryPrefab;
     public GameObject cavalryPrefab;
     public GameObject artillaryPrefab;
-    public int playerTurn;
+    public int playerTurn = 1;
     public int playerCount = 3;
     public int startingPlayer = -1;
     public List<PlayerScript> players = new List<PlayerScript>();
@@ -80,10 +80,40 @@ public class MapScript : MonoBehaviour
 
     private IEnumerator AssignStartTerritories()
     {
-        diceRoller.OnDiceRolled += HandleDiceRollResult; //assigning the OnDiceRolled event to the HandleDiceResult method 
+        // Step one: get dice results for all players to determine who starts
         diceResults = new int[playerCount];
+        for(int i = 0; i < playerCount; i++){
+            // initialize to -1 for later reference.
+            diceResults[i] = -1;
+        }
         
-        yield return StartCoroutine(RollDiceForAllPlayers());
+        int completed_roll = 0;
+        playerTurn = 1; // start from 1st player
+        while(completed_roll < playerCount){
+            // permit this player to roll
+            players[playerTurn - 1].AllowRollToStart();
+
+            // Wait for the player to take an action
+            yield return StartCoroutine(WaitForDieRoll());
+
+            // They didn't roll the die successfully
+            if(diceResults[playerTurn - 1] == -1){
+                continue;
+            }
+            
+            // Remove permission
+            players[playerTurn - 1].PreventRollToStart();
+            // update player turn: 
+            if(playerTurn == playerCount){
+                // cycle back to start of player list
+                playerTurn = 1;
+            }
+            else{
+                // otherwise, simply move to the next player
+                playerTurn++;
+            }
+            completed_roll++; // success!
+        }
 
         //Whoever lands highest gets to start choosing first
         int highestNumIndex = 0;
@@ -97,7 +127,7 @@ public class MapScript : MonoBehaviour
         playerTurn = highestNumIndex + 1;
         startingPlayer = playerTurn; // for future reference
 
-        // Enetered new game stage
+        // Step two: Allow players to claim territories to start
         int territories_left = 10; // TODO: change to 42, but for testing, use smaller number
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
         while(territories_left > 0){
@@ -133,7 +163,7 @@ public class MapScript : MonoBehaviour
             }
         }
 
-        /* Impelemnet last stage of set up:
+        /* Step three: players place remaining pieces on their claimed territories
 
         "After all 42 territories are claimed, each player in turn places one
         additional army onto any territory he or she already occupies. Continue
@@ -175,7 +205,15 @@ public class MapScript : MonoBehaviour
         //TODO
             // Instanciate army object and place it on the territory
             // Update hud
+        // Completed game set up!
         yield return StartCoroutine(EnterGamePlay());
+    }
+
+    private IEnumerator WaitForDieRoll(){
+        Debug.Log($"Player {playerTurn}, click the dice to roll.");
+        PlayerScript player = players[playerTurn - 1];
+        player.isTurn = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
 
     private IEnumerator InitialiseStartingInfantry()
@@ -191,32 +229,12 @@ public class MapScript : MonoBehaviour
         yield return new WaitUntil(() => !player.isTurn);
     }
 
-    private IEnumerator RollDiceForAllPlayers()
-    {
-        for (playerTurn = 1; playerTurn < playerCount+1; playerTurn++)
-        {
-            diceRoller.AllowRoll(playerTurn);
-            yield return StartCoroutine(WaitForDiceRoll());
-
-            // After the roll is complete, store the result
-            // Assuming HandleDiceRollResult stores the result in diceResults[currentPlayerIndex]
-        }
-        // Now, all players have rolled the dice, and you can print the results
-        Debug.Log($"Dice Results: {string.Join(", ", diceResults)}");
-    }
-
-    private IEnumerator WaitForDiceRoll()
-    {
-        yield return new WaitUntil(() => diceRoller.isRollComplete);
-        diceRoller.isRollComplete = false; // Reset for the next roll
-    }
-
-    private void HandleDiceRollResult(int result)
-    {
-        // Store the result for the current player
-        diceResults[playerTurn-1] = result;
-
-        Debug.Log($"Player {playerTurn} rolled: {result}");
+    private void HandleDiceRollAtStart(int player_id, GameObject die){
+        DiceRollerScript die_rolled = die.GetComponent<DiceRollerScript>();
+        int result = die_rolled.RollDice();
+        diceResults[player_id - 1] = result;
+        Debug.Log("Player " + player_id + " rolled a " + result);
+        // TODO: add animation here.
     }
 
     // Update territory members
@@ -326,6 +344,7 @@ public class MapScript : MonoBehaviour
             // Add listener for when player claims or attacks a territory
             newPlayerScript.OnPlayerClaimedTerritoryAtStart += HandleTerritoryClaimedAtStart;
             newPlayerScript.OnPlayerPlacesArmiesAtStart += HandleFinishPlacingArmiesAtStart;
+            newPlayerScript.OnRollDiceAtStart += HandleDiceRollAtStart;
             players.Add(newPlayerScript);
         }
 
