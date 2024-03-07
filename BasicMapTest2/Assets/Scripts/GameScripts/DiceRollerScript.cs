@@ -1,6 +1,9 @@
 using UnityEngine;
 using System;
 
+// TODO: consider updating implementation to be more consistent with other game pieces
+// For example, moving the permission settings to the player object, and transferring the handler
+// To the map script. So this class would only be used for rolling the die and returning a result.
 public class DiceRollerScript : MonoBehaviour
 {
     public bool canRoll = false; // Flag to control when rolling is allowed

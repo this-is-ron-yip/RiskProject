@@ -18,7 +18,8 @@ public class PlayerScript : MonoBehaviour
     private bool canClaimTerritoryAtStart = false;
     private bool canPlaceArmyAtStart = false;
     private bool canDraw = false;
-    private bool canRoll = false;
+    private bool canRoll = false; // TODO: probably split this into more specific permissoins
+                                // Depending on the game implementation
     private bool canTurnInCards = false;
     private bool canSelectAttackFrom = false;
     private bool canSelectAttackWho = false;
@@ -66,24 +67,37 @@ public class PlayerScript : MonoBehaviour
                 else if(canPlaceArmyAtStart){
                     OnPlayerPlacesArmiesAtStart?.Invoke(playerNumber, clickedObject);
                 }
-                else {
-                    // Call a different handler. Player is choosing a territory to attack
-                    // or choosing a territory to attack from.
+                else if(canSelectAttackFrom){
+                    // TODO: Call a different handle
+                }
+                else if(canSelectAttackWho){
+                    // TODO: Call a different handle
+                }
+                else{
+                    Debug.Log("Illegal click.");
                 }
             }
             else if(clickedObject.GetComponent<DeckScript>() != null){
                 if(canDraw){
-                    // Call a different handler. But for now, we can test with calling
+                    // TOOD: Call a different handler. But for now, we can test with calling
                     // directly on draw card
                     clickedObject.GetComponent<DeckScript>().DrawCard();
                 }
                 else{
-                    Debug.Log("Action not allowed.");
+                    Debug.Log("Illegal click.");
+                }
+            }
+            else if(clickedObject.GetComponent<DiceRollerScript>() != null){
+                if(canRoll){
+                    // TODO: Call handler.
+                }
+                else{
+                    Debug.Log("Illegal click.");
                 }
             }
             else {
                 // replace with other game object possibilities. Like dice, for esample.
-                Debug.Log("This is not a valid click.");
+                Debug.Log("Illegal click.");
             }
               
             isTurn = false; // Player relinquishes its turn. Map decides whether to give the turn
