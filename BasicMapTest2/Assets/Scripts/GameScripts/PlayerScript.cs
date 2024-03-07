@@ -18,7 +18,7 @@ public class PlayerScript : MonoBehaviour
 
     // Define an event that other scripts can subscribe to, to get the player id
     // The int is the player id, the string is the territory_id
-    public event Action<int, string> OnPlayerClaimedTerritoryAtStart; // TODO: pass game object instead of string
+    public event Action<int, GameObject> OnPlayerClaimedTerritoryAtStart; // TODO: pass game object instead of string
     public event Action<int, GameObject> OnPlayerPlacesArmiesAtStart;
     enum ArmyTypes { Infantry, Cavalry, Artillery }
     
@@ -54,14 +54,9 @@ public class PlayerScript : MonoBehaviour
             // Determine which handler to call on 
             if(clickedObject.GetComponent<TerritoryScript>() != null){
                 if(gameStage == MapScript.CLAIM_TERRITORIES_STAGE){
-                    // TODO: Spawnarmypiece should be called later, after error checking
-                    SpawnArmyPiece(ArmyTypes.Infantry, clickedObject.transform.position);
-                    OnPlayerClaimedTerritoryAtStart?.Invoke(playerNumber, clickedTileTag);
-                    // TODO: change to passing the object ninstead of the tag, so that we 
-                    // can spawn the army in the right place.
+                    OnPlayerClaimedTerritoryAtStart?.Invoke(playerNumber, clickedObject);
                 }
                 else if(gameStage == MapScript.FINISH_PLACING_ARMIES_STAGE){
-                    Debug.Log("Entered finish placing if statement in player");
                     OnPlayerPlacesArmiesAtStart?.Invoke(playerNumber, clickedObject);
                 }
                 else if(gameStage == MapScript.GAME_PLAY_STAGE){

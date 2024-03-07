@@ -19,11 +19,12 @@ public class MapScript : MonoBehaviour
     private DiceRollerScript diceRoller;
     public int[] diceResults;
     public Dictionary<Transform, List<Transform>> adjacencyList = new Dictionary<Transform, List<Transform>>();
+    enum ArmyTypes { Infantry, Cavalry, Artillery }
 
     // Define static variables to avoid bugs:
     public static String CLAIM_TERRITORIES_STAGE = "CLAIM_TERRITORIES";
     public static String FINISH_PLACING_ARMIES_STAGE = "FINISH_PLACING_ARMIES";
-    public static String GAME_PLAY_STAGE = "PLAY";
+    public static String GAME_PLAY_STAGE = "PLAY"; // TODO: add more stages depending on implementation
 
     private void OnValidate()
     {
@@ -161,7 +162,7 @@ public class MapScript : MonoBehaviour
         }
 
 
-        PlayerScript.gameStage = "PLAY"; // done with set up!
+        PlayerScript.gameStage = GAME_PLAY_STAGE; // done with set up!
 
         //TODO
             // Instanciate army object and place it on the territory
@@ -211,7 +212,7 @@ public class MapScript : MonoBehaviour
     }
 
     // Update territory members
-    private void HandleTerritoryClaimedAtStart(int player_id, string territory_id){
+    private void HandleTerritoryClaimedAtStart(int player_id, GameObject territory){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
         if(PlayerScript.gameStage != "CLAIM_TERRITORIES"){
             // ERROR: this function should only be called in the claime territories stage
@@ -219,7 +220,7 @@ public class MapScript : MonoBehaviour
         }
 
         // Find the territory by territory_id aka tag. If not found, do nothing
-        TerritoryScript claimed_territory = GameObject.FindWithTag(territory_id).GetComponent<TerritoryScript>();
+        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
         
         // Update the territory's owner
         if(claimed_territory == null){
@@ -240,14 +241,16 @@ public class MapScript : MonoBehaviour
             // of the game. TODO: Create a similar, but more general function for typical gameplay
             claimed_territory.armyCount++;
             curr_player.infCount--;
-            Debug.Log(territory_id + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
+            Debug.Log(territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
+            // spawn army: 
+            SpawnArmyPiece(ArmyTypes.Infantry, territory.transform.position, player_id);
         }
     }
 
     private void HandleFinishPlacingArmiesAtStart(int player_id, GameObject territory){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
         
-        if(PlayerScript.gameStage != "FINISH_PLACING_ARMIES"){
+        if(PlayerScript.gameStage != FINISH_PLACING_ARMIES_STAGE){
             // ERROR: this function should only be called in the finish placing armies stage
             return;
         }
@@ -352,4 +355,13 @@ public class MapScript : MonoBehaviour
         }
     }
 
+    private void SpawnArmyPiece(ArmyTypes armyType, Vector3 position, int player_id)
+    {
+        Debug.Log("SPAWNING ARMY PIECE");
+        // TODO: place army on the given position
+        // TODO: figure out who owns the army objects. Should we store a list
+        // of army game objects in the player, which would include their position? 
+        // TODO: figure out how to represent armies on a territory (maybe just 1 piece?)
+        // And maybe clicking on the piece tells us how many armies it represents.
+    }
 }
