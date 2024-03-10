@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
@@ -8,7 +9,6 @@ public class PlayerScript : MonoBehaviour
     public int infCount, cavCount, artilCount;
     public int playerNumber;
     public bool isTurn = false;
-    public GameObject armyPrefab;
     public List<TerritoryScript> territoriesOwned = new List<TerritoryScript>();
     public List<GameObject> armies = new List<GameObject>();
     public List<Card> cardsInHand = new List<Card>();
@@ -58,7 +58,6 @@ public class PlayerScript : MonoBehaviour
             GameObject clickedObject = hit.transform.gameObject;
             string clickedTileTag = clickedObject.tag;
             Debug.Log("Clicked on tile with tag: " + clickedTileTag);
-
 
             // Determine which handler to call on 
             if(clickedObject.GetComponent<TerritoryScript>() != null){
@@ -133,6 +132,11 @@ public class PlayerScript : MonoBehaviour
         // the number of infantry they represent. We can always just call this function
         // if we want the total number
         return infCount+cavCount+artilCount;
+    }
+
+    public void CreateArmy(GameObject armyPrefab, Vector3 position)
+    {
+        Instantiate(armyPrefab, position, Quaternion.identity);
     }
 
     public bool CanClaimTerritoryAtStart(){

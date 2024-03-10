@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641228, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1420,7 +1420,7 @@ MonoBehaviour:
   - {fileID: 1525302318}
   - {fileID: 2077155352}
   playerPrefab: {fileID: 8898816300779238917, guid: 811b6ababe70ee4418118aa6cbcd94d1, type: 3}
-  infantryPrefab: {fileID: 0}
+  infantryPrefab: {fileID: 45277284910968522, guid: fa981abfd72273f47a9bff2507c58243, type: 3}
   cavalryPrefab: {fileID: 0}
   artillaryPrefab: {fileID: 0}
   playerTurn: 0

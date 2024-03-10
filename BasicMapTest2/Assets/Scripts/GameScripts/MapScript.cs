@@ -183,6 +183,7 @@ public class MapScript : MonoBehaviour
 
             // check that the placing army was successful by checking the player's army count
             // if it wasn't, don't update anything and try again
+            // else, instantiate the infantry object and make the territory the colour of the player
             int player_ending_armies = players[playerTurn - 1].GetArmyCountTotal();
             if(player_ending_armies == player_starting_armies){
                 continue;
@@ -265,7 +266,7 @@ public class MapScript : MonoBehaviour
             curr_player.infCount--;
             Debug.Log(territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
             // spawn army: 
-            SpawnArmyPiece(ArmyTypes.Infantry, territory.transform.position, player_id);
+            SpawnArmyPiece(ArmyTypes.Infantry, territory, player_id);
         }
     }
 
@@ -378,9 +379,48 @@ public class MapScript : MonoBehaviour
         }
     }
 
-    private void SpawnArmyPiece(ArmyTypes armyType, Vector3 position, int player_id)
+    private void SpawnArmyPiece(ArmyTypes armyType, GameObject territory, int player_id)
     {
+        /* If a player owns a territory, it will either have an inf object, a cav object or an artil object.
+         * These objects will each have a number attached to them to say how many of its type it represents.
+         * E.g if Player1 owns Peru and has 5 infantry on it, Peru will have 1 infantry Gameobject
+         * on it, and that gameobjcet will have the number 5 attached to it. (to avoid having loads of gameobjects
+         * on a single territory)
+         * 
+         * As a result of this, this method should handle spawning an army differently depending on what situation we're
+         * spawning it in. Refer to the pinned messages in the "game-developments" channel to see these situations
+        */
+
         Debug.Log("SPAWNING ARMY PIECE");
+
+        //SITUATION 1 - Initial Army Placement:
+
+        //setting the position for the army to be in when its spwaned
+        Vector3 armyPos = territory.transform.position;
+        armyPos.Set(armyPos.x, (float)0.4044418, armyPos.z);
+        //creating the correct army piece on the territory that was clicked on for the player who clicked on it
+        switch (armyType)
+        {
+            case ArmyTypes.Infantry:
+                players[playerTurn - 1].CreateArmy(infantryPrefab, armyPos);
+                break;
+            case ArmyTypes.Cavalry:
+                players[playerTurn - 1].CreateArmy(artillaryPrefab, armyPos);
+                break;
+            case ArmyTypes.Artillery:
+                players[playerTurn - 1].CreateArmy(cavalryPrefab, armyPos);
+                break;
+        }
+        //territory stores who occupies it
+        territory.GetComponent<TerritoryScript>().occupiedBy = player_id;
+        
+        //TODO for SITUATION 1: check any other variables that need to be updated when spawning the Army object
+            //(e.g occupiedBy field in the Territory script etc..)
+
+        //SITUATION 2 - Getting and Placing New Armies at the Beginning of Each Turn:
+
+        //SITUATION 3 - During Gameplay:
+
         // TODO: place army on the given position
         // TODO: figure out who owns the army objects. Should we store a list
         // of army game objects in the player, which would include their position? 
