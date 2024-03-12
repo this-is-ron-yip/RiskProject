@@ -19,7 +19,11 @@ public class MapScript : MonoBehaviour
     private DiceRollerScript diceRoller;
     public int[] diceResults;
     public Dictionary<Transform, List<Transform>> adjacencyList = new Dictionary<Transform, List<Transform>>();
-    enum ArmyTypes { Infantry, Cavalry, Artillery }
+    enum ArmyTypes { Infantry, Cavalry, Artillery };
+
+    // Need 6 colors, for a maximum of 6 players
+    public static Color[] colorArray = {Color.red, Color.yellow, Color.green,
+                Color.blue, Color.magenta, Color.black};
 
     // Define static variables to avoid bugs:
     // public static String CLAIM_TERRITORIES_STAGE = "CLAIM_TERRITORIES";
@@ -341,6 +345,9 @@ public class MapScript : MonoBehaviour
             // TODO: DELETE LATER, give less armies for testing
             infCount = 5;
             newPlayerScript.GivePlayerArmies(infCount, 0, 0);
+
+            // Set color for pieces:
+            newPlayerScript.color = colorArray[newPlayerScript.playerNumber - 1];
 
             // Add listener for when player claims or attacks a territory
             newPlayerScript.OnPlayerClaimedTerritoryAtStart += HandleTerritoryClaimedAtStart;

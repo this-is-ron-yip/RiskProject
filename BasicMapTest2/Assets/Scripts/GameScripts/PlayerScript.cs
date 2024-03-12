@@ -9,6 +9,8 @@ public class PlayerScript : MonoBehaviour
     public int infCount, cavCount, artilCount;
     public int playerNumber;
     public bool isTurn = false;
+
+    public Color color = new Color(0, 0, 0);
     public List<TerritoryScript> territoriesOwned = new List<TerritoryScript>();
     public List<GameObject> armies = new List<GameObject>();
     public List<Card> cardsInHand = new List<Card>();
@@ -136,7 +138,8 @@ public class PlayerScript : MonoBehaviour
 
     public void CreateArmy(GameObject armyPrefab, Vector3 position)
     {
-        Instantiate(armyPrefab, position, Quaternion.identity);
+        GameObject obj = Instantiate(armyPrefab, position, Quaternion.identity);
+        obj.GetComponent<Renderer>().material.color = color;
     }
 
     public bool CanClaimTerritoryAtStart(){
