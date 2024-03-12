@@ -26,11 +26,22 @@ public class MapScript : MonoBehaviour
     // Need 6 colors, for a maximum of 6 players
     public static Color[] colorArray = {Color.red, Color.yellow, Color.green,
                 Color.blue, Color.magenta, Color.black};
-
-    // Define static variables to avoid bugs:
-    // public static String CLAIM_TERRITORIES_STAGE = "CLAIM_TERRITORIES";
-    // public static String FINISH_PLACING_ARMIES_STAGE = "FINISH_PLACING_ARMIES";
-    // public static String GAME_PLAY_STAGE = "PLAY"; // TODO: add more stages depending on implementation
+    
+    // Map for how many terrritories correspond to each continent
+    public static Dictionary<TerritoryScript.Continents, int> ContinentTerritoryCounts =  
+        new Dictionary<TerritoryScript.Continents, int> (){
+            {TerritoryScript.Continents.NorthAmerica, 9}, {TerritoryScript.Continents.SouthAmerica, 4},
+            {TerritoryScript.Continents.Europe, 7}, {TerritoryScript.Continents.Asia, 12}, 
+            {TerritoryScript.Continents.Africa, 6}, {TerritoryScript.Continents.Australia, 4}
+    };
+    
+    // Map for how many armies to grant for controlling a continent
+    public static Dictionary<TerritoryScript.Continents, int> ArmiesGrantedForContinent =  
+        new Dictionary<TerritoryScript.Continents, int> (){
+            {TerritoryScript.Continents.NorthAmerica, 5}, {TerritoryScript.Continents.SouthAmerica, 2},
+            {TerritoryScript.Continents.Europe, 5}, {TerritoryScript.Continents.Asia, 7}, 
+            {TerritoryScript.Continents.Africa, 3}, {TerritoryScript.Continents.Australia, 2}
+    };
 
     private void OnValidate()
     {
@@ -265,12 +276,15 @@ public class MapScript : MonoBehaviour
             // add territory to player list:
             claimed_territory.occupiedBy = player_id;
             curr_player.territoriesOwned.Add(claimed_territory);
+            curr_player.territoryCountsPerContinent[claimed_territory.continent] += 1;
 
             // Add one to the troops on this territory, since this function is only used at the start 
             // of the game. TODO: Create a similar, but more general function for typical gameplay
             claimed_territory.armyCount++;
             curr_player.infCount--;
-            Debug.Log(territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
+            Debug.Log(territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies." +
+               " Player " + player_id + " now has " + curr_player.territoryCountsPerContinent[claimed_territory.continent] + " on " + 
+               " territories on the continent of " + claimed_territory.continent);
             // spawn army (this step should always happen last!!!): 
             SpawnArmyPiece(ArmyTypes.Infantry, territory, player_id);
         }
@@ -319,7 +333,6 @@ public class MapScript : MonoBehaviour
             player.isTurn = true; // TODO: move this statement to just before WaitForPlayerToDoMove is called
             bool playerMustDraw = false; // For whether they can draw a RISK card at the end
 
-            // TODO: each of the following steps should be handled in different functins/coroutines
             // Step one: calculate the number of armies this player should receive
             // Step two: allow player to turn in sets of cards. give additional armies accordingly
             // Step three: prompt and allow the player to place armies
@@ -327,6 +340,7 @@ public class MapScript : MonoBehaviour
             
             // Step five: if the player has claimed at least one territory during their turn
             // Prompt and allow/require them to draw a card from the deck
+            // TODO: what if the deck is empty? 
             playerMustDraw = true; // TODO: delete later, for testing only: 
             while(playerMustDraw){
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");

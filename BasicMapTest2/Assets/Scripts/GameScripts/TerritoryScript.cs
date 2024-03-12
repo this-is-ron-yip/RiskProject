@@ -8,11 +8,16 @@ public class TerritoryScript : MonoBehaviour
     public string territory_id { get; set; }
     public int armyCount { get; set; } = 0;
     public int occupiedBy = -1;
+
+    public enum Continents {NorthAmerica, SouthAmerica, Europe, Asia, Africa, Australia};
+
+    public Continents continent; 
     [field: SerializeField] public List<Transform> adjacentCountries { get; set; }
 
     private void OnValidate()
     {
         FillAdjTerritoriesList();
+        SetContinents();
     }
 
     private void FillAdjTerritoriesList()
@@ -127,6 +132,78 @@ public class TerritoryScript : MonoBehaviour
             case "Russia":
                 adjacentCountries.Add(GameObject.FindWithTag("China").GetComponent<Transform>());
                 adjacentCountries.Add(GameObject.FindWithTag("Kazakhstan").GetComponent<Transform>());
+                break;
+
+        }
+    }
+
+    private void SetContinents()
+    {
+        adjacentCountries.Clear();
+        switch (this.gameObject.tag)
+        {
+            case "Canada":
+                continent = Continents.NorthAmerica;
+                break;
+            case "EastAmerica":
+                continent = Continents.NorthAmerica;
+                break;
+            case "WestAmerica":
+                continent = Continents.NorthAmerica;
+                break;
+            case "Brazil":
+               continent = Continents.SouthAmerica;
+                break;
+            case "Argentina":
+                continent = Continents.SouthAmerica;
+                break;
+            case "UnitedKingdom":
+               continent = Continents.Europe;
+                break;
+            case "Peru":
+                continent = Continents.SouthAmerica;
+                break;
+            case "WestEurope":
+               continent = Continents.Europe;
+                break;
+            case "NorthEurope":
+               continent = Continents.Europe;
+                break;
+            case "SouthEurope":
+                continent = Continents.Europe;
+                break;
+            case "Egypt":
+                continent = Continents.Africa;
+                break;
+            case "EastAfrica":
+               continent = Continents.Africa;
+                break;
+            case "NorthAfrica":
+                continent = Continents.Africa;
+                break;
+            case "SouthAfrica":
+               continent = Continents.Africa;
+                break;
+            case "WestAustralia":
+                continent = Continents.Australia;
+                break;
+            case "EastAustralia":
+                continent = Continents.Australia;
+                break;
+            case "India":
+                continent = Continents.Asia;
+                break;
+            case "MiddleEast":
+                continent = Continents.Asia;
+                break;
+            case "Kazakhstan":
+                continent = Continents.Asia;
+                break;
+            case "China":
+                continent = Continents.Asia;
+                break;
+            case "Russia": // TODO: Russia is in two continents, and isn't a territory in risk
+                continent = Continents.Asia;
                 break;
 
         }

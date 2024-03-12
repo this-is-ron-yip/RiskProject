@@ -15,6 +15,13 @@ public class PlayerScript : MonoBehaviour
     public List<GameObject> armies = new List<GameObject>();
     public List<Card> cardsInHand = new List<Card>();
     public List<Card> cardsPlayed = new List<Card>();
+    public Dictionary<TerritoryScript.Continents, int> territoryCountsPerContinent =  
+        new Dictionary<TerritoryScript.Continents, int> (){
+            {TerritoryScript.Continents.NorthAmerica, 0}, {TerritoryScript.Continents.SouthAmerica, 0},
+            {TerritoryScript.Continents.Europe, 0}, {TerritoryScript.Continents.Asia, 0}, 
+            {TerritoryScript.Continents.Africa, 0}, {TerritoryScript.Continents.Australia, 0}
+    };
+
     // Create a set of booleans to dictate legal and illegal actions for this player.
     // MapScript will modify these permissions during game play
     private bool canClaimTerritoryAtStart = false;
