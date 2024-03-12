@@ -24,19 +24,22 @@ public class PlayerScript : MonoBehaviour
 
     // Create a set of booleans to dictate legal and illegal actions for this player.
     // MapScript will modify these permissions during game play
-    private bool canClaimTerritoryAtStart = false;
-    private bool canPlaceArmyAtStart = false;
-    private bool canDraw = false;
-    private bool canRollToStart = false;
-    private bool canTurnInCards = false;
-    private bool canSelectAttackFrom = false;
-    private bool canSelectAttackWho = false;
+    public bool canClaimTerritoryAtStart = false;
+    public bool canPlaceArmyAtStart = false;
+    public bool canDraw = false;
+    public bool canRollToStart = false;
+    public bool canTurnInCards = false;
+    public bool canSelectAttackFrom = false;
+    public bool canSelectAttackWho = false;
+    public bool canPlaceArmyInGame = false;
+
     // TODO: add more permissoins for different actions
 
     // Define an event that other scripts can subscribe to, to get the player id
     // The int is the player id, the object is the object they clicked on
     public event Action<int, GameObject> OnPlayerClaimedTerritoryAtStart;
-    public event Action<int, GameObject> OnPlayerPlacesArmiesAtStart;
+    public event Action<int, GameObject> OnPlayerPlacesAnArmyAtStart;
+    public event Action<int, GameObject> OnPlayerPlacesAnArmyInGame;
     public event Action<int, GameObject> OnRollDiceAtStart;
     public event Action<int, GameObject> OnPlayerDrawsCard;
     enum ArmyTypes { Infantry, Cavalry, Artillery }
@@ -75,7 +78,10 @@ public class PlayerScript : MonoBehaviour
                     OnPlayerClaimedTerritoryAtStart?.Invoke(playerNumber, clickedObject);
                 }
                 else if(canPlaceArmyAtStart){
-                    OnPlayerPlacesArmiesAtStart?.Invoke(playerNumber, clickedObject);
+                    OnPlayerPlacesAnArmyAtStart?.Invoke(playerNumber, clickedObject);
+                }
+                else if(canPlaceArmyInGame){
+                    OnPlayerPlacesAnArmyInGame?.Invoke(playerNumber, clickedObject);
                 }
                 else if(canSelectAttackFrom){
                     // TODO: Call a different handle
@@ -113,7 +119,7 @@ public class PlayerScript : MonoBehaviour
             // back to the player (in the case that the player's turn isn't actually complete)
         }
 
-        yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
+        yield return null; // Doesn't matter what we return, but must yield return something
     }
 
     private void MovePieceUnderCorrectConditions()
@@ -147,72 +153,8 @@ public class PlayerScript : MonoBehaviour
         GameObject obj = Instantiate(armyPrefab, position, Quaternion.identity);
         obj.GetComponent<Renderer>().material.color = color;
     }
-
-    public bool CanClaimTerritoryAtStart(){
-        return canClaimTerritoryAtStart;
-    }
-    public bool CanPlaceArmyAtStart(){
-        return canPlaceArmyAtStart;
-    }
-    public bool CanDraw(){
-        return canDraw;
-    }
-    public bool CanRollToStart(){
-        return canRollToStart;
-    }
-    public bool CanTurnInCards(){
-        return canTurnInCards;
-    }
-    public bool CanSelectAttackFrom(){
-        return canSelectAttackFrom;
-    }
-
-    public bool CanSelectAttackWho(){
-        return canSelectAttackWho;
-    }
-    public void AllowClaimTerritoryAtStart(){
-        canClaimTerritoryAtStart = true;
-    }
-    public void AllowPlaceArmyAtStart(){
-        canPlaceArmyAtStart = true;
-    }
-    public void AllowDraw(){
-        canDraw = true;
-    }
-    public void AllowRollToStart(){
-        canRollToStart = true;
-    }
-    public void AllowTurnInCards(){
-        canTurnInCards = true;
-    }
-    public void AllowSelectAttackFrom(){
-        canSelectAttackFrom = true;
-    }
-    public void AllowSelectAttackWho(){
-        canSelectAttackWho = true;
-    }
-    public void PreventClaimTerritoryAtStart(){
-        canClaimTerritoryAtStart = false;
-    }
-    public void PreventPlaceArmyAtStart(){
-        canPlaceArmyAtStart = false;
-    }
-    public void PreventDraw(){
-        canDraw = false;
-    }
-    public void PreventRollToStart(){
-        canRollToStart = false;
-    }
-    public void PreventTurnInCards(){
-        canTurnInCards = false;
-    }
-    public void PreventSelectAttackFrom(){
-        canSelectAttackFrom = false;
-    }
-    public void PreventSelectAttackWho(){
-        canSelectAttackWho = false;
-    }
-    public void ResetAllPermissions(){
+ 
+    public IEnumerator ResetAllPermissions(){
         canClaimTerritoryAtStart = false;
         canPlaceArmyAtStart = false;
         canDraw = false;
@@ -220,5 +162,7 @@ public class PlayerScript : MonoBehaviour
         canTurnInCards = false;
         canSelectAttackFrom = false;
         canSelectAttackWho = false;
+        canPlaceArmyInGame = false;
+        yield return null;
     }
 }

@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MapScript : MonoBehaviour
 {
@@ -108,7 +110,7 @@ public class MapScript : MonoBehaviour
         playerTurn = 1; // start from 1st player
         while(completed_roll < playerCount){
             // permit this player to roll
-            players[playerTurn - 1].AllowRollToStart();
+            players[playerTurn - 1].canRollToStart = true;
 
             // Wait for the player to take an action
             yield return StartCoroutine(WaitForDieRoll());
@@ -119,7 +121,7 @@ public class MapScript : MonoBehaviour
             }
             
             // Remove permission
-            players[playerTurn - 1].PreventRollToStart();
+            players[playerTurn - 1].canRollToStart = false;
             // update player turn: 
             if(playerTurn == playerCount){
                 // cycle back to start of player list
@@ -149,7 +151,7 @@ public class MapScript : MonoBehaviour
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
         while(territories_left > 0){
             Debug.Log("Territories left: " + territories_left);
-            players[playerTurn - 1].AllowClaimTerritoryAtStart();
+            players[playerTurn - 1].canClaimTerritoryAtStart = true;
 
             // store in temp variable for later reference
             int player_starting_territories = players[playerTurn - 1].territoriesOwned.Count;
@@ -167,7 +169,7 @@ public class MapScript : MonoBehaviour
             territories_left--;
 
             // Revoke permission
-            players[playerTurn - 1].PreventClaimTerritoryAtStart();
+            players[playerTurn - 1].canClaimTerritoryAtStart = false;
 
             // update next player's turn: 
             if(playerTurn == playerCount){
@@ -191,8 +193,8 @@ public class MapScript : MonoBehaviour
     
         // Entered next phase of the game
         while(players[playerTurn - 1].GetArmyCountTotal() != 0){
-            players[playerTurn - 1].AllowPlaceArmyAtStart();
-            
+            players[playerTurn - 1].canPlaceArmyAtStart = true; 
+
             // Store in temp variable for later reference
             int player_starting_armies = players[playerTurn - 1].GetArmyCountTotal();
 
@@ -207,7 +209,7 @@ public class MapScript : MonoBehaviour
             }
 
             // Revoke permission
-            players[playerTurn - 1].PreventPlaceArmyAtStart();
+            players[playerTurn - 1].canPlaceArmyAtStart = false;
 
             // update next player's turn: 
             if(playerTurn == playerCount){
@@ -242,10 +244,69 @@ public class MapScript : MonoBehaviour
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
 
+    private IEnumerator InitialiseStartOfTurnInfantry(int player_id){
+        Debug.Log($"Player {player_id}, where would you like to place one infantry?");
+        PlayerScript player = players[player_id - 1];
+        player.isTurn = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+
     private IEnumerator WaitForPlayerToDoMove(PlayerScript player)
     {
         yield return new WaitUntil(() => !player.isTurn);
     }
+
+
+    // Responsible for calculating and granting armies based on territories,
+    // At the start of each turn.
+    // This function is called by a coroutine, so it must be a coroutine
+    private IEnumerator GrantArmiesFromTerritories(int player_id){
+        PlayerScript player = players[player_id - 1];
+
+        // Count the number of territories you occupy, divide by three and round down. 
+        player.infCount += Math.Max(player.territoriesOwned.Count / 3, 3);
+
+        Debug.Log("Player " + player_id + " occupies " + player.territoriesOwned.Count + 
+        " territories and has been granted " +
+                player.GetArmyCountTotal() + " armies");
+        yield return null;
+    }
+
+    private IEnumerator GrantArmiesFromContinents(int player_id){
+        int infantry = 0;
+        PlayerScript player = players[player_id - 1];
+
+        // Add armies for each territory owned
+        foreach(KeyValuePair<TerritoryScript.Continents, int> count in player.territoryCountsPerContinent){
+            // This player controls the continent
+            if(count.Value == ContinentTerritoryCounts[count.Key] ){
+                // Add proper number of armies
+                infantry += ArmiesGrantedForContinent[count.Key];
+                Debug.Log("Player " + player_id + " controls " + count.Key + " and has been granted" + 
+                    ArmiesGrantedForContinent[count.Key] + " additional armies");
+            }
+        }
+        Debug.Log("Player " + player_id + " now has " + player.GetArmyCountTotal() + " armies");
+
+        yield return null;
+    }
+
+    private IEnumerator PlaceArmiesInGame(int player_id){
+        // TODO: figure out why this nondeterministic behavior occurs (see below)
+        Debug.Log("Player id: " + player_id + " versus playerturn: " + this.playerTurn);
+        PlayerScript player = players[player_id - 1];
+        while(player.GetArmyCountTotal() != 0){
+            player.canPlaceArmyInGame = true;
+            yield return StartCoroutine(InitialiseStartOfTurnInfantry(player_id));
+            Debug.Log("Player " + player_id + " has " + player.GetArmyCountTotal() + 
+                " armies left");
+
+            // Revoke permission
+            player.canPlaceArmyInGame = false;
+        }
+        yield return null;
+    }
+
 
     private void HandleDiceRollAtStart(int player_id, GameObject die){
         DiceRollerScript die_rolled = die.GetComponent<DiceRollerScript>();
@@ -290,7 +351,7 @@ public class MapScript : MonoBehaviour
         }
     }
 
-    private void HandleFinishPlacingArmiesAtStart(int player_id, GameObject territory){
+    private void HandlePlacingAnArmy(int player_id, GameObject territory){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
 
         // Find the territory by territory_id aka tag. If not found, do nothing
@@ -307,8 +368,6 @@ public class MapScript : MonoBehaviour
             return;
         }
         else{
-            // Add one to the troops on this territory, since this function is only used at the start 
-            // of the game. TODO: Create a similar, but more general function for typical gameplay
             claimed_territory.armyCount++;
             curr_player.infCount--;
             Debug.Log(claimed_territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
@@ -323,40 +382,61 @@ public class MapScript : MonoBehaviour
     // TODO: complete this function!
     private IEnumerator EnterGamePlay(){
         Debug.Log("Entered game play!");
-
         int playerTurn = startingPlayer;
-
         int testNumberOfTurns = 15;
+
         while(!gameOver){
             // update player and give them the turn
             PlayerScript player = players[playerTurn - 1];
-            player.isTurn = true; // TODO: move this statement to just before WaitForPlayerToDoMove is called
+            // Prevent all permissions at start of each loop
+            yield return StartCoroutine(player.ResetAllPermissions());
+
+            // TODO: maybe make this a member variable
             bool playerMustDraw = false; // For whether they can draw a RISK card at the end
 
-            // Step one: calculate the number of armies this player should receive
+            // Step one: getting and placing armies
+            /// calculate the number of armies this player should receive based on territories
+            yield return StartCoroutine(GrantArmiesFromTerritories(playerTurn));
+            // Require player to place the new armies
+            yield return StartCoroutine(PlaceArmiesInGame(playerTurn));
+
+
+            // calculate and grant armies from controlling continents
+            yield return StartCoroutine(GrantArmiesFromContinents(playerTurn));
+            // Require player to place their armies
+            yield return StartCoroutine(PlaceArmiesInGame(playerTurn));
+
             // Step two: allow player to turn in sets of cards. give additional armies accordingly
-            // Step three: prompt and allow the player to place armies
-            // Step four: as long as they keep winning, prompt and allow the player to attack
+            // Allow player to turn in cards
+                // TODO: this requires figuring out how the HUD will work, how to prompt user to 
+                // Submit sets of cards. Fill in this step once that is complete
+
+            // Require player to place armies earned from card sets
+
+            // Step three: as long as they keep winning, prompt and allow the player to attack
             
-            // Step five: if the player has claimed at least one territory during their turn
+            // Step four: if the player has claimed at least one territory during their turn
             // Prompt and allow/require them to draw a card from the deck
             // TODO: what if the deck is empty? 
             playerMustDraw = true; // TODO: delete later, for testing only: 
             while(playerMustDraw){
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
                 int cardsBeforeDraw = player.cardsInHand.Count;
-                player.AllowDraw();
+                player.canDraw = true;
                 player.isTurn = true;
                 yield return StartCoroutine(WaitForPlayerToDoMove(player));
                 int cardsAfterDraw = player.cardsInHand.Count;
                 if(cardsBeforeDraw != cardsAfterDraw){
                     // Task accomplished
+                    player.canDraw = false;
                     playerMustDraw = false;
                 }
                 else{
                     Debug.Log("Must draw a card. Try again.");
                 }
             }
+
+            Debug.Log("End of Player " + playerTurn + "'s turn");
             
             // update the player
             if(playerTurn == playerCount){
@@ -397,7 +477,8 @@ public class MapScript : MonoBehaviour
 
             // Add listener for when player claims or attacks a territory
             newPlayerScript.OnPlayerClaimedTerritoryAtStart += HandleTerritoryClaimedAtStart;
-            newPlayerScript.OnPlayerPlacesArmiesAtStart += HandleFinishPlacingArmiesAtStart;
+            newPlayerScript.OnPlayerPlacesAnArmyAtStart += HandlePlacingAnArmy;
+            newPlayerScript.OnPlayerPlacesAnArmyInGame += HandlePlacingAnArmy;
             newPlayerScript.OnRollDiceAtStart += HandleDiceRollAtStart;
             newPlayerScript.OnPlayerDrawsCard += HandleDrawCard;
             players.Add(newPlayerScript);
