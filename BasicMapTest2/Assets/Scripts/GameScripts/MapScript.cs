@@ -14,6 +14,8 @@ public class MapScript : MonoBehaviour
     public int playerTurn = 1;
     public int playerCount = 3;
     public int startingPlayer = -1;
+
+    public bool gameOver = false;
     public List<PlayerScript> players = new List<PlayerScript>();
     public List<Transform> territories = new List<Transform>();
     private DiceRollerScript diceRoller;
@@ -108,14 +110,7 @@ public class MapScript : MonoBehaviour
             // Remove permission
             players[playerTurn - 1].PreventRollToStart();
             // update player turn: 
-            if(playerTurn == playerCount){
-                // cycle back to start of player list
-                playerTurn = 1;
-            }
-            else{
-                // otherwise, simply move to the next player
-                playerTurn++;
-            }
+            NextTurn();
             completed_roll++; // success!
         }
 
@@ -157,14 +152,7 @@ public class MapScript : MonoBehaviour
             players[playerTurn - 1].PreventClaimTerritoryAtStart();
 
             // update next player's turn: 
-            if(playerTurn == playerCount){
-                // cycle back to start of player list
-                playerTurn = 1;
-            }
-            else{
-                // otherwise, simply move to the next player
-                playerTurn++;
-            }
+            NextTurn();
         }
 
         /* Step three: players place remaining pieces on their claimed territories
@@ -197,14 +185,7 @@ public class MapScript : MonoBehaviour
             players[playerTurn - 1].PreventPlaceArmyAtStart();
 
             // update next player's turn: 
-            if(playerTurn == playerCount){
-                // cycle back to start of player list
-                playerTurn = 1;
-            }
-            else{
-                // otherwise, simply move to the next player
-                playerTurn++;
-            }
+            NextTurn();
         }
 
         //TODO
@@ -299,33 +280,58 @@ public class MapScript : MonoBehaviour
         }
     }
 
+    private void HandleDrawCard(int player_id, GameObject deck){
+        Card drawn = deck.GetComponent<DeckScript>().DrawCard();
+        players[player_id - 1].cardsInHand.Add(drawn);
+    }
+
     // TODO: complete this function!
     private IEnumerator EnterGamePlay(){
         Debug.Log("Entered game play!");
 
         int playerTurn = startingPlayer;
 
-        // TODO: delete this loop later — used for testing only
-        for(int i = 0; i < 15; i++){
+        int testNumberOfTurns = 15;
+        while(!gameOver){
             // update player and give them the turn
             PlayerScript player = players[playerTurn - 1];
             player.isTurn = true;
+            bool playerMustDraw = false; // For whether they can draw a RISK card at the end
 
-            // TODO: set permissions after figuring out game implementaiton. 
-            // For now, let's just allow them to draw a card: 
-            player.AllowDraw();
-
-            // wait for player to finish turn
-            yield return StartCoroutine(WaitForPlayerToDoMove(player));
+            // TODO: each of the following steps should be handled in different functins/coroutines
+            // Step one: calculate the number of armies this player should receive
+            // Step two: allow player to turn in sets of cards. give additional armies accordingly
+            // Step three: prompt and allow the player to place armies
+            // Step four: as long as they keep winning, prompt and allow the player to attack
             
-            // update the player 
-            if(playerTurn == playerCount){
-                // cycle back to start of player list
-                playerTurn = 1;
+            // Step five: if the player has claimed at least one territory during their turn
+            // Prompt and allow/require them to draw a card from the deck
+            // TODO: delete later, for testing only: 
+            playerMustDraw = true;
+            while(playerMustDraw){
+                Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
+                int cardsBeforeDraw = player.cardsInHand.Count;
+                player.AllowDraw();
+                player.isTurn = true;
+                yield return StartCoroutine(WaitForPlayerToDoMove(player));
+                int cardsAfterDraw = player.cardsInHand.Count;
+
+                if(cardsBeforeDraw != cardsAfterDraw){
+                    // Reset the bool
+                    playerMustDraw = false;
+                }
+                else{
+                    Debug.Log("Must draw a card. Try again.");
+                }
             }
-            else{
-                // otherwise, simply move to the next player
-                playerTurn++;
+            
+            // update the player
+            NextTurn();
+
+            // TODO: delete later. For testing only
+            testNumberOfTurns--;
+            if(testNumberOfTurns == 0){
+                gameOver = true;
             }
         }
     }
@@ -353,6 +359,7 @@ public class MapScript : MonoBehaviour
             newPlayerScript.OnPlayerClaimedTerritoryAtStart += HandleTerritoryClaimedAtStart;
             newPlayerScript.OnPlayerPlacesArmiesAtStart += HandleFinishPlacingArmiesAtStart;
             newPlayerScript.OnRollDiceAtStart += HandleDiceRollAtStart;
+            newPlayerScript.OnPlayerDrawsCard += HandleDrawCard;
             players.Add(newPlayerScript);
         }
 
@@ -437,5 +444,16 @@ public class MapScript : MonoBehaviour
         // of army game objects in the player, which would include their position? 
         // TODO: figure out how to represent armies on a territory (maybe just 1 piece?)
         // And maybe clicking on the piece tells us how many armies it represents.
+    }
+
+    private void NextTurn(){
+        if(playerTurn == playerCount){
+            // cycle back to start of player list
+            playerTurn = 1;
+        }
+        else{
+            // otherwise, simply move to the next player
+            playerTurn++;
+        }
     }
 }

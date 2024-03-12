@@ -31,6 +31,7 @@ public class PlayerScript : MonoBehaviour
     public event Action<int, GameObject> OnPlayerClaimedTerritoryAtStart;
     public event Action<int, GameObject> OnPlayerPlacesArmiesAtStart;
     public event Action<int, GameObject> OnRollDiceAtStart;
+    public event Action<int, GameObject> OnPlayerDrawsCard;
     enum ArmyTypes { Infantry, Cavalry, Artillery }
     
 
@@ -81,9 +82,7 @@ public class PlayerScript : MonoBehaviour
             }
             else if(clickedObject.GetComponent<DeckScript>() != null){
                 if(canDraw){
-                    // TOOD: Call a different handler. But for now, we can test with calling
-                    // directly on draw card
-                    clickedObject.GetComponent<DeckScript>().DrawCard();
+                    OnPlayerDrawsCard?.Invoke(playerNumber, clickedObject);
                 }
                 else{
                     Debug.Log("Illegal click.");
