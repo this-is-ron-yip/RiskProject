@@ -110,7 +110,14 @@ public class MapScript : MonoBehaviour
             // Remove permission
             players[playerTurn - 1].PreventRollToStart();
             // update player turn: 
-            NextTurn();
+            if(playerTurn == playerCount){
+                // cycle back to start of player list
+                playerTurn = 1;
+            }
+            else{
+                // otherwise, simply move to the next player
+                playerTurn++;
+            }
             completed_roll++; // success!
         }
 
@@ -152,7 +159,14 @@ public class MapScript : MonoBehaviour
             players[playerTurn - 1].PreventClaimTerritoryAtStart();
 
             // update next player's turn: 
-            NextTurn();
+            if(playerTurn == playerCount){
+                // cycle back to start of player list
+                playerTurn = 1;
+            }
+            else{
+                // otherwise, simply move to the next player
+                playerTurn++;
+            }
         }
 
         /* Step three: players place remaining pieces on their claimed territories
@@ -185,7 +199,14 @@ public class MapScript : MonoBehaviour
             players[playerTurn - 1].PreventPlaceArmyAtStart();
 
             // update next player's turn: 
-            NextTurn();
+            if(playerTurn == playerCount){
+                // cycle back to start of player list
+                playerTurn = 1;
+            }
+            else{
+                // otherwise, simply move to the next player
+                playerTurn++;
+            }
         }
 
         //TODO
@@ -295,7 +316,7 @@ public class MapScript : MonoBehaviour
         while(!gameOver){
             // update player and give them the turn
             PlayerScript player = players[playerTurn - 1];
-            player.isTurn = true;
+            player.isTurn = true; // TODO: move this statement to just before WaitForPlayerToDoMove is called
             bool playerMustDraw = false; // For whether they can draw a RISK card at the end
 
             // TODO: each of the following steps should be handled in different functins/coroutines
@@ -306,8 +327,7 @@ public class MapScript : MonoBehaviour
             
             // Step five: if the player has claimed at least one territory during their turn
             // Prompt and allow/require them to draw a card from the deck
-            // TODO: delete later, for testing only: 
-            playerMustDraw = true;
+            playerMustDraw = true; // TODO: delete later, for testing only: 
             while(playerMustDraw){
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
                 int cardsBeforeDraw = player.cardsInHand.Count;
@@ -315,9 +335,8 @@ public class MapScript : MonoBehaviour
                 player.isTurn = true;
                 yield return StartCoroutine(WaitForPlayerToDoMove(player));
                 int cardsAfterDraw = player.cardsInHand.Count;
-
                 if(cardsBeforeDraw != cardsAfterDraw){
-                    // Reset the bool
+                    // Task accomplished
                     playerMustDraw = false;
                 }
                 else{
@@ -326,7 +345,14 @@ public class MapScript : MonoBehaviour
             }
             
             // update the player
-            NextTurn();
+            if(playerTurn == playerCount){
+                // cycle back to start of player list
+                playerTurn = 1;
+            }
+            else{
+                // otherwise, simply move to the next player
+                playerTurn++;
+            }
 
             // TODO: delete later. For testing only
             testNumberOfTurns--;
@@ -444,16 +470,5 @@ public class MapScript : MonoBehaviour
         // of army game objects in the player, which would include their position? 
         // TODO: figure out how to represent armies on a territory (maybe just 1 piece?)
         // And maybe clicking on the piece tells us how many armies it represents.
-    }
-
-    private void NextTurn(){
-        if(playerTurn == playerCount){
-            // cycle back to start of player list
-            playerTurn = 1;
-        }
-        else{
-            // otherwise, simply move to the next player
-            playerTurn++;
-        }
     }
 }
