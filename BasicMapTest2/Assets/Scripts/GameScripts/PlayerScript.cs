@@ -84,13 +84,13 @@ public class PlayerScript : MonoBehaviour
                     OnPlayerPlacesAnArmyInGame?.Invoke(playerNumber, clickedObject);
                 }
                 else if(canSelectAttackFrom){
-                    // TODO: Call a different handle
+                    // TODO: Call a different handler
                 }
                 else if(canSelectAttackWho){
-                    // TODO: Call a different handle
+                    // TODO: Call a different handler
                 }
                 else{
-                    Debug.Log("Illegal click.");
+                    Debug.Log("Illegal click on territory.");
                 }
             }
             else if(clickedObject.GetComponent<DeckScript>() != null){
@@ -98,7 +98,7 @@ public class PlayerScript : MonoBehaviour
                     OnPlayerDrawsCard?.Invoke(playerNumber, clickedObject);
                 }
                 else{
-                    Debug.Log("Illegal click.");
+                    Debug.Log("Illegal click on deck.");
                 }
             }
             else if(clickedObject.GetComponent<DiceRollerScript>() != null){
@@ -107,7 +107,7 @@ public class PlayerScript : MonoBehaviour
                     OnRollDiceAtStart?.Invoke(playerNumber, clickedObject);
                 }
                 else{
-                    Debug.Log("Illegal click.");
+                    Debug.Log("Illegal click on dice.");
                 }
             }
             else {
@@ -119,7 +119,7 @@ public class PlayerScript : MonoBehaviour
             // back to the player (in the case that the player's turn isn't actually complete)
         }
 
-        yield return null; // Doesn't matter what we return, but must yield return something
+        yield return null;
     }
 
     private void MovePieceUnderCorrectConditions()
@@ -154,6 +154,7 @@ public class PlayerScript : MonoBehaviour
         obj.GetComponent<Renderer>().material.color = color;
     }
  
+    // TODO: does this have to be an ienumerator? 
     public IEnumerator ResetAllPermissions(){
         canClaimTerritoryAtStart = false;
         canPlaceArmyAtStart = false;

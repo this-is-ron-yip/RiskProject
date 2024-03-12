@@ -383,7 +383,7 @@ public class MapScript : MonoBehaviour
     private IEnumerator EnterGamePlay(){
         Debug.Log("Entered game play!");
         int playerTurn = startingPlayer;
-        int testNumberOfTurns = 15;
+        int testNumberOfTurns = 10;
 
         while(!gameOver){
             // update player and give them the turn
