@@ -155,7 +155,7 @@ public class PlayerScript : MonoBehaviour
     }
  
     // TODO: does this have to be an ienumerator? 
-    public IEnumerator ResetAllPermissions(){
+    public void ResetAllPermissions(){
         canClaimTerritoryAtStart = false;
         canPlaceArmyAtStart = false;
         canDraw = false;
@@ -164,6 +164,5 @@ public class PlayerScript : MonoBehaviour
         canSelectAttackFrom = false;
         canSelectAttackWho = false;
         canPlaceArmyInGame = false;
-        yield return null;
     }
 }
