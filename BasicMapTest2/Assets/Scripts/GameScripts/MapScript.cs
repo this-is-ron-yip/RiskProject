@@ -265,7 +265,7 @@ public class MapScript : MonoBehaviour
             claimed_territory.armyCount++;
             curr_player.infCount--;
             Debug.Log(territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
-            // spawn army: 
+            // spawn army (this step should always happen last!!!): 
             SpawnArmyPiece(ArmyTypes.Infantry, territory, player_id);
         }
     }
@@ -379,6 +379,12 @@ public class MapScript : MonoBehaviour
         }
     }
 
+
+    // This function is only responsible for creating the army piece and visually placing it
+    // in the proper position. Any other functional logic (i.e. number of armies a player has
+    // left, or who owns the territory) is handled outside of this function.
+    // As such, this function should always be called last, since it may rely on data members
+    // that should be modified before it is called. 
     private void SpawnArmyPiece(ArmyTypes armyType, GameObject territory, int player_id)
     {
         /* If a player owns a territory, it will either have an inf object, a cav object or an artil object.
@@ -411,8 +417,6 @@ public class MapScript : MonoBehaviour
                 players[playerTurn - 1].CreateArmy(cavalryPrefab, armyPos);
                 break;
         }
-        //territory stores who occupies it
-        territory.GetComponent<TerritoryScript>().occupiedBy = player_id;
         
         //TODO for SITUATION 1: check any other variables that need to be updated when spawning the Army object
             //(e.g occupiedBy field in the Territory script etc..)
