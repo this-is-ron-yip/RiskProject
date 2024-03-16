@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 306302829714190320}
   - component: {fileID: 7295566036341694064}
   - component: {fileID: 787757307887690651}
+  - component: {fileID: 3987297305100709120}
   m_Layer: 0
   m_Name: Infantry
   m_TagString: Untagged
@@ -107,3 +108,21 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &3987297305100709120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45277284910968522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4120dc89d54834b96760283a058d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMoving: 0
+  speed: 5
+  ownedByPlayerNum: -1
+  armyType: inf
+  currentTerritoryPos: {fileID: 0}
+  armyCount: 0

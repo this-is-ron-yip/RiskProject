@@ -47,7 +47,20 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
+        this.gameObject.tag = "player";
         isTurn = false;
+        //just to test to see if the "choose armies" screen will come up if a player has 3 army cards (can delete after done with testing)
+        Card card1 = new Card();
+        card1.territory_id = "China";
+        card1.status = "IN_HAND";
+        card1.troop_type = "Infantry";
+        cardsInHand.Add(card1);
+        card1.territory_id = "Peru";
+        cardsInHand.Add(card1);
+        card1.territory_id = "Russia";
+        cardsInHand.Add(card1);
+
+
     }
 
     private void Update()
@@ -151,7 +164,10 @@ public class PlayerScript : MonoBehaviour
     public void CreateArmy(GameObject armyPrefab, Vector3 position)
     {
         GameObject obj = Instantiate(armyPrefab, position, Quaternion.identity);
+
         obj.GetComponent<Renderer>().material.color = color;
+        obj.GetComponent<ArmyScript>().ownedByPlayerNum = this.playerNumber;
+        obj.GetComponent<ArmyScript>().armyCount = 1;
     }
  
     // TODO: does this have to be an ienumerator? 

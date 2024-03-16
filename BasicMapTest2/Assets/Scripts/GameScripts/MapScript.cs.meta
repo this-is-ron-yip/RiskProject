@@ -3,7 +3,11 @@ guid: f34307c31c466964cab028c3bfdc8226
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - playerPrefab: {instanceID: 0}
+  - infantryPrefab: {fileID: 45277284910968522, guid: fa981abfd72273f47a9bff2507c58243, type: 3}
+  - cavalryPrefab: {instanceID: 0}
+  - artillaryPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

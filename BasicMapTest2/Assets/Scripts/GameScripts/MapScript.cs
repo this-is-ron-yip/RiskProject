@@ -50,6 +50,8 @@ public class MapScript : MonoBehaviour
         FillTerritoriesList();
         FillAdjList();
     }
+
+    [Obsolete]
     private void Start()
     {
         diceRoller = GetComponent<DiceRollerScript>(); //initialising the diceRoller
@@ -97,6 +99,7 @@ public class MapScript : MonoBehaviour
         return listOfAdjTerrs;
     }
 
+    [Obsolete]
     private IEnumerator AssignStartTerritories()
     {
         // Step one: get dice results for all players to determine who starts
@@ -145,6 +148,9 @@ public class MapScript : MonoBehaviour
         }
         playerTurn = highestNumIndex + 1;
         startingPlayer = playerTurn; // for future reference
+
+        //for testing
+        GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer = players[playerTurn-1];
 
         // Step two: Allow players to claim territories to start
         int territories_left = 10; // TODO: change to 42, but for testing, use smaller number
@@ -348,7 +354,16 @@ public class MapScript : MonoBehaviour
             return;
         }
         else{
+            //update the territory's armyCount
             claimed_territory.armyCount++;
+            //update the armyCount of the Army that is on the territory so it can display a new number
+            foreach (GameObject army in curr_player.armies)
+            {
+                if (army.GetComponent<ArmyScript>().currentTerritoryPos = territory.transform)
+                {
+                    army.GetComponent<ArmyScript>().armyCount = claimed_territory.armyCount;
+                }
+            }
             curr_player.infCount--;
             Debug.Log(claimed_territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
         }
@@ -360,6 +375,7 @@ public class MapScript : MonoBehaviour
     }
 
     // TODO: complete this function!
+    [Obsolete]
     private IEnumerator EnterGamePlay(){
         Debug.Log("Entered game play!");
         int playerTurn = startingPlayer;
@@ -402,19 +418,32 @@ public class MapScript : MonoBehaviour
 
             // Step two: allow player to turn in sets of cards. give additional armies accordingly
             // Allow player to turn in cards
-                // TODO: this requires figuring out how the HUD will work, how to prompt user to 
-                // Submit sets of cards. Fill in this step once that is complete
+            // TODO: this requires figuring out how the HUD will work, how to prompt user to 
+            // Submit sets of cards. Fill in this step once that is complete
+            if (players[playerTurn-1].cardsInHand.Count >= 3)
+            {
+                GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
+                // TODO: add code to wait for the player to choose a card
+            }
+            else
+            {
+                Debug.Log("You don't have enough cards to turn in (3 minimum required)...");
+            }
+
+            //Add code to listen
 
             // Require player to place armies earned from card sets
 
             // Step three: as long as they keep winning, prompt and allow the player to attack
             // TODO: maybe make this a member variable
             bool playerMustDraw = false; // For whether they can draw a RISK card at the end
-            
+
             // Step four: if the player has claimed at least one territory during their turn
             // Prompt and allow/require them to draw a card from the deck
             // TODO: what if the deck is empty? 
 
+
+            /*
             playerMustDraw = true; // TODO: delete later, for testing only: 
             while(playerMustDraw){
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
@@ -432,6 +461,7 @@ public class MapScript : MonoBehaviour
                     Debug.Log("Must draw a card. Try again.");
                 }
             }
+            
 
             Debug.Log("End of Player " + playerTurn + "'s turn");
             
@@ -450,6 +480,7 @@ public class MapScript : MonoBehaviour
             if(testNumberOfTurns == 0){
                 gameOver = true;
             }
+            */
         }
     }
 
@@ -562,5 +593,10 @@ public class MapScript : MonoBehaviour
         // of army game objects in the player, which would include their position? 
         // TODO: figure out how to represent armies on a territory (maybe just 1 piece?)
         // And maybe clicking on the piece tells us how many armies it represents.
+    }
+
+    internal void HandleCardTurnIn(List<Card> selectedCards)
+    {
+        Debug.Log("3 cards were selected");
     }
 }

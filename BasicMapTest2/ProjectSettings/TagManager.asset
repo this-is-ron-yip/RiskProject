@@ -34,6 +34,10 @@ TagManager:
   - WestAmerica
   - NorthAfrica
   - Deck
+  - GameHUD
+  - card
+  - BackToGameBtn
+  - player
   layers:
   - Default
   - TransparentFX
