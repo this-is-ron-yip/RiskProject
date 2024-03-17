@@ -45,7 +45,8 @@ public class ArmyScript : MonoBehaviour
         UpdateNumberDisplay();
     }
 
-    public void UpdateCurrentTerritoryPos()
+    //army 65
+    public Transform GetAndUpdateCurrentTerritoryPos()
     {
         // getting the territory that has the same x and z coord as this object
         List<TerritoryScript> _territories = GameObject.Find("Map").GetComponent<MapScript>().players[ownedByPlayerNum - 1].GetComponent<PlayerScript>().territoriesOwned;
@@ -54,15 +55,17 @@ public class ArmyScript : MonoBehaviour
             if (terr.gameObject.transform.position.x == this.gameObject.transform.position.x && terr.gameObject.transform.position.z == this.gameObject.transform.position.z)
             {
                 currentTerritoryPos = terr.transform;
-                break;
+                return currentTerritoryPos;
             }
         }
+        Debug.Log("Could not find territory for this army piece..");
+        return null;
     }
 
     private void UpdateNumberDisplay()
     {
         //find the correct armyCount number using territory
-        UpdateCurrentTerritoryPos();
+        GetAndUpdateCurrentTerritoryPos();
         this.armyCount = currentTerritoryPos.gameObject.GetComponent<TerritoryScript>().armyCount;
         if (armyText != null && armyCount >= 0)
         {

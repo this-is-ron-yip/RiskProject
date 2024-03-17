@@ -430,8 +430,6 @@ public class MapScript : MonoBehaviour
                 Debug.Log("You don't have enough cards to turn in (3 minimum required)...");
             }
 
-            //Add code to listen
-
             // Require player to place armies earned from card sets
 
             // Step three: as long as they keep winning, prompt and allow the player to attack
@@ -597,6 +595,44 @@ public class MapScript : MonoBehaviour
 
     internal void HandleCardTurnIn(List<Card> selectedCards)
     {
-        Debug.Log("3 cards were selected");
+        //removing the selected cards from the players hand:
+        List<Card> playerCards = players[playerTurn - 1].GetComponent<PlayerScript>().cardsInHand;
+        if (selectedCards != null)
+        {
+            for (int i = playerCards.Count - 1; i >= 0; i--)
+            {
+                if (selectedCards.Contains(playerCards[i]))
+                {
+                    playerCards.RemoveAt(i);
+                }
+            }
+        }
+        
+
+        //Can remove all of the following code. It was just to show that the card selection works correctly
+
+        //if selected cards is a null object, it means that the player decided not to turn in any cards
+        if (selectedCards == null)
+        {
+            Debug.Log("Player chose to not turn in any cards");
+        }
+        else
+        {
+            string debugString = "Selected Cards: ";
+            foreach (Card card in selectedCards)
+            {
+                debugString += "(" + $"{card.territory_id} : {card.troop_type}" + ") ";
+            }
+            Debug.Log(debugString);
+        }
+
+        // showing the cards that are left in the players hand
+        string debugString2 = "Cards remaining in player hand : ";
+        foreach (Card card in playerCards)
+        {
+            debugString2 += "(" + $"{card.territory_id} : {card.troop_type}" + ") ";
+        }
+        Debug.Log(debugString2);
     }
+        
 }

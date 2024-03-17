@@ -43,21 +43,20 @@ public class GameHUDScript : MonoBehaviour
         }
 
         Debug.Log("Card clicked: " + card.territory_id + " - " + card.troop_type);
-        Debug.Log("Cards Selected: " + selectedCards.Count);
+        Debug.Log("Number of Cards Selected: " + selectedCards.Count);
 
         // If three cards are selected, do something
         if (selectedCards.Count == 3)
         {
             // Call a method in MapScript and pass the selected cards
-            GameObject mapObject = GameObject.FindGameObjectWithTag("Map");
+            MapScript mapScript = GameObject.FindGameObjectWithTag("Map").GetComponent<MapScript>();
+            if (mapScript != null)
             {
-                MapScript mapScript = mapObject.GetComponent<MapScript>();
-                if (mapScript != null)
-                {
-                    mapScript.HandleCardTurnIn(selectedCards);
-                    // Clear the selected cards list
-                    selectedCards.Clear();
-                }
+                chooseCardDisplayPanel.gameObject.SetActive(false);
+                mapScript.HandleCardTurnIn(selectedCards);
+                // Clear the selected cards list
+                selectedCards.Clear();
+                
             }
         }
     }
@@ -89,7 +88,6 @@ public class GameHUDScript : MonoBehaviour
     }
 
     // Call this method when the "View Cards" button is pressed.
-    [System.Obsolete]
     public void OnViewCardsButtonPressed()
     {
         if (currentPlayer != null)
@@ -181,10 +179,11 @@ public class GameHUDScript : MonoBehaviour
     }
 
     // Closes the Cards display panel and returns to the game
-    [System.Obsolete]
     public void OnBackToGamePressed()
     {
-        cardDisplayPanel.gameObject.SetActive(false);
-        //chooseCardDisplayPanel.gameObject.SetActive(false);
+        selectedCards.Clear();
+        chooseCardDisplayPanel.gameObject.SetActive(false);
+        MapScript mapScript = GameObject.FindGameObjectWithTag("Map").GetComponent<MapScript>();
+        mapScript.HandleCardTurnIn(null);
     }
 }
