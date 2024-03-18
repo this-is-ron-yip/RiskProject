@@ -242,6 +242,22 @@ public class MapScript : MonoBehaviour
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
 
+    private IEnumerator WaitForAttackFromTerritory()
+    {
+        Debug.Log($"Player {playerTurn}, click an owned territory to attack from.");
+        PlayerScript player = players[playerTurn - 1];
+        player.isTurn = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+
+    private IEnumerator WaitForAttackOnTerritory()
+    {
+        Debug.Log($"Player {playerTurn}, click an enemy territory to attack on.");
+        PlayerScript player = players[playerTurn - 1];
+        player.isTurn = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+
     private IEnumerator InitialiseStartingInfantry()
     {
         Debug.Log($"Player {playerTurn}, choose a territory to place 1 infantry on.");
@@ -294,6 +310,29 @@ public class MapScript : MonoBehaviour
         Debug.Log("Player " + player_id + " now has " + player.GetArmyCountTotal() + " armies");
     }
 
+    private IEnumerator LaunchAnAttack(int player_id)
+    {
+        Debug.Log("Phase two: Launch an attack");
+        PlayerScript player = players[player_id - 1];
+
+        // Part one: pick an owned territory to attack from
+        player.canSelectAttackFrom = true;
+        yield return StartCoroutine(WaitForAttackFromTerritory());
+        player.canSelectAttackFrom = false;
+
+        //canSelectAttackFrom
+        player.canSelectAttackOn = true;
+        yield return StartCoroutine(WaitForAttackOnTerritory());
+        player.canSelectAttackOn = false;
+
+        // Part three: roll the dice
+
+        // Part four: evaluate the outcome of the attack 
+
+        // player.isTurn = true;
+        // yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+
     private void HandleDiceRollAtStart(int player_id, GameObject die){
         DiceRollerScript die_rolled = die.GetComponent<DiceRollerScript>();
         int result = die_rolled.RollDice();
@@ -301,7 +340,7 @@ public class MapScript : MonoBehaviour
         Debug.Log("Player " + player_id + " rolled a " + result);
         // TODO: add animation here.
     }
-
+    
     // Update territory members
     private void HandleTerritoryClaimedAtStart(int player_id, GameObject territory){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
@@ -334,6 +373,56 @@ public class MapScript : MonoBehaviour
                " territories on the continent of " + claimed_territory.continent);
             // spawn army (this step should always happen last!!!): 
             SpawnArmyPiece(ArmyTypes.Infantry, territory, player_id);
+        }
+    }
+
+    // Select a territory to attack from
+    private void HandleTerritoryToAttackFrom(int player_id, GameObject territory)
+    {
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
+
+        // Find the territory by territory_id aka tag. If not found, do nothing
+        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
+
+        // Update the territory's owner
+        if (claimed_territory == null)
+        {
+            Debug.Log("Tag does not match a known territory");
+            return;
+        }
+        if (claimed_territory.occupiedBy == player_id)
+        {
+            Debug.Log("Attacking from" + claimed_territory.name);
+            return;
+        }
+        else
+        {
+            Debug.Log("Player" + player_id + "does not own" + claimed_territory.name);
+        }
+    }
+
+    // Select a territory to attack on
+    private void HandleTerritoryToAttackOn(int player_id, GameObject territory)
+    {
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
+
+        // Find the territory by territory_id aka tag. If not found, do nothing
+        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
+
+        // Update the territory's owner
+        if (claimed_territory == null)
+        {
+            Debug.Log("Tag does not match a known territory");
+            return;
+        }
+        if (claimed_territory.occupiedBy != player_id)
+        {
+            Debug.Log("Attacking on" + claimed_territory.name);
+            return;
+        }
+        else
+        {
+            Debug.Log("Player" + player_id + "owns" + claimed_territory.name);
         }
     }
 
@@ -415,6 +504,9 @@ public class MapScript : MonoBehaviour
                 // Revoke permission
                 player.canPlaceArmyInGame = false;
             }
+
+            // Step two: select a territory to attack
+            yield return LaunchAnAttack(playerTurn);
 
             // Step two: allow player to turn in sets of cards. give additional armies accordingly
             // Allow player to turn in cards
@@ -505,6 +597,8 @@ public class MapScript : MonoBehaviour
             newPlayerScript.OnPlayerClaimedTerritoryAtStart += HandleTerritoryClaimedAtStart;
             newPlayerScript.OnPlayerPlacesAnArmyAtStart += HandlePlacingAnArmy;
             newPlayerScript.OnPlayerPlacesAnArmyInGame += HandlePlacingAnArmy;
+            newPlayerScript.OnPlayerSelectAttackFrom += HandleTerritoryToAttackFrom;
+            newPlayerScript.OnPlayerSelectAttackOn += HandleTerritoryToAttackOn;
             newPlayerScript.OnRollDiceAtStart += HandleDiceRollAtStart;
             newPlayerScript.OnPlayerDrawsCard += HandleDrawCard;
             players.Add(newPlayerScript);

@@ -30,7 +30,7 @@ public class PlayerScript : MonoBehaviour
     public bool canRollToStart = false;
     public bool canTurnInCards = false;
     public bool canSelectAttackFrom = false;
-    public bool canSelectAttackWho = false;
+    public bool canSelectAttackOn = false;
     public bool canPlaceArmyInGame = false;
 
     // TODO: add more permissoins for different actions
@@ -40,6 +40,8 @@ public class PlayerScript : MonoBehaviour
     public event Action<int, GameObject> OnPlayerClaimedTerritoryAtStart;
     public event Action<int, GameObject> OnPlayerPlacesAnArmyAtStart;
     public event Action<int, GameObject> OnPlayerPlacesAnArmyInGame;
+    public event Action<int, GameObject> OnPlayerSelectAttackFrom;
+    public event Action<int, GameObject> OnPlayerSelectAttackOn;
     public event Action<int, GameObject> OnRollDiceAtStart;
     public event Action<int, GameObject> OnPlayerDrawsCard;
     enum ArmyTypes { Infantry, Cavalry, Artillery }
@@ -104,12 +106,13 @@ public class PlayerScript : MonoBehaviour
                     OnPlayerPlacesAnArmyInGame?.Invoke(playerNumber, clickedObject);
                 }
                 else if(canSelectAttackFrom){
-                    // TODO: Call a different handler
+                    OnPlayerSelectAttackFrom?.Invoke(playerNumber, clickedObject);
                 }
-                else if(canSelectAttackWho){
-                    // TODO: Call a different handler
+                else if(canSelectAttackOn){
+                    OnPlayerSelectAttackOn?.Invoke(playerNumber, clickedObject);
                 }
-                else{
+                else
+                {
                     Debug.Log("Illegal click on territory.");
                 }
             }
@@ -185,7 +188,7 @@ public class PlayerScript : MonoBehaviour
         canRollToStart = false;
         canTurnInCards = false;
         canSelectAttackFrom = false;
-        canSelectAttackWho = false;
+        canSelectAttackOn = false;
         canPlaceArmyInGame = false;
     }
 }
