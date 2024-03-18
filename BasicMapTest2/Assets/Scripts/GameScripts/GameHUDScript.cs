@@ -185,5 +185,9 @@ public class GameHUDScript : MonoBehaviour
         chooseCardDisplayPanel.gameObject.SetActive(false);
         MapScript mapScript = GameObject.FindGameObjectWithTag("Map").GetComponent<MapScript>();
         mapScript.HandleCardTurnIn(null);
+        mapScript.players[mapScript.playerTurn - 1].isTurn = false; // Notify board that this sequence is over
     }
 }
+
+// TODO: add logic for submitting cards. consider changing implementation to match the rest
+// Sicne the on click handlers can't be coroutines, causing out of order debug statements.

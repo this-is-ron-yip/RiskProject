@@ -506,15 +506,16 @@ public class MapScript : MonoBehaviour
             }
 
             // Step two: allow player to turn in sets of cards. give additional armies accordingly
-            // Allow player to turn in cards
-            // TODO: this requires figuring out how the HUD will work, how to prompt user to 
-            // Submit sets of cards. Fill in this step once that is complete
+            // TODO: reqiure player to turn in cards if they have 5 or 6. 
             if (player.cardsInHand.Count >= 3)
             {
                 // Allow player to turn in cards
                 player.canTurnInCards = true;
                 GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
                 // TODO: add code to wait for the player to choose a card
+                yield return StartCoroutine(WaitForPlayerToDoMove(player));
+
+                // Revoke permission
                 player.canTurnInCards = false;
             }
             else
@@ -691,7 +692,7 @@ public class MapScript : MonoBehaviour
     {
         //removing the selected cards from the players hand:
         List<Card> playerCards = players[playerTurn - 1].GetComponent<PlayerScript>().cardsInHand;
-        if (selectedCards != null)
+        if (selectedCards != null && players[playerTurn - 1].canTurnInCards)
         {
             for (int i = playerCards.Count - 1; i >= 0; i--)
             {

@@ -44,6 +44,7 @@ public class PlayerScript : MonoBehaviour
     public event Action<int, GameObject> OnPlayerSelectAttackOn;
     public event Action<int, GameObject> OnRollDiceAtStart;
     public event Action<int, GameObject> OnPlayerDrawsCard;
+
     enum ArmyTypes { Infantry, Cavalry, Artillery }
     
 
@@ -133,6 +134,9 @@ public class PlayerScript : MonoBehaviour
                     Debug.Log("Illegal click on dice.");
                 }
             }
+            else if(clickedObject.GetComponent<GameHUDScript>() != null){
+                // For now, do nothing. This is handled by button on click
+            }
             else {
                 // replace with other game object possibilities. Like dice, for esample.
                 Debug.Log("Illegal click.");
@@ -180,7 +184,6 @@ public class PlayerScript : MonoBehaviour
         obj.GetComponent<ArmyScript>().armyCount = 1;
     }
  
-    // TODO: does this have to be an ienumerator? 
     public void ResetAllPermissions(){
         canClaimTerritoryAtStart = false;
         canPlaceArmyAtStart = false;
