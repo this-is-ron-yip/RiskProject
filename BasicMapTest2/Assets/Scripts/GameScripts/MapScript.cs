@@ -312,7 +312,7 @@ public class MapScript : MonoBehaviour
 
     private IEnumerator LaunchAnAttack(int player_id)
     {
-        Debug.Log("Phase two: Launch an attack");
+        Debug.Log("Phase three: Launch an attack");
         PlayerScript player = players[player_id - 1];
 
         // Part one: pick an owned territory to attack from
@@ -392,12 +392,12 @@ public class MapScript : MonoBehaviour
         }
         if (claimed_territory.occupiedBy == player_id)
         {
-            Debug.Log("Attacking from" + claimed_territory.name);
+            Debug.Log("Attacking from " + claimed_territory.name);
             return;
         }
         else
         {
-            Debug.Log("Player" + player_id + "does not own" + claimed_territory.name);
+            Debug.Log("Player " + player_id + " does not own " + claimed_territory.name);
         }
     }
 
@@ -417,12 +417,12 @@ public class MapScript : MonoBehaviour
         }
         if (claimed_territory.occupiedBy != player_id)
         {
-            Debug.Log("Attacking on" + claimed_territory.name);
+            Debug.Log("Attacking on " + claimed_territory.name);
             return;
         }
         else
         {
-            Debug.Log("Player" + player_id + "owns" + claimed_territory.name);
+            Debug.Log("Player " + player_id + " owns " + claimed_territory.name);
         }
     }
 
@@ -505,35 +505,35 @@ public class MapScript : MonoBehaviour
                 player.canPlaceArmyInGame = false;
             }
 
-            // Step two: select a territory to attack
-            yield return LaunchAnAttack(playerTurn);
-
             // Step two: allow player to turn in sets of cards. give additional armies accordingly
             // Allow player to turn in cards
             // TODO: this requires figuring out how the HUD will work, how to prompt user to 
             // Submit sets of cards. Fill in this step once that is complete
-            if (players[playerTurn-1].cardsInHand.Count >= 3)
+            if (player.cardsInHand.Count >= 3)
             {
+                // Allow player to turn in cards
+                player.canTurnInCards = true;
                 GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
                 // TODO: add code to wait for the player to choose a card
+                player.canTurnInCards = false;
             }
             else
             {
                 Debug.Log("You don't have enough cards to turn in (3 minimum required)...");
             }
 
-            // Require player to place armies earned from card sets
+            // TODO: Require player to place armies earned from card sets
 
             // Step three: as long as they keep winning, prompt and allow the player to attack
+            // prompt them to attack!
+            yield return LaunchAnAttack(playerTurn);
+
             // TODO: maybe make this a member variable
             bool playerMustDraw = false; // For whether they can draw a RISK card at the end
 
             // Step four: if the player has claimed at least one territory during their turn
             // Prompt and allow/require them to draw a card from the deck
             // TODO: what if the deck is empty? 
-
-
-            /*
             playerMustDraw = true; // TODO: delete later, for testing only: 
             while(playerMustDraw){
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
@@ -570,7 +570,7 @@ public class MapScript : MonoBehaviour
             if(testNumberOfTurns == 0){
                 gameOver = true;
             }
-            */
+            
         }
     }
 
