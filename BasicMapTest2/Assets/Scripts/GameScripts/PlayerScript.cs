@@ -44,8 +44,8 @@ public class PlayerScript : MonoBehaviour
     public event Action<int, GameObject> OnPlayerSelectAttackOn;
     public event Action<int, GameObject> OnRollDiceAtStart;
     public event Action<int, GameObject> OnPlayerDrawsCard;
-    enum ArmyTypes { Infantry, Cavalry, Artillery }
-    
+    enum ArmyTypes { Infantry, Cavalry, Artillery };
+    public TerritoryScript TerritoryAttackingFrom = null, TerritoryAttackingOn = null;
 
     private void Start()
     {

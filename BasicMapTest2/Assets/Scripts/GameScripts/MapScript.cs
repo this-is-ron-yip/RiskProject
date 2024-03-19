@@ -317,18 +317,23 @@ public class MapScript : MonoBehaviour
 
         // Part one: pick an owned territory to attack from
         player.canSelectAttackFrom = true;
-        yield return StartCoroutine(WaitForAttackFromTerritory());
+        while(player.TerritoryAttackingFrom == null)
+        {
+            yield return StartCoroutine(WaitForAttackFromTerritory());
+        }
         player.canSelectAttackFrom = false;
 
         //canSelectAttackFrom
         player.canSelectAttackOn = true;
-        yield return StartCoroutine(WaitForAttackOnTerritory());
+        while(player.TerritoryAttackingOn == null) {
+            yield return StartCoroutine(WaitForAttackOnTerritory());
+        }
         player.canSelectAttackOn = false;
 
         // Part three: roll the dice
 
         // Part four: evaluate the outcome of the attack 
-
+        EvaluateAttack(player_id);
         // player.isTurn = true;
         // yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
@@ -382,22 +387,25 @@ public class MapScript : MonoBehaviour
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
 
         // Find the territory by territory_id aka tag. If not found, do nothing
-        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
+        TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
 
-        // Update the territory's owner
-        if (claimed_territory == null)
+        if (selected_territory != null)
         {
-            Debug.Log("Tag does not match a known territory");
-            return;
-        }
-        if (claimed_territory.occupiedBy == player_id)
-        {
-            Debug.Log("Attacking from" + claimed_territory.name);
-            return;
+            if (selected_territory.occupiedBy == player_id)
+            {
+                Debug.Log("Player" + player_id + "is launching an attack from" + selected_territory.name);
+                curr_player.TerritoryAttackingFrom = selected_territory;
+                return;
+            }
+            else
+            {
+                Debug.Log("Attack cannot be launched from " + selected_territory.name + ": Player does not own the territory!");
+            }
         }
         else
         {
-            Debug.Log("Player" + player_id + "does not own" + claimed_territory.name);
+            Debug.Log("Tag does not match a known territory");
+            return;
         }
     }
 
@@ -407,25 +415,79 @@ public class MapScript : MonoBehaviour
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
 
         // Find the territory by territory_id aka tag. If not found, do nothing
-        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
+        TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
 
-        // Update the territory's owner
-        if (claimed_territory == null)
+        // TODO: Get all adjacent territories of the attacking territory
+
+        if (selected_territory != null)
+        {
+            if (selected_territory.occupiedBy != player_id)
+            {
+                Debug.Log("Player" + player_id + "is launching an attack on" + selected_territory.name);
+                Debug.Log(curr_player.TerritoryAttackingFrom.name);
+                // TODO: check if selected territory is adjacent
+                if(true)
+                {
+                    curr_player.TerritoryAttackingOn = selected_territory;
+                    return;
+                }
+            }
+            else
+            {
+                Debug.Log("Attack cannot be launched on " + selected_territory.name + ": Player owns the territory!");
+            }
+        }
+        else
         {
             Debug.Log("Tag does not match a known territory");
             return;
         }
-        if (claimed_territory.occupiedBy != player_id)
-        {
-            Debug.Log("Attacking on" + claimed_territory.name);
-            return;
-        }
-        else
-        {
-            Debug.Log("Player" + player_id + "owns" + claimed_territory.name);
-        }
     }
 
+    private void EvaluateAttack(int player_id)
+    {
+        PlayerScript player = players[player_id - 1];
+
+        // TODO: Improve attack evaluation with dice
+        TerritoryScript PlayerTerritory = player.TerritoryAttackingFrom;
+        TerritoryScript EnemyTerritory = player.TerritoryAttackingOn;
+
+        //! Do I need to reduce by 1
+        PlayerScript enemy = players[EnemyTerritory.occupiedBy - 1];
+
+        if (PlayerTerritory.armyCount > EnemyTerritory.armyCount)
+        {
+            // TODO: Improve by letting player select the number of troops to move
+            int troopsToNewTerritory = 1;
+            int consumedTroops = EnemyTerritory.armyCount;
+
+            // update territories variables
+            EnemyTerritory.occupiedBy = player_id;
+            PlayerTerritory.armyCount = PlayerTerritory.armyCount - consumedTroops - 1;
+            EnemyTerritory.armyCount = troopsToNewTerritory;
+
+            // update players variables
+            //? Need to update infCount, cavCount, artilCount, armies?
+            player.territoriesOwned.Add(EnemyTerritory);
+            player.territoryCountsPerContinent[EnemyTerritory.continent] += 1;
+            enemy.territoriesOwned.Remove(EnemyTerritory);
+            enemy.territoryCountsPerContinent[EnemyTerritory.continent] -= 1;
+
+            // update armies variables
+            foreach (GameObject army in enemy.armies)
+            {
+                if (army.GetComponent<ArmyScript>().currentTerritoryPos = EnemyTerritory.transform)
+                {
+                    // army.GetComponent<ArmyScript>().armyCount = troopsToNewTerritory;
+                    army.GetComponent<ArmyScript>().ownedByPlayerNum = player_id - 1;
+                    break;
+                }
+            }
+        }
+        player.TerritoryAttackingFrom = null;
+        player.TerritoryAttackingOn = null;
+        return;
+    }
     private void HandlePlacingAnArmy(int player_id, GameObject territory){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
 
