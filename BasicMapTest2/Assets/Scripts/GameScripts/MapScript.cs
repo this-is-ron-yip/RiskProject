@@ -377,7 +377,7 @@ public class MapScript : MonoBehaviour
                " Player " + player_id + " now has " + curr_player.territoryCountsPerContinent[claimed_territory.continent] + " on " + 
                " territories on the continent of " + claimed_territory.continent);
             // spawn army (this step should always happen last!!!): 
-            SpawnArmyPiece(ArmyTypes.Infantry, territory, player_id);
+            // SpawnArmyPiece(ArmyTypes.Infantry, territory, player_id);
         }
     }
 
@@ -472,17 +472,6 @@ public class MapScript : MonoBehaviour
             player.territoryCountsPerContinent[EnemyTerritory.continent] += 1;
             enemy.territoriesOwned.Remove(EnemyTerritory);
             enemy.territoryCountsPerContinent[EnemyTerritory.continent] -= 1;
-
-            // update armies variables
-            foreach (GameObject army in enemy.armies)
-            {
-                if (army.GetComponent<ArmyScript>().currentTerritoryPos = EnemyTerritory.transform)
-                {
-                    // army.GetComponent<ArmyScript>().armyCount = troopsToNewTerritory;
-                    army.GetComponent<ArmyScript>().ownedByPlayerNum = player_id - 1;
-                    break;
-                }
-            }
         }
         player.TerritoryAttackingFrom = null;
         player.TerritoryAttackingOn = null;
@@ -508,13 +497,13 @@ public class MapScript : MonoBehaviour
             //update the territory's armyCount
             claimed_territory.armyCount++;
             //update the armyCount of the Army that is on the territory so it can display a new number
-            foreach (GameObject army in curr_player.armies)
-            {
-                if (army.GetComponent<ArmyScript>().currentTerritoryPos = territory.transform)
-                {
-                    army.GetComponent<ArmyScript>().armyCount = claimed_territory.armyCount;
-                }
-            }
+            // foreach (GameObject army in curr_player.armies)
+            // {
+            //     if (army.GetComponent<ArmyScript>().currentTerritoryPos = territory.transform)
+            //     {
+            //         army.GetComponent<ArmyScript>().armyCount = claimed_territory.armyCount;
+            //     }
+            // }
             curr_player.infCount--;
             Debug.Log(claimed_territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
         }

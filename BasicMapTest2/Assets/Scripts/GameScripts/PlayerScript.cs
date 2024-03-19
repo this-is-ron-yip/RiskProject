@@ -12,7 +12,7 @@ public class PlayerScript : MonoBehaviour
 
     public Color color = new Color(0, 0, 0);
     public List<TerritoryScript> territoriesOwned = new List<TerritoryScript>();
-    public List<GameObject> armies = new List<GameObject>();
+    // public List<GameObject> armies = new List<GameObject>();
     public List<Card> cardsInHand = new List<Card>();
     public List<Card> cardsPlayed = new List<Card>();
     public Dictionary<TerritoryScript.Continents, int> territoryCountsPerContinent =  
