@@ -12,7 +12,7 @@ public class PlayerScript : MonoBehaviour
 
     public Color color = new Color(0, 0, 0);
     public List<TerritoryScript> territoriesOwned = new List<TerritoryScript>();
-    public List<GameObject> armies = new List<GameObject>();
+    // public List<GameObject> armies = new List<GameObject>();
     public List<Card> cardsInHand = new List<Card>();
     public List<Card> cardsPlayed = new List<Card>();
     public Dictionary<TerritoryScript.Continents, int> territoryCountsPerContinent =  
@@ -31,6 +31,7 @@ public class PlayerScript : MonoBehaviour
     public bool canTurnInCards = false;
     public bool canSelectAttackFrom = false;
     public bool canSelectAttackOn = false;
+    public bool canSelectAttackOn = false;
     public bool canPlaceArmyInGame = false;
 
     // TODO: add more permissoins for different actions
@@ -44,9 +45,8 @@ public class PlayerScript : MonoBehaviour
     public event Action<int, GameObject> OnPlayerSelectAttackOn;
     public event Action<int, GameObject> OnRollDiceAtStart;
     public event Action<int, GameObject> OnPlayerDrawsCard;
-
-    enum ArmyTypes { Infantry, Cavalry, Artillery }
-    
+    enum ArmyTypes { Infantry, Cavalry, Artillery };
+    public TerritoryScript TerritoryAttackingFrom = null, TerritoryAttackingOn = null;
 
     private void Start()
     {

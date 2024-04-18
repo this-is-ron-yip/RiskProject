@@ -13,7 +13,47 @@ public class TerritoryScript : MonoBehaviour
 
     public Continents continent; 
     [field: SerializeField] public List<Transform> adjacentCountries { get; set; }
+    private TextMesh armyText; // TextMesh to display the army count.
+    public void Start()
+    {
+        // Ensure there's a child GameObject to hold the TextMesh.
+        GameObject textObj = new GameObject("ArmyText");
+        textObj.transform.SetParent(transform);
 
+        // Position it above the army unit
+        textObj.transform.localPosition = new Vector3(0, 1, 0);
+
+        // Add the TextMesh component and configure it.
+        armyText = textObj.AddComponent<TextMesh>();
+        armyText.characterSize = 0.042f;
+        armyText.anchor = TextAnchor.MiddleCenter;
+        armyText.alignment = TextAlignment.Center;
+        armyText.fontSize = 100;
+        armyText.color = Color.black;
+        textObj.transform.localScale = new Vector3(1, 0.7f, 1);
+        textObj.transform.localRotation = Quaternion.Euler(90, 0, 0);
+        textObj.transform.localEulerAngles = new Vector3(textObj.transform.localEulerAngles.x, textObj.transform.localEulerAngles.y, 90);
+    }
+
+    private void Update()
+    {
+        // if (armyText != null && armyCount >= 0)
+        // {
+            armyText.text = armyCount.ToString();
+
+        // }
+        if (occupiedBy != -1)
+        {
+            foreach (PlayerScript player in FindObjectsOfType<PlayerScript>())
+            {
+                if (player.playerNumber == occupiedBy)
+                {
+                    gameObject.GetComponent<Renderer>().material.color = player.color;
+                    break;
+                }
+            }
+        }
+    }
     private void OnValidate()
     {
         FillAdjTerritoriesList();
