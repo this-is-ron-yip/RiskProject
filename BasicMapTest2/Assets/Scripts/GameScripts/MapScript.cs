@@ -258,22 +258,6 @@ public class MapScript : MonoBehaviour
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
 
-    private IEnumerator WaitForAttackFromTerritory()
-    {
-        Debug.Log($"Player {playerTurn}, click an owned territory to attack from.");
-        PlayerScript player = players[playerTurn - 1];
-        player.isTurn = true;
-        yield return StartCoroutine(WaitForPlayerToDoMove(player));
-    }
-
-    private IEnumerator WaitForAttackOnTerritory()
-    {
-        Debug.Log($"Player {playerTurn}, click an enemy territory to attack on.");
-        PlayerScript player = players[playerTurn - 1];
-        player.isTurn = true;
-        yield return StartCoroutine(WaitForPlayerToDoMove(player));
-    }
-
     private IEnumerator InitialiseStartingInfantry()
     {
         Debug.Log($"Player {playerTurn}, choose a territory to place 1 infantry on.");
@@ -419,59 +403,6 @@ public class MapScript : MonoBehaviour
         else
         {
             Debug.Log("Player " + player_id + " does not own " + claimed_territory.name);
-        }
-    }
-
-    // Select a territory to attack on
-    private void HandleTerritoryToAttackOn(int player_id, GameObject territory)
-    {
-        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
-
-        // Find the territory by territory_id aka tag. If not found, do nothing
-        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
-
-        // Update the territory's owner
-        if (claimed_territory == null)
-        {
-            Debug.Log("Tag does not match a known territory");
-            return;
-        }
-        if (claimed_territory.occupiedBy != player_id)
-        {
-            Debug.Log("Attacking on " + claimed_territory.name);
-            return;
-        }
-        else
-        {
-            Debug.Log("Player " + player_id + " owns " + claimed_territory.name);
-        }
-    }
-
-    // Select a territory to attack from
-    private void HandleTerritoryToAttackFrom(int player_id, GameObject territory)
-    {
-        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
-
-        // Find the territory by territory_id aka tag. If not found, do nothing
-        TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
-
-        if (selected_territory != null)
-        {
-            if (selected_territory.occupiedBy == player_id)
-            {
-                Debug.Log("Player" + player_id + "is launching an attack from" + selected_territory.name);
-                curr_player.TerritoryAttackingFrom = selected_territory;
-                return;
-            }
-            else
-            {
-                Debug.Log("Attack cannot be launched from " + selected_territory.name + ": Player does not own the territory!");
-            }
-        }
-        else
-        {
-            Debug.Log("Tag does not match a known territory");
-            return;
         }
     }
 

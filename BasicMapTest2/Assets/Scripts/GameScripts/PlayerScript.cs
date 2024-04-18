@@ -30,9 +30,7 @@ public class PlayerScript : MonoBehaviour
     public bool canRollToStart = false;
     public bool canTurnInCards = false;
     public bool canSelectAttackFrom = false;
-    public bool canSelectAttackOn = false;
-    public bool canSelectAttackOn = false;
-    public bool canPlaceArmyInGame = false;
+    public bool canSelectAttackOn = false;    public bool canPlaceArmyInGame = false;
 
     // TODO: add more permissoins for different actions
 
