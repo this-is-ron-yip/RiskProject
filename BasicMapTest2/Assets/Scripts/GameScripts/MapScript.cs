@@ -229,8 +229,9 @@ public class MapScript : MonoBehaviour
         }
 
         //TODO
-            // Instanciate army object and place it on the territory
+            // Instantiate army object and place it on the territory
             // Update hud
+            
         // Completed game set up!
         yield return StartCoroutine(EnterGamePlay());
     }
@@ -314,6 +315,9 @@ public class MapScript : MonoBehaviour
     {
         Debug.Log("Phase two: Launch an attack");
         PlayerScript player = players[player_id - 1];
+        // Clear past values:
+        player.TerritoryAttackingFrom = null;
+        player.TerritoryAttackingOn = null;
 
         // Part one: pick an owned territory to attack from
         player.canSelectAttackFrom = true;
@@ -325,7 +329,8 @@ public class MapScript : MonoBehaviour
 
         //canSelectAttackFrom
         player.canSelectAttackOn = true;
-        while(player.TerritoryAttackingOn == null) {
+        // TODO: add quit features — player can choose to quit attack. set a flag and check here.
+        while(player.TerritoryAttackingOn == null) { // Until valid input is received
             yield return StartCoroutine(WaitForAttackOnTerritory());
         }
         player.canSelectAttackOn = false;
@@ -350,7 +355,7 @@ public class MapScript : MonoBehaviour
     private void HandleTerritoryClaimedAtStart(int player_id, GameObject territory){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
 
-        // Find the territory by territory_id aka tag. If not found, do nothing
+        // Find the territory by name aka tag. If not found, do nothing
         TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
         
         // Update the territory's owner
@@ -398,6 +403,7 @@ public class MapScript : MonoBehaviour
         if (claimed_territory.occupiedBy == player_id)
         {
             Debug.Log("Attacking from " + claimed_territory.name);
+            curr_player.TerritoryAttackingFrom = claimed_territory;
             return;
         }
         else
@@ -422,11 +428,16 @@ public class MapScript : MonoBehaviour
             {
                 Debug.Log("Player" + player_id + "is launching an attack on" + selected_territory.name);
                 Debug.Log(curr_player.TerritoryAttackingFrom.name);
-                // TODO: check if selected territory is adjacent
-                if(true)
+                
+                // Check if territory is adjacent
+                if(AreAdjacent(selected_territory, curr_player.TerritoryAttackingFrom))
                 {
                     curr_player.TerritoryAttackingOn = selected_territory;
                     return;
+                }
+                else{
+                    Debug.Log("The selected territory: " + selected_territory.name + 
+                            " is not adjacent to the territory you are attacking from: " + curr_player.TerritoryAttackingFrom.territory_id);
                 }
             }
             else
@@ -651,7 +662,6 @@ public class MapScript : MonoBehaviour
             newPlayerScript.OnPlayerPlacesAnArmyInGame += HandlePlacingAnArmy;
             newPlayerScript.OnPlayerSelectAttackFrom += HandleTerritoryToAttackFrom;
             newPlayerScript.OnPlayerSelectAttackOn += HandleTerritoryToAttackOn;
-            newPlayerScript.OnPlayerSelectAttackFrom += HandleTerritoryToAttackFrom;
             newPlayerScript.OnPlayerSelectAttackOn += HandleTerritoryToAttackOn;
             newPlayerScript.OnRollDiceAtStart += HandleDiceRollAtStart;
             newPlayerScript.OnPlayerDrawsCard += HandleDrawCard;
@@ -686,6 +696,11 @@ public class MapScript : MonoBehaviour
                 territories.Add(territory);
             }
         }
+    }
+
+    // Returns whether or not the territories are adjacent. Simply check adjacency list
+    private bool AreAdjacent(TerritoryScript terr1, TerritoryScript terr2){
+        return terr1.adjacentCountryIDs.Contains(terr2.name);
     }
 
 
