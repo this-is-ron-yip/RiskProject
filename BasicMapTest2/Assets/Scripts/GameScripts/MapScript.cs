@@ -391,7 +391,7 @@ public class MapScript : MonoBehaviour
     {
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
 
-        // Find the territory by territory_id aka tag. If not found, do nothing
+        // Find the territory by name aka tag. If not found, do nothing
         TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
 
         // Update the territory's owner
@@ -417,7 +417,7 @@ public class MapScript : MonoBehaviour
     {
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
 
-        // Find the territory by territory_id aka tag. If not found, do nothing
+        // Find the territory by name aka tag. If not found, do nothing
         TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
 
         // TODO: Get all adjacent territories of the attacking territory
@@ -437,7 +437,7 @@ public class MapScript : MonoBehaviour
                 }
                 else{
                     Debug.Log("The selected territory: " + selected_territory.name + 
-                            " is not adjacent to the territory you are attacking from: " + curr_player.TerritoryAttackingFrom.territory_id);
+                            " is not adjacent to the territory you are attacking from: " + curr_player.TerritoryAttackingFrom.name);
                 }
             }
             else
@@ -488,7 +488,7 @@ public class MapScript : MonoBehaviour
     private void HandlePlacingAnArmy(int player_id, GameObject territory){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
 
-        // Find the territory by territory_id aka tag. If not found, do nothing
+        // Find the territory by name aka tag. If not found, do nothing
         TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
         
         // Update the territory's owner

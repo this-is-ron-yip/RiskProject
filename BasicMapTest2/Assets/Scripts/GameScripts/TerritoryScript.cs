@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class TerritoryScript : MonoBehaviour
 {
-    public string territory_id { get; set; }
     public int armyCount { get; set; } = 0;
     public int occupiedBy = -1;
 
