@@ -700,9 +700,8 @@ public class MapScript : MonoBehaviour
 
     // Returns whether or not the territories are adjacent. Simply check adjacency list
     private bool AreAdjacent(TerritoryScript terr1, TerritoryScript terr2){
-        return terr1.adjacentCountryIDs.Contains(terr2.name);
+        return terr1.adjacentCountryEnums.Contains(terr2.territoryEnum);
     }
-
 
     // This function is only responsible for creating the army piece and visually placing it
     // in the proper position. Any other functional logic (i.e. number of armies a player has

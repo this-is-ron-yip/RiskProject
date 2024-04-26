@@ -10,10 +10,16 @@ public class TerritoryScript : MonoBehaviour
 
     public enum Continents {NorthAmerica, SouthAmerica, Europe, Asia, Africa, Australia};
 
+    // TODO: should be a total of 41 territories
+    public enum TerritoryEnum {Canada, EastAmerica, WestAmerica, Brazil, Argentina, UnitedKingdom, 
+                Peru, WestEurope, NorthEurope, SouthEurope, Egypt, EastAfrica, NorthAfrica,
+                SouthAfrica, WestAustralia, EastAustralia, India, MiddleEast, Kazakhstan, China, Russia };
+
     public Continents continent; 
+    public TerritoryEnum territoryEnum;
     [field: SerializeField] public List<Transform> adjacentCountries { get; set; }
 
-    [field: SerializeField] public List<string> adjacentCountryIDs { get; set; } // Store id rather than transform
+    [field: SerializeField] public List<TerritoryEnum> adjacentCountryEnums { get; set; } // Store id rather than transform
     private TextMesh armyText; // TextMesh to display the army count.
     public void Start()
     {
@@ -57,6 +63,7 @@ public class TerritoryScript : MonoBehaviour
     }
     private void OnValidate()
     {
+        SetTerritoryEnums();
         FillAdjTerritoriesList();
         SetContinents();
     }
@@ -68,177 +75,177 @@ public class TerritoryScript : MonoBehaviour
         {
             case "Canada":
                 adjacentCountries.Add(GameObject.FindWithTag("UnitedKingdom").GetComponent<Transform>());
-                adjacentCountryIDs.Add("UnitedKingdom");
+                adjacentCountryEnums.Add(TerritoryEnum.UnitedKingdom);
                 adjacentCountries.Add(GameObject.FindWithTag("WestAmerica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("WestAmerica");
+                adjacentCountryEnums.Add(TerritoryEnum.WestAmerica);
                 adjacentCountries.Add(GameObject.FindWithTag("EastAmerica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("EastAmerica");
+                adjacentCountryEnums.Add(TerritoryEnum.EastAmerica);
                 break;
             case "EastAmerica":
                 adjacentCountries.Add(GameObject.FindWithTag("Canada").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Canada");
+                adjacentCountryEnums.Add(TerritoryEnum.Canada);
                 adjacentCountries.Add(GameObject.FindWithTag("WestAmerica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("WestAmerica");
+                adjacentCountryEnums.Add(TerritoryEnum.WestAmerica);
                 adjacentCountries.Add(GameObject.FindWithTag("Brazil").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Brazil");
+                adjacentCountryEnums.Add(TerritoryEnum.Brazil);
                 break;
             case "WestAmerica":
                 adjacentCountries.Add(GameObject.FindWithTag("Canada").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Canada");
+                adjacentCountryEnums.Add(TerritoryEnum.Canada);
                 adjacentCountries.Add(GameObject.FindWithTag("EastAmerica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("EastAmerica");
+                adjacentCountryEnums.Add(TerritoryEnum.EastAmerica);
                 adjacentCountries.Add(GameObject.FindWithTag("Peru").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Peru");
+                adjacentCountryEnums.Add(TerritoryEnum.Peru);
                 break;
             case "Brazil":
                 adjacentCountries.Add(GameObject.FindWithTag("Argentina").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Argentina");
+                adjacentCountryEnums.Add(TerritoryEnum.Argentina);
                 adjacentCountries.Add(GameObject.FindWithTag("EastAmerica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("EastAmerica");
+                adjacentCountryEnums.Add(TerritoryEnum.EastAmerica);
                 adjacentCountries.Add(GameObject.FindWithTag("Peru").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Peru");
+                adjacentCountryEnums.Add(TerritoryEnum.Peru);
                 adjacentCountries.Add(GameObject.FindWithTag("NorthAfrica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("NorthAfrica");
+                adjacentCountryEnums.Add(TerritoryEnum.NorthAfrica);
                 break;
             case "Argentina":
                 adjacentCountries.Add(GameObject.FindWithTag("Brazil").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Brazil");
+                adjacentCountryEnums.Add(TerritoryEnum.Brazil);
                 adjacentCountries.Add(GameObject.FindWithTag("Peru").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Peru");
+                adjacentCountryEnums.Add(TerritoryEnum.Peru);
                 break;
             case "UnitedKingdom":
                 adjacentCountries.Add(GameObject.FindWithTag("NorthEurope").GetComponent<Transform>());
-                adjacentCountryIDs.Add("NorthEurope");
+                adjacentCountryEnums.Add(TerritoryEnum.NorthEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("WestEurope").GetComponent<Transform>());
-                adjacentCountryIDs.Add("WestEurope");
+                adjacentCountryEnums.Add(TerritoryEnum.WestEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("Canada").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Canada");
+                adjacentCountryEnums.Add(TerritoryEnum.Canada);
                 break;
             case "Peru":
                 adjacentCountries.Add(GameObject.FindWithTag("Brazil").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Brazil");
+                adjacentCountryEnums.Add(TerritoryEnum.Brazil);
                 adjacentCountries.Add(GameObject.FindWithTag("Argentina").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Argentina");
+                adjacentCountryEnums.Add(TerritoryEnum.Argentina);
                 adjacentCountries.Add(GameObject.FindWithTag("WestAmerica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("WestAmerica");
+                adjacentCountryEnums.Add(TerritoryEnum.WestAmerica);
                 break;
             case "WestEurope":
                 adjacentCountries.Add(GameObject.FindWithTag("NorthEurope").GetComponent<Transform>());
-                adjacentCountryIDs.Add("NorthEurope");
+                adjacentCountryEnums.Add(TerritoryEnum.NorthEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("SouthEurope").GetComponent<Transform>());
-                adjacentCountryIDs.Add("SouthEurope");
+                adjacentCountryEnums.Add(TerritoryEnum.SouthEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("UnitedKingdom").GetComponent<Transform>());
-                adjacentCountryIDs.Add("UnitedKingdom");
+                adjacentCountryEnums.Add(TerritoryEnum.UnitedKingdom);
                 break;
             case "NorthEurope":
                 adjacentCountries.Add(GameObject.FindWithTag("WestEurope").GetComponent<Transform>());
-                adjacentCountryIDs.Add("WestEurope");
+                adjacentCountryEnums.Add(TerritoryEnum.WestEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("SouthEurope").GetComponent<Transform>());
-                adjacentCountryIDs.Add("SouthEurope");
+                adjacentCountryEnums.Add(TerritoryEnum.SouthEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("UnitedKingdom").GetComponent<Transform>());
-                adjacentCountryIDs.Add("UnitedKingdom");
+                adjacentCountryEnums.Add(TerritoryEnum.UnitedKingdom);
                 adjacentCountries.Add(GameObject.FindWithTag("Kazakhstan").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Kazakhstan");
+                adjacentCountryEnums.Add(TerritoryEnum.Kazakhstan);
                 break;
             case "SouthEurope":
                 adjacentCountries.Add(GameObject.FindWithTag("WestEurope").GetComponent<Transform>());
-                adjacentCountryIDs.Add("WestEurope");
+                adjacentCountryEnums.Add(TerritoryEnum.WestEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("NorthEurope").GetComponent<Transform>());
-                adjacentCountryIDs.Add("NorthEurope");
+                adjacentCountryEnums.Add(TerritoryEnum.NorthEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("Egypt").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Egypt");
+                adjacentCountryEnums.Add(TerritoryEnum.Egypt);
                 adjacentCountries.Add(GameObject.FindWithTag("MiddleEast").GetComponent<Transform>());
-                adjacentCountryIDs.Add("MiddleEast");
+                adjacentCountryEnums.Add(TerritoryEnum.MiddleEast);
                 break;
             case "Egypt":
                 adjacentCountries.Add(GameObject.FindWithTag("SouthEurope").GetComponent<Transform>());
-                adjacentCountryIDs.Add("SouthEurope");
+                adjacentCountryEnums.Add(TerritoryEnum.SouthEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("EastAfrica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("EastAfrica");
+                adjacentCountryEnums.Add(TerritoryEnum.EastAfrica);
                 adjacentCountries.Add(GameObject.FindWithTag("MiddleEast").GetComponent<Transform>());
-                adjacentCountryIDs.Add("MiddeEast");
+                adjacentCountryEnums.Add(TerritoryEnum.MiddleEast);
                 adjacentCountries.Add(GameObject.FindWithTag("NorthAfrica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("NorthAfrica");
+                adjacentCountryEnums.Add(TerritoryEnum.NorthAfrica);
                 break;
             case "EastAfrica":
                 adjacentCountries.Add(GameObject.FindWithTag("Egypt").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Egypt");
+                adjacentCountryEnums.Add(TerritoryEnum.Egypt);
                 adjacentCountries.Add(GameObject.FindWithTag("NorthAfrica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("NorthAfrica");
+                adjacentCountryEnums.Add(TerritoryEnum.NorthAfrica);
                 adjacentCountries.Add(GameObject.FindWithTag("SouthAfrica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("SouthAfrica");
+                adjacentCountryEnums.Add(TerritoryEnum.SouthAfrica);
                 adjacentCountries.Add(GameObject.FindWithTag("WestAustralia").GetComponent<Transform>());
-                adjacentCountryIDs.Add("WestAustralia");
+                adjacentCountryEnums.Add(TerritoryEnum.WestAustralia);
                 break;
             case "NorthAfrica":
                 adjacentCountries.Add(GameObject.FindWithTag("Egypt").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Egypt");
+                adjacentCountryEnums.Add(TerritoryEnum.Egypt);
                 adjacentCountries.Add(GameObject.FindWithTag("Brazil").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Brazil");
+                adjacentCountryEnums.Add(TerritoryEnum.Brazil);
                 adjacentCountries.Add(GameObject.FindWithTag("SouthAfrica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("SouthAfrica");
+                adjacentCountryEnums.Add(TerritoryEnum.SouthAfrica);
                 adjacentCountries.Add(GameObject.FindWithTag("EastAfrica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("EastAfrica");
+                adjacentCountryEnums.Add(TerritoryEnum.EastAfrica);
                 break;
             case "SouthAfrica":
                 adjacentCountries.Add(GameObject.FindWithTag("NorthAfrica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("NorthAfrica");
+                adjacentCountryEnums.Add(TerritoryEnum.NorthAfrica);
                 adjacentCountries.Add(GameObject.FindWithTag("EastAfrica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("EastAfrica");
+                adjacentCountryEnums.Add(TerritoryEnum.EastAfrica);
                 break;
             case "WestAustralia":
                 adjacentCountries.Add(GameObject.FindWithTag("EastAustralia").GetComponent<Transform>());
-                adjacentCountryIDs.Add("EastAustralia");
+                adjacentCountryEnums.Add(TerritoryEnum.EastAustralia);
                 adjacentCountries.Add(GameObject.FindWithTag("EastAfrica").GetComponent<Transform>());
-                adjacentCountryIDs.Add("EastAfrica");
+                adjacentCountryEnums.Add(TerritoryEnum.EastAfrica);
                 adjacentCountries.Add(GameObject.FindWithTag("India").GetComponent<Transform>());
-                adjacentCountryIDs.Add("India");
+                adjacentCountryEnums.Add(TerritoryEnum.India);
                 break;
             case "EastAustralia":
                 adjacentCountries.Add(GameObject.FindWithTag("WestAustralia").GetComponent<Transform>());
-                adjacentCountryIDs.Add("WestAustralia");
+                adjacentCountryEnums.Add(TerritoryEnum.WestAustralia);
                 break;
             case "India":
                 adjacentCountries.Add(GameObject.FindWithTag("MiddleEast").GetComponent<Transform>());
-                adjacentCountryIDs.Add("MiddleEast");
+                adjacentCountryEnums.Add(TerritoryEnum.MiddleEast);
                 adjacentCountries.Add(GameObject.FindWithTag("China").GetComponent<Transform>());
-                adjacentCountryIDs.Add("China");
+                adjacentCountryEnums.Add(TerritoryEnum.China);
                 adjacentCountries.Add(GameObject.FindWithTag("WestAustralia").GetComponent<Transform>());
-                adjacentCountryIDs.Add("WestAustralia");
+                adjacentCountryEnums.Add(TerritoryEnum.WestAustralia);
                 break;
             case "MiddleEast":
                 adjacentCountries.Add(GameObject.FindWithTag("India").GetComponent<Transform>());
-                adjacentCountryIDs.Add("India");
+                adjacentCountryEnums.Add(TerritoryEnum.India);
                 adjacentCountries.Add(GameObject.FindWithTag("Egypt").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Egypt");
+                adjacentCountryEnums.Add(TerritoryEnum.Egypt);
                 adjacentCountries.Add(GameObject.FindWithTag("SouthEurope").GetComponent<Transform>());
-                adjacentCountryIDs.Add("SouthEurope");
+                adjacentCountryEnums.Add(TerritoryEnum.SouthEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("Kazakhstan").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Kazakhstan");
+                adjacentCountryEnums.Add(TerritoryEnum.Kazakhstan);
                 break;
             case "Kazakhstan":
                 adjacentCountries.Add(GameObject.FindWithTag("NorthEurope").GetComponent<Transform>());
-                adjacentCountryIDs.Add("NorthEurope");
+                adjacentCountryEnums.Add(TerritoryEnum.NorthEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("MiddleEast").GetComponent<Transform>());
-                adjacentCountryIDs.Add("MiddleEast");
+                adjacentCountryEnums.Add(TerritoryEnum.MiddleEast);
                 adjacentCountries.Add(GameObject.FindWithTag("Russia").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Russia");
+                adjacentCountryEnums.Add(TerritoryEnum.Russia);
                 adjacentCountries.Add(GameObject.FindWithTag("China").GetComponent<Transform>());
-                adjacentCountryIDs.Add("China");
+                adjacentCountryEnums.Add(TerritoryEnum.China);
                 break;
             case "China":
                 adjacentCountries.Add(GameObject.FindWithTag("India").GetComponent<Transform>());
-                adjacentCountryIDs.Add("India");
+                adjacentCountryEnums.Add(TerritoryEnum.India);
                 adjacentCountries.Add(GameObject.FindWithTag("Russia").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Russia");
+                adjacentCountryEnums.Add(TerritoryEnum.Russia);
                 adjacentCountries.Add(GameObject.FindWithTag("Kazakhstan").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Kazakhstan");
+                adjacentCountryEnums.Add(TerritoryEnum.Kazakhstan);
                 break;
             case "Russia":
                 adjacentCountries.Add(GameObject.FindWithTag("China").GetComponent<Transform>());
-                adjacentCountryIDs.Add("China");
+                adjacentCountryEnums.Add(TerritoryEnum.China);
                 adjacentCountries.Add(GameObject.FindWithTag("Kazakhstan").GetComponent<Transform>());
-                adjacentCountryIDs.Add("Kazakhstan");
+                adjacentCountryEnums.Add(TerritoryEnum.Kazakhstan);
                 break;
 
         }
@@ -311,6 +318,77 @@ public class TerritoryScript : MonoBehaviour
                 break;
             case "Russia": // TODO: Russia is in two continents, and isn't a territory in risk
                 continent = Continents.Asia;
+                break;
+
+        }
+    }
+    private void SetTerritoryEnums()
+    {
+        adjacentCountries.Clear();
+        switch (this.gameObject.tag)
+        {
+            case "Canada":
+                territoryEnum = TerritoryEnum.Canada;
+                break;
+            case "EastAmerica":
+                territoryEnum = TerritoryEnum.EastAmerica;
+                break;
+            case "WestAmerica":
+                territoryEnum = TerritoryEnum.WestAmerica;
+                break;
+            case "Brazil":
+               territoryEnum = TerritoryEnum.Brazil;
+                break;
+            case "Argentina":
+                territoryEnum = TerritoryEnum.Argentina;
+                break;
+            case "UnitedKingdom":
+               territoryEnum = TerritoryEnum.UnitedKingdom;
+                break;
+            case "Peru":
+                territoryEnum = TerritoryEnum.Peru;
+                break;
+            case "WestEurope":
+               territoryEnum = TerritoryEnum.WestEurope;
+                break;
+            case "NorthEurope":
+               territoryEnum = TerritoryEnum.NorthEurope;
+                break;
+            case "SouthEurope":
+                territoryEnum = TerritoryEnum.SouthEurope;
+                break;
+            case "Egypt":
+                territoryEnum = TerritoryEnum.Egypt;
+                break;
+            case "EastAfrica":
+               territoryEnum = TerritoryEnum.EastAfrica;
+                break;
+            case "NorthAfrica":
+                territoryEnum = TerritoryEnum.NorthAfrica;
+                break;
+            case "SouthAfrica":
+               territoryEnum = TerritoryEnum.SouthAfrica;
+                break;
+            case "WestAustralia":
+                territoryEnum = TerritoryEnum.WestAustralia;
+                break;
+            case "EastAustralia":
+                territoryEnum = TerritoryEnum.EastAustralia;
+                break;
+            case "India":
+                territoryEnum = TerritoryEnum.India;
+                break;
+            case "MiddleEast":
+                territoryEnum = TerritoryEnum.MiddleEast;
+                break;
+            case "Kazakhstan":
+                territoryEnum = TerritoryEnum.Kazakhstan;
+                break;
+            case "China":
+                territoryEnum = TerritoryEnum.China;
+                break;
+            case "Russia":
+                territoryEnum = TerritoryEnum.Russia;
                 break;
 
         }
