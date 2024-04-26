@@ -248,6 +248,16 @@ public class MapScript : MonoBehaviour
         Debug.Log($"Player {playerTurn}, click an owned territory to attack from.");
         PlayerScript player = players[playerTurn - 1];
         player.isTurn = true;
+        player.canSelectAttackFrom = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+
+    // Overload depending on how we want to use it.
+    private IEnumerator WaitForAttackFromTerritory(PlayerScript player)
+    {
+        Debug.Log($"Player {player.playerNumber}, click an owned territory to attack from.");
+        player.isTurn = true;
+        player.canSelectAttackFrom = true;
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
 
@@ -280,6 +290,12 @@ public class MapScript : MonoBehaviour
     }
 
 
+    private IEnumerator WaitForCardDisplayInactive()
+    {
+        yield return new WaitUntil(() => 
+                !GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().isOnDisplay);
+    }
+
     // Responsible for calculating and granting armies based on territories,
     // At the start of each turn.
     // This function is called by a coroutine, so it must be a coroutine
@@ -308,12 +324,11 @@ public class MapScript : MonoBehaviour
                     ArmiesGrantedForContinent[count.Key] + " additional armies");
             }
         }
-        Debug.Log("Player " + player_id + " now has " + player.GetArmyCountTotal() + " armies");
     }
 
     private IEnumerator LaunchAnAttack(int player_id)
     {
-        Debug.Log("Phase two: Launch an attack");
+        Debug.Log("Phase two. Player: " + player_id + ", launch an attack.");
         PlayerScript player = players[player_id - 1];
         // Clear past values:
         player.TerritoryAttackingFrom = null;
@@ -323,9 +338,11 @@ public class MapScript : MonoBehaviour
         player.canSelectAttackFrom = true;
         while(player.TerritoryAttackingFrom == null)
         {
-            yield return StartCoroutine(WaitForAttackFromTerritory());
+            yield return StartCoroutine(WaitForAttackFromTerritory(player));
         }
         player.canSelectAttackFrom = false;
+        // TODO: delete later
+        Debug.Log("Immediately after wait for attack from, player turn is: " + playerTurn);
 
         //canSelectAttackFrom
         player.canSelectAttackOn = true;
@@ -334,6 +351,8 @@ public class MapScript : MonoBehaviour
             yield return StartCoroutine(WaitForAttackOnTerritory());
         }
         player.canSelectAttackOn = false;
+         // TODO: delete later
+        Debug.Log("Immediately after wait for attack on, player turn is: " + playerTurn);
 
         // Part three: roll the dice
 
@@ -534,6 +553,8 @@ public class MapScript : MonoBehaviour
             PlayerScript player = players[playerTurn - 1];
             // Prevent all permissions at start of each loop
             player.ResetAllPermissions();
+            // Update gamehud's player
+            GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer = players[playerTurn-1];
 
             // Step one: getting and placing armies
             /// calculate the number of armies this player should receive based on territories
@@ -564,21 +585,14 @@ public class MapScript : MonoBehaviour
                 player.canPlaceArmyInGame = false;
             }
 
-            // Step two: select a territory to attack
-            yield return LaunchAnAttack(playerTurn);
-
             // Step two: allow player to turn in sets of cards. give additional armies accordingly
-            // TODO: reqiure player to turn in cards if they have 5 or 6. 
+            // TODO: require player to turn in cards if they have 5 or 6. 
             if (player.cardsInHand.Count >= 3)
             {
                 // Allow player to turn in cards
-                player.canTurnInCards = true;
                 GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
-                // TODO: add code to wait for the player to choose a card
-                yield return StartCoroutine(WaitForPlayerToDoMove(player));
-
-                // Revoke permission
-                player.canTurnInCards = false;
+                // Once display is inactive, assume we are done with this phase.
+                yield return WaitForCardDisplayInactive();
             }
             else
             {
@@ -602,7 +616,7 @@ public class MapScript : MonoBehaviour
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
                 int cardsBeforeDraw = player.cardsInHand.Count;
                 player.canDraw = true;
-                player.isTurn = true;
+                player.isTurn = true; // TODO: figure out why we need this line (should be handled by waitforplayer)
                 yield return StartCoroutine(WaitForPlayerToDoMove(player));
                 int cardsAfterDraw = player.cardsInHand.Count;
                 if(cardsBeforeDraw != cardsAfterDraw){
@@ -617,7 +631,7 @@ public class MapScript : MonoBehaviour
             
 
             Debug.Log("End of Player " + playerTurn + "'s turn");
-            
+
             // update the player
             if(playerTurn == playerCount){
                 // cycle back to start of player list

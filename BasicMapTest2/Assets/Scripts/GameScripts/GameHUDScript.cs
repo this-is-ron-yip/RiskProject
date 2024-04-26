@@ -8,6 +8,7 @@ public class GameHUDScript : MonoBehaviour
     public GameObject cardDisplayPrefab;
     public Transform cardDisplayPanel;
     public Transform chooseCardDisplayPanel;
+    public bool isOnDisplay;
     public PlayerScript currentPlayer;
     private List<Card> selectedCards = new List<Card>();
     private int cardsInDisplay = 0;
@@ -17,6 +18,7 @@ public class GameHUDScript : MonoBehaviour
     {
         // Make sure the cards display panel is not visible at the start.
         cardDisplayPanel.gameObject.SetActive(false);
+        isOnDisplay = false;
     }
 
     private void CardClicked(Card card, GameObject cardDisplay)
@@ -53,6 +55,7 @@ public class GameHUDScript : MonoBehaviour
             if (mapScript != null)
             {
                 chooseCardDisplayPanel.gameObject.SetActive(false);
+                isOnDisplay = false;
                 mapScript.HandleCardTurnIn(selectedCards);
                 // Clear the selected cards list
                 selectedCards.Clear();
@@ -66,6 +69,7 @@ public class GameHUDScript : MonoBehaviour
     public void ShowChooseCardPanel()
     {
         chooseCardDisplayPanel.gameObject.SetActive(true);
+        isOnDisplay = true;
 
         foreach (Transform child in chooseCardDisplayPanel)
         {
@@ -81,6 +85,7 @@ public class GameHUDScript : MonoBehaviour
         cardsInDisplay = 0;
 
         // Create a display for each card in the current player's hand
+        Debug.Log("Choose your Cards to turn in!");
         foreach (Card card in currentPlayer.cardsInHand)
         {
             CreateChooseCardDisplay(card);
@@ -93,6 +98,7 @@ public class GameHUDScript : MonoBehaviour
         if (currentPlayer != null)
         {
             cardDisplayPanel.gameObject.SetActive(true);
+            isOnDisplay = true;
 
             foreach (Transform child in cardDisplayPanel)
             {
@@ -146,7 +152,6 @@ public class GameHUDScript : MonoBehaviour
 
     public void CreateChooseCardDisplay(Card card)
     {
-        Debug.Log("Choose your Cards to turn in!");
         GameObject cardDisplay = Instantiate(cardDisplayPrefab, chooseCardDisplayPanel);
 
         // Set the position for the card display
@@ -183,6 +188,7 @@ public class GameHUDScript : MonoBehaviour
     {
         selectedCards.Clear();
         chooseCardDisplayPanel.gameObject.SetActive(false);
+        isOnDisplay = false;
         MapScript mapScript = GameObject.FindGameObjectWithTag("Map").GetComponent<MapScript>();
         mapScript.HandleCardTurnIn(null);
         mapScript.players[mapScript.playerTurn - 1].isTurn = false; // Notify board that this sequence is over

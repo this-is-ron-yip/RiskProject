@@ -52,6 +52,7 @@ public class PlayerScript : MonoBehaviour
         isTurn = false;
 
         //just to test to see if the "choose armies" screen will come up if a player has 3 army cards (can delete after done with testing)
+        // TODO: change later
         Card card1 = new Card();
         Card card2 = new Card();
         Card card3 = new Card();
@@ -67,8 +68,6 @@ public class PlayerScript : MonoBehaviour
         cardsInHand.Add(card1);
         cardsInHand.Add(card2);
         cardsInHand.Add(card3);
-
-
     }
 
     private void Update()
