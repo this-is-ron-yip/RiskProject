@@ -252,15 +252,6 @@ public class MapScript : MonoBehaviour
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
 
-    // Overload depending on how we want to use it.
-    private IEnumerator WaitForAttackFromTerritory(PlayerScript player)
-    {
-        Debug.Log($"Player {player.playerNumber}, click an owned territory to attack from.");
-        player.isTurn = true;
-        player.canSelectAttackFrom = true;
-        yield return StartCoroutine(WaitForPlayerToDoMove(player));
-    }
-
     private IEnumerator WaitForAttackOnTerritory()
     {
         Debug.Log($"Player {playerTurn}, click an enemy territory to attack on.");
@@ -338,21 +329,18 @@ public class MapScript : MonoBehaviour
         player.canSelectAttackFrom = true;
         while(player.TerritoryAttackingFrom == null)
         {
-            yield return StartCoroutine(WaitForAttackFromTerritory(player));
+            playerTurn = player_id; // We need to reset the playerTurn, which is being updated when it shouldn't be
+            // TODO: figure out why the behavior explained above is occuring.
+            yield return StartCoroutine(WaitForAttackFromTerritory());
         }
         player.canSelectAttackFrom = false;
-        // TODO: delete later
-        Debug.Log("Immediately after wait for attack from, player turn is: " + playerTurn);
 
-        //canSelectAttackFrom
         player.canSelectAttackOn = true;
-        // TODO: add quit features — player can choose to quit attack. set a flag and check here.
         while(player.TerritoryAttackingOn == null) { // Until valid input is received
+            playerTurn = player_id; // Override in case playerTurn has changed unpredictably
             yield return StartCoroutine(WaitForAttackOnTerritory());
         }
         player.canSelectAttackOn = false;
-         // TODO: delete later
-        Debug.Log("Immediately after wait for attack on, player turn is: " + playerTurn);
 
         // Part three: roll the dice
 
