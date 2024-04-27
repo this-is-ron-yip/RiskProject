@@ -8,6 +8,7 @@ public class GameHUDScript : MonoBehaviour
     public GameObject cardDisplayPrefab;
     public Transform cardDisplayPanel;
     public Transform chooseCardDisplayPanel;
+    public Transform endOfGamePanel;
     public bool isOnDisplay;
     public PlayerScript currentPlayer;
     private List<Card> selectedCards = new List<Card>();
@@ -16,8 +17,9 @@ public class GameHUDScript : MonoBehaviour
     [System.Obsolete]
     private void Start()
     {
-        // Make sure the cards display panel is not visible at the start.
+        // Make sure the display panels are not visible at the start.
         cardDisplayPanel.gameObject.SetActive(false);
+        endOfGamePanel.gameObject.SetActive(false);
         isOnDisplay = false;
     }
 
@@ -196,7 +198,14 @@ public class GameHUDScript : MonoBehaviour
 
     public void ShowEndingPanel(int winnerNum) {
         // TODO: replace with actual end screen
+        endOfGamePanel.gameObject.SetActive(true);
         Debug.Log("Player " + winnerNum + " has conquered all the territories and won the game! GAME OVER.");
+    }
+
+    public void OnQuitGamePressed()
+    {
+        // TODO: add code to quit/kill the game.
+        Debug.Log("Quit game pressed.");
     }
 }
 

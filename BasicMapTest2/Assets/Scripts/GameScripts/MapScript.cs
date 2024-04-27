@@ -151,12 +151,12 @@ public class MapScript : MonoBehaviour
         playerTurn = highestNumIndex + 1;
         startingPlayer = playerTurn; // for future reference
 
-        //for testing
+        //for testing TODO: delete? or delete this comment
         GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer = players[playerTurn-1];
 
         // Step two: Allow players to claim territories to start
-        int territories_left = 10; // TODO: change to 42, but for testing, use smaller number
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
+        int territories_left = TerritoryScript.NUMBER_OF_TERRITORIES;
         while(territories_left > 0){
             Debug.Log("Territories left: " + territories_left);
             players[playerTurn - 1].canClaimTerritoryAtStart = true;
@@ -435,7 +435,7 @@ public class MapScript : MonoBehaviour
         {
             if (selected_territory.occupiedBy != player_id)
             {
-                Debug.Log("Player" + player_id + "is launching an attack on" + selected_territory.name);
+                Debug.Log("Player " + player_id + " is launching an attack on " + selected_territory.name);
                 Debug.Log(curr_player.TerritoryAttackingFrom.name);
                 
                 // Check if territory is adjacent
@@ -497,6 +497,9 @@ public class MapScript : MonoBehaviour
         if(player.territoriesOwned.Count == TerritoryScript.NUMBER_OF_TERRITORIES){
             OnPlayerConqueredAllTerritories?.Invoke(player.playerNumber);
         }
+
+        // TODO: delete later. for testing the final game screen only
+        // OnPlayerConqueredAllTerritories?.Invoke(player.playerNumber);
 
         return;
     }

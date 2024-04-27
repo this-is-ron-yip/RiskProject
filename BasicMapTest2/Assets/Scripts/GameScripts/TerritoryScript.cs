@@ -22,7 +22,7 @@ public class TerritoryScript : MonoBehaviour
     [field: SerializeField] public List<TerritoryEnum> adjacentCountryEnums { get; set; } // Store id rather than transform
     private TextMesh armyText; // TextMesh to display the army count.
 
-    public const int NUMBER_OF_TERRITORIES = 42; 
+    public const int NUMBER_OF_TERRITORIES = 21; // TODO: update until we have all 42
     public void Start()
     {
         // Ensure there's a child GameObject to hold the TextMesh.
