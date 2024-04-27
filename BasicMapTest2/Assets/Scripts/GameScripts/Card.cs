@@ -15,4 +15,5 @@ public class Card
         this.troop_type = troop_type;
         this.status = status;
     }
+    
 }

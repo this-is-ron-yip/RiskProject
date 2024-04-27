@@ -151,9 +151,6 @@ public class MapScript : MonoBehaviour
         playerTurn = highestNumIndex + 1;
         startingPlayer = playerTurn; // for future reference
 
-        //for testing TODO: delete? or delete this comment
-        // GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer = players[playerTurn-1];
-
         // Step two: Allow players to claim territories to start
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
         int territories_left = TerritoryScript.NUMBER_OF_TERRITORIES;
@@ -385,7 +382,8 @@ public class MapScript : MonoBehaviour
             curr_player.infCount--;
             Debug.Log(territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies." +
                " Player " + player_id + " now has " + curr_player.territoryCountsPerContinent[claimed_territory.continent] + " on " + 
-               " territories on the continent of " + claimed_territory.continent);
+               " territories on the continent of " + claimed_territory.continent + ". Player " + player_id + " has " + 
+                curr_player.infCount + " infantry remaining.");
             // spawn army (this step should always happen last!!!): 
             // SpawnArmyPiece(ArmyTypes.Infantry, territory, player_id);
         }
@@ -764,42 +762,65 @@ public class MapScript : MonoBehaviour
     }
     internal void HandleCardTurnIn(List<Card> selectedCards)
     {
-        //removing the selected cards from the players hand:
-        List<Card> playerCards = players[playerTurn - 1].GetComponent<PlayerScript>().cardsInHand;
-        if (selectedCards != null && players[playerTurn - 1].canTurnInCards)
+        if (selectedCards == null)
         {
-            for (int i = playerCards.Count - 1; i >= 0; i--)
-            {
-                if (selectedCards.Contains(playerCards[i]))
-                {
-                    playerCards.RemoveAt(i);
-                }
+            Debug.Log("Player chose to not turn in any cards");
+            return;
+        }
+
+        // Otherwise, must have selected 3 to turn in. Verify the match is valid. If not, return early.
+        if(selectedCards.Count != 3){
+            Debug.Log("Insufficient cards");
+            return; // Should never be reached, but just in case.
+        }
+
+        // Check for a valid set
+        if(selectedCards[1].troop_type != "WILD"){ 
+            // All three match:
+            if(selectedCards[0].troop_type == selectedCards[1].troop_type && 
+                selectedCards[1].troop_type == selectedCards[2].troop_type){
+                // valid set! allow cards to be turned in.
+            }
+            else if(selectedCards[0].troop_type != selectedCards[1].troop_type &&
+                selectedCards[0].troop_type != selectedCards[2].troop_type &&
+                selectedCards[1].troop_type != selectedCards[2].troop_type){
+                // valid set! allow cards to be turned in.
+            }
+            else{
+                Debug.Log("Set is invalid.");
+                return; // invalid set. 
+            }
+
+        }
+        // If one card is a wild, then it must be a valid set. Allow the set to be turned in.
+        Debug.Log("Set is valid.");
+
+        //removing the selected cards from the players hand:
+        List<Card> updatedHand = new List<Card>();
+        foreach(Card card in players[playerTurn - 1].GetComponent<PlayerScript>().cardsInHand){
+            if (!selectedCards.Contains(card)){
+                updatedHand.Add(card);
             }
         }
+        players[playerTurn - 1].GetComponent<PlayerScript>().cardsInHand = updatedHand;
         
 
         //Can remove all of the following code. It was just to show that the card selection works correctly
 
         //if selected cards is a null object, it means that the player decided not to turn in any cards
-        if (selectedCards == null)
+        string debugString = "Selected Cards: ";
+        List<Card> playerCards = players[playerTurn - 1].GetComponent<PlayerScript>().cardsInHand;
+        foreach (Card card in selectedCards)
         {
-            Debug.Log("Player chose to not turn in any cards");
+            debugString += "(" + $"{card.territory_id} : {card.troop_type}" + " with status: " + card.status + ") ";
         }
-        else
-        {
-            string debugString = "Selected Cards: ";
-            foreach (Card card in selectedCards)
-            {
-                debugString += "(" + $"{card.territory_id} : {card.troop_type}" + ") ";
-            }
-            Debug.Log(debugString);
-        }
+        Debug.Log(debugString);
 
         // showing the cards that are left in the players hand
         string debugString2 = "Cards remaining in player hand : ";
         foreach (Card card in playerCards)
         {
-            debugString2 += "(" + $"{card.territory_id} : {card.troop_type}" + ") ";
+            debugString2 += "(" + $"{card.territory_id} : {card.troop_type}" + " with status: " + card.status + ") ";
         }
         Debug.Log(debugString2);
     }
