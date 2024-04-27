@@ -339,7 +339,7 @@ public class MapScript : MonoBehaviour
         }
         player.canSelectAttackOn = false;
 
-        // Part three: roll the dice
+        // TODO: Part three: roll the dice
 
         // Part four: evaluate the outcome of the attack 
         EvaluateAttack(player_id);
@@ -455,7 +455,7 @@ public class MapScript : MonoBehaviour
         }
     }
 
-    private void EvaluateAttack(int player_id)
+   public void EvaluateAttack(int player_id)
     {
         PlayerScript player = players[player_id - 1];
 
