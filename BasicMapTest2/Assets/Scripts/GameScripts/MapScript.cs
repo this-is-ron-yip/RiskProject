@@ -23,6 +23,7 @@ public class MapScript : MonoBehaviour
     private DiceRollerScript diceRoller;
     public int[] diceResults;
     public Dictionary<Transform, List<Transform>> adjacencyList = new Dictionary<Transform, List<Transform>>();
+    public event Action<int> OnPlayerConqueredAllTerritories;
     enum ArmyTypes { Infantry, Cavalry, Artillery };
 
     // Need 6 colors, for a maximum of 6 players
@@ -57,6 +58,7 @@ public class MapScript : MonoBehaviour
         diceRoller = GetComponent<DiceRollerScript>(); //initialising the diceRoller
         CreatePlayers();
         UpdateHud();
+        OnPlayerConqueredAllTerritories += HandlePlayerWonGame;
 
         StartCoroutine(AssignStartTerritories());
     }
@@ -467,7 +469,7 @@ public class MapScript : MonoBehaviour
         TerritoryScript PlayerTerritory = player.TerritoryAttackingFrom;
         TerritoryScript EnemyTerritory = player.TerritoryAttackingOn;
 
-        //! Do I need to reduce by 1
+        // Reduce by 1
         PlayerScript enemy = players[EnemyTerritory.occupiedBy - 1];
 
         if (PlayerTerritory.armyCount > EnemyTerritory.armyCount)
@@ -490,6 +492,12 @@ public class MapScript : MonoBehaviour
         }
         player.TerritoryAttackingFrom = null;
         player.TerritoryAttackingOn = null;
+
+        // TODO: check if either player, not just the curr player, have won the game
+        if(player.territoriesOwned.Count == TerritoryScript.NUMBER_OF_TERRITORIES){
+            OnPlayerConqueredAllTerritories?.Invoke(player.playerNumber);
+        }
+
         return;
     }
     private void HandlePlacingAnArmy(int player_id, GameObject territory){
@@ -757,6 +765,12 @@ public class MapScript : MonoBehaviour
         // And maybe clicking on the piece tells us how many armies it represents.
     }
 
+    public void HandlePlayerWonGame(int playerNumber){
+        // TODO: handle any other game logic
+        // Show ending screen
+        GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowEndingPanel(playerNumber);
+        // TODO: end the game
+    }
     internal void HandleCardTurnIn(List<Card> selectedCards)
     {
         //removing the selected cards from the players hand:

@@ -193,6 +193,11 @@ public class GameHUDScript : MonoBehaviour
         mapScript.HandleCardTurnIn(null);
         mapScript.players[mapScript.playerTurn - 1].isTurn = false; // Notify board that this sequence is over
     }
+
+    public void ShowEndingPanel(int winnerNum) {
+        // TODO: replace with actual end screen
+        Debug.Log("Player " + winnerNum + " has conquered all the territories and won the game! GAME OVER.");
+    }
 }
 
 // TODO: add logic for submitting cards. consider changing implementation to match the rest
