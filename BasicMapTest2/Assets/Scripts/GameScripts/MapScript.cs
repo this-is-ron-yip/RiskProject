@@ -152,7 +152,7 @@ public class MapScript : MonoBehaviour
         startingPlayer = playerTurn; // for future reference
 
         //for testing TODO: delete? or delete this comment
-        GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer = players[playerTurn-1];
+        // GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer = players[playerTurn-1];
 
         // Step two: Allow players to claim territories to start
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
@@ -230,9 +230,7 @@ public class MapScript : MonoBehaviour
             }
         }
 
-        //TODO
-            // Instantiate army object and place it on the territory
-            // Update hud
+        //TODO: Instantiate army object and place it on the territory OR simply don't spawn
             
         // Completed game set up!
         yield return StartCoroutine(EnterGamePlay());
@@ -348,8 +346,6 @@ public class MapScript : MonoBehaviour
 
         // Part four: evaluate the outcome of the attack 
         EvaluateAttack(player_id);
-        // player.isTurn = true;
-        // yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
 
     private void HandleDiceRollAtStart(int player_id, GameObject die){
@@ -468,6 +464,7 @@ public class MapScript : MonoBehaviour
         // TODO: Improve attack evaluation with dice
         TerritoryScript PlayerTerritory = player.TerritoryAttackingFrom;
         TerritoryScript EnemyTerritory = player.TerritoryAttackingOn;
+        PlayerScript defendant = players[EnemyTerritory.occupiedBy - 1];
 
         // Reduce by 1
         PlayerScript enemy = players[EnemyTerritory.occupiedBy - 1];
@@ -477,6 +474,7 @@ public class MapScript : MonoBehaviour
             // TODO: Improve by letting player select the number of troops to move
             int troopsToNewTerritory = 1;
             int consumedTroops = EnemyTerritory.armyCount;
+            player.mustDraw = true; // They won a territory! So they must draw a card. 
 
             // update territories variables
             EnemyTerritory.occupiedBy = player_id;
@@ -493,9 +491,12 @@ public class MapScript : MonoBehaviour
         player.TerritoryAttackingFrom = null;
         player.TerritoryAttackingOn = null;
 
-        // TODO: check if either player, not just the curr player, have won the game
+        // Check if either player have won the game
         if(player.territoriesOwned.Count == TerritoryScript.NUMBER_OF_TERRITORIES){
             OnPlayerConqueredAllTerritories?.Invoke(player.playerNumber);
+        }
+        else if(defendant.territoriesOwned.Count == TerritoryScript.NUMBER_OF_TERRITORIES){
+            OnPlayerConqueredAllTerritories?.Invoke(defendant.playerNumber);
         }
 
         // TODO: delete later. for testing the final game screen only
@@ -540,12 +541,10 @@ public class MapScript : MonoBehaviour
         players[player_id - 1].cardsInHand.Add(drawn);
     }
 
-    // TODO: complete this function!
     [Obsolete]
     private IEnumerator EnterGamePlay(){
         Debug.Log("Entered game play!");
         int playerTurn = startingPlayer;
-        int testNumberOfTurns = 10;
 
         while(!gameOver){
             // update player and give them the turn
@@ -604,24 +603,20 @@ public class MapScript : MonoBehaviour
             // prompt them to attack!
             yield return LaunchAnAttack(playerTurn);
 
-            // TODO: maybe make this a member variable
-            bool playerMustDraw = false; // For whether they can draw a RISK card at the end
-
             // Step four: if the player has claimed at least one territory during their turn
             // Prompt and allow/require them to draw a card from the deck
-            // TODO: what if the deck is empty? 
-            playerMustDraw = true; // TODO: delete later, for testing only: 
-            while(playerMustDraw){
+            // TODO: what if the deck is empty? Theoretically, reshuffle the deck.
+            while(player.mustDraw){ // mustDraw will be set during the attack logic
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
                 int cardsBeforeDraw = player.cardsInHand.Count;
                 player.canDraw = true;
-                player.isTurn = true; // TODO: figure out why we need this line (should be handled by waitforplayer)
+                player.isTurn = true; // figure out why we need this line (should be handled by waitforplayer)
                 yield return StartCoroutine(WaitForPlayerToDoMove(player));
                 int cardsAfterDraw = player.cardsInHand.Count;
                 if(cardsBeforeDraw != cardsAfterDraw){
                     // Task accomplished
                     player.canDraw = false;
-                    playerMustDraw = false;
+                    player.mustDraw = false;
                 }
                 else{
                     Debug.Log("Must draw a card. Try again.");
@@ -640,12 +635,6 @@ public class MapScript : MonoBehaviour
                 // otherwise, simply move to the next player
                 playerTurn++;
             }
-
-            // TODO: delete later. For testing only
-            testNumberOfTurns--;
-            if(testNumberOfTurns == 0){
-                gameOver = true;
-            }
             
         }
     }
@@ -662,7 +651,7 @@ public class MapScript : MonoBehaviour
             PlayerScript newPlayerScript = newPlayer.GetComponent<PlayerScript>();
             newPlayerScript.playerNumber = i+1;
             int infCount = 50 - (playerCount * 5);
-            // TODO: DELETE LATER, give less armies for testing
+            // TODO: DELETE THE LINE BELOW LATER, give less armies for testing
             infCount = 5;
             newPlayerScript.GivePlayerArmies(infCount, 0, 0);
 
@@ -769,10 +758,9 @@ public class MapScript : MonoBehaviour
     }
 
     public void HandlePlayerWonGame(int playerNumber){
-        // TODO: handle any other game logic
         // Show ending screen
         GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowEndingPanel(playerNumber);
-        // TODO: end the game
+        gameOver = true;
     }
     internal void HandleCardTurnIn(List<Card> selectedCards)
     {
