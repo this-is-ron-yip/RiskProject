@@ -52,24 +52,6 @@ public class PlayerScript : MonoBehaviour
     {
         this.gameObject.tag = "player";
         isTurn = false;
-
-        //just to test to see if the "choose armies" screen will come up if a player has 3 army cards (can delete after done with testing)
-        // TODO: change later
-        Card card1 = new Card();
-        Card card2 = new Card();
-        Card card3 = new Card();
-        card1.territory_id = "China";
-        card1.status = "IN_HAND";
-        card1.troop_type = "Infantry";
-        card2.territory_id = "Peru";
-        card2.status = "IN_HAND";
-        card2.troop_type = "Infantry";
-        card3.territory_id = "Russia";
-        card3.status = "IN_HAND";
-        card3.troop_type = "Infantry";
-        cardsInHand.Add(card1);
-        cardsInHand.Add(card2);
-        cardsInHand.Add(card3);
     }
 
     private void Update()

@@ -11,9 +11,6 @@ public class DeckScript : MonoBehaviour
 {
     private Queue<Card> deck = new Queue<Card>(); // the actual deck of cards
 
-    // TODO: change back to false when your'e done testing
-    public bool canDraw = true; // Flag to control when rolling is allowed
-
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +26,8 @@ public class DeckScript : MonoBehaviour
     // Returns null if the action is not allowed or if the deck is empty
     public Card DrawCard(){
          // if the deck is empty, return error message
-         // otherwise, return card? figure this out.
-        if(!canDraw)
-        {
-            Debug.Log("Not allowed to draw card.");
-        }
-        else if (deck.Count != 0)
+         // otherwise, return card? TODO: figure this out.
+        if (deck.Count != 0)
         {
             // draw the card
             Card result = deck.Dequeue();
@@ -69,32 +62,25 @@ public class DeckScript : MonoBehaviour
     public List<Card> GetUnshuffledDeck(){
         List<Card> unshuffled_deck = new List<Card>();
    
-        // Starting off with 8 cards for now. Change later.
-        for(int i = 0; i < 8; i++){
-            Card card = new(territories_in_order[i], troop_types_in_order[i], "IN_DECK");
+        // Note that the game description never specifies which troop type must match to which territory
+        // So we can assign them arbitrarily.
+        for(int i = 0; i < all_territories.Count(); i++){
+            Card card = new(all_territories[i], troop_types[i % 3], "IN_DECK");
             unshuffled_deck.Add(card);
         }
+        unshuffled_deck.Add(new Card("WILD", "WILD", "WILD"));
+        unshuffled_deck.Add(new Card("WILD", "WILD", "WILD")); // Add two wild cards
         return unshuffled_deck;
     }
 
-    // Method to allow dice rolling, could be called with a player number if needed
-    public void AllowDraw(int playerNumber) // default parameter in case you don't want to specify
-    {
-        canDraw = true;
-    }
-
-    // Method to prevent dice rolling, if needed
-    public void PreventRoll()
-    {
-        canDraw = false;
-    }
-
     // Used to create deck. These two arrays should be the same size as the deck.
-    public string[] territories_in_order = {
-        "North America", "South America", "Europe", "Asia", "Africa", "Australia",
-            "Antarctica", "Wild"
+    // TODO: update the list to have all 42
+    public string[] all_territories = {"Canada", "EastAmerica", "WestAmerica", "Brazil",
+        "Argentina", "UnitedKingdom", "Peru",  "WestEurope", "NorthEurope",  "SouthEurope", "Egypt",
+         "EastAfrica", "NorthAfrica", "SouthAfrica", "WestAustralia", "EastAustralia", "India", "MiddleEast",
+         "Kazakhstan", "China", "Russia"
     };
-    public string[] troop_types_in_order = {
-        "Infantry", "Calvalry", "Cannon", "Infantry", "Calvalry", "Cannon", "Infantry", "Wild"
+    public string[] troop_types = {
+        "Infantry", "Calvalry", "Cannon",
     };
 } 
