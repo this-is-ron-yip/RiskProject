@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour
     public int infCount, cavCount, artilCount;
     public int playerNumber;
     public bool isTurn = false;
+    public bool eliminated = false;
 
     public Color color = new Color(0, 0, 0);
     public List<TerritoryScript> territoriesOwned = new List<TerritoryScript>();

@@ -497,6 +497,14 @@ public class MapScript : MonoBehaviour
             OnPlayerConqueredAllTerritories?.Invoke(defendant.playerNumber);
         }
 
+        // Check if either player has been eliminated (no territories left)
+        if(player.territoriesOwned.Count == 0){
+            player.eliminated = true;
+        }
+        else if(defendant.territoriesOwned.Count == 0){
+            defendant.eliminated = true;
+        }
+
         // TODO: delete later. for testing the final game screen only
         // OnPlayerConqueredAllTerritories?.Invoke(player.playerNumber);
 
@@ -551,6 +559,21 @@ public class MapScript : MonoBehaviour
             player.ResetAllPermissions();
             // Update gamehud's player
             GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer = players[playerTurn-1];
+
+            // Check if this player has been eliminated before proceeding: 
+            if(player.eliminated){
+                Debug.Log("Player " + playerTurn + " is out of the game. Skipping their turn.");
+                // update the player
+                if(playerTurn == playerCount){
+                    // cycle back to start of player list
+                    playerTurn = 1;
+                }
+                else{
+                    // otherwise, simply move to the next player
+                    playerTurn++;
+                }
+                continue;
+            }
 
             // Step one: getting and placing armies
             /// calculate the number of armies this player should receive based on territories
