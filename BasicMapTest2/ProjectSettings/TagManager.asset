@@ -12,33 +12,51 @@ TagManager:
   - Europe
   - 1
   - 2
-  - Canada
-  - Brazil
-  - Argentina
-  - Peru
-  - SouthAfrica
-  - EastAfrica
-  - Egypt
-  - Russia
-  - Kazakhstan
-  - MiddleEast
-  - India
-  - China
-  - UnitedKingdom
-  - SouthEurope
-  - NorthEurope
-  - WestEurope
-  - EastAustralia
-  - WestAustralia
-  - EastAmerica
-  - WestAmerica
-  - NorthAfrica
   - Deck
   - GameHUD
   - card
   - BackToGameBtn
   - player
   - Map
+  - Alaska
+  - NorthWestTerritory
+  - NorthEastTerritory
+  - Qubec
+  - Ontareo
+  - Alberta
+  - CentralAmerica
+  - EastUSA
+  - WestUSA
+  - Greenland
+  - Brazil
+  - Argentina
+  - Venezuela
+  - Peru
+  - NorthAfrica
+  - Congo
+  - Egypt
+  - EastAfrica
+  - SouthAfrica
+  - Madagascar
+  - Iceland
+  - UnitedKingdom
+  - Scandanavia
+  - Ukraine
+  - WestEurope
+  - NorthEurope
+  - SouthEurope
+  - Ural
+  - Siberia
+  - Yakutsk
+  - Kamchatka
+  - Japan
+  - China
+  - Mongolia
+  - Malaysia
+  - MiddleEast
+  - Afghanistan
+  - Siam
+  - India
   layers:
   - Default
   - TransparentFX
