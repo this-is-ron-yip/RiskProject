@@ -52,11 +52,15 @@ TagManager:
   - Japan
   - China
   - Mongolia
-  - Malaysia
   - MiddleEast
   - Afghanistan
   - Siam
   - India
+  - Indonesia
+  - NewGuinea
+  - WestAustralia
+  - EastAustralia
+  - NewZealand
   layers:
   - Default
   - TransparentFX
