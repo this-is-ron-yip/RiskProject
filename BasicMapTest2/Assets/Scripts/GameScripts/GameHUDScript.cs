@@ -193,7 +193,7 @@ public class GameHUDScript : MonoBehaviour
         isOnDisplay = false;
         MapScript mapScript = GameObject.FindGameObjectWithTag("Map").GetComponent<MapScript>();
         mapScript.HandleCardTurnIn(null);
-        mapScript.players[mapScript.playerTurn - 1].isTurn = false; // Notify board that this sequence is over
+        mapScript.players[mapScript.playerTurn - 1].clickExpected = false; // Notify board that this sequence is over
     }
 
     public void ShowEndingPanel(int winnerNum) {
