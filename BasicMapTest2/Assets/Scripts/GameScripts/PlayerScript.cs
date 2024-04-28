@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour
 {
     public int infCount, cavCount, artilCount;
     public int playerNumber;
-    public bool isTurn = false;
+    public bool clickExpected = false;
     public bool eliminated = false;
 
     public Color color = new Color(0, 0, 0);
@@ -52,12 +52,19 @@ public class PlayerScript : MonoBehaviour
     private void Start()
     {
         this.gameObject.tag = "player";
-        isTurn = false;
+        clickExpected = false;
+
+        // TODO: delete later. for testing only.
+        cardsInHand.Add(new Card("WILD", "WILD", "TEST_CARD_1"));
+        cardsInHand.Add(new Card("Bad", "Bad", "TEST_CARD_2"));
+        cardsInHand.Add(new Card("No match", "No match", "TEST_CARD_3"));
+        cardsInHand.Add(new Card("Bad", "Bad", "TEST_CARD_4"));
+        cardsInHand.Add(new Card("WILD", "WILD", "TEST_CARD_5"));
     }
 
     private void Update()
     {
-        if (isTurn && Input.GetMouseButtonDown(0))
+        if (clickExpected && Input.GetMouseButtonDown(0))
         {
             StartCoroutine(CheckWhatWasClickedOn());
         }
@@ -124,7 +131,7 @@ public class PlayerScript : MonoBehaviour
                 Debug.Log("Illegal click.");
             }
               
-            isTurn = false; // Player relinquishes its turn. Map decides whether to give the turn
+            clickExpected = false; // Player relinquishes its turn. Map decides whether to give the turn
             // back to the player (in the case that the player's turn isn't actually complete)
         }
 

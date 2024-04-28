@@ -11,7 +11,7 @@ public class GameHUDScript : MonoBehaviour
     public Transform endOfGamePanel;
     public bool isOnDisplay;
     public PlayerScript currentPlayer;
-    private List<Card> selectedCards = new List<Card>();
+    public List<Card> selectedCards = new List<Card>();
     private int cardsInDisplay = 0;
 
     [System.Obsolete]
@@ -59,9 +59,7 @@ public class GameHUDScript : MonoBehaviour
                 chooseCardDisplayPanel.gameObject.SetActive(false);
                 isOnDisplay = false;
                 mapScript.HandleCardTurnIn(selectedCards);
-                // Clear the selected cards list
-                selectedCards.Clear();
-                
+                selectedCards.Clear();            
             }
         }
     }
@@ -77,7 +75,7 @@ public class GameHUDScript : MonoBehaviour
         {
             //destroys all the existing cards
             //destroys the button to return without turning in cards if the player has max number of cards (the player must turn in 3 cards)
-            if (child.tag == "card" || (child.tag == "BackToGameBtn" && currentPlayer.cardsInHand.Count == 5))
+            if (child.tag != "TitleTxt" && (child.tag != "BackToGameBtn" || currentPlayer.cardsInHand.Count >= 5))
             {
                 Destroy(child.gameObject);
             }
@@ -87,7 +85,8 @@ public class GameHUDScript : MonoBehaviour
         cardsInDisplay = 0;
 
         // Create a display for each card in the current player's hand
-        Debug.Log("Choose your Cards to turn in!");
+        Debug.Log("Choose your cards to turn in!");
+        Debug.Log("Cards remaining in player hand: " + currentPlayer.cardsInHand.Count); // TODO: this isn't updating properly
         foreach (Card card in currentPlayer.cardsInHand)
         {
             CreateChooseCardDisplay(card);
@@ -208,6 +207,3 @@ public class GameHUDScript : MonoBehaviour
         Debug.Log("Quit game pressed.");
     }
 }
-
-// TODO: add logic for submitting cards. consider changing implementation to match the rest
-// Sicne the on click handlers can't be coroutines, causing out of order debug statements.

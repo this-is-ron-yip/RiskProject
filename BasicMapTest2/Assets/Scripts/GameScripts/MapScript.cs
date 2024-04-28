@@ -666,17 +666,18 @@ public class MapScript : MonoBehaviour
             }
 
             // Step two: allow player to turn in sets of cards. give additional armies accordingly
-            // TODO: require player to turn in cards if they have 5 or 6. 
-            if (player.cardsInHand.Count >= 3)
+             // Update gamehud's player
+            GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer = player;
+            while (player.cardsInHand.Count >= 3)
             {
                 // Allow player to turn in cards
+                Debug.Log("Player: " +  GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer.playerNumber +
+                         " Select cards to turn in.");
                 GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
                 // Once display is inactive, assume we are done with this phase.
                 yield return WaitForCardDisplayInactive();
-            }
-            else
-            {
-                Debug.Log("You don't have enough cards to turn in (3 minimum required)...");
+                // The display won't be inactive until they have chosen to return to the game
+                // Meaning they have four or less cards.
             }
 
             // TODO: Require player to place armies earned from card sets
@@ -688,16 +689,18 @@ public class MapScript : MonoBehaviour
             // Step four: if the player has claimed at least one territory during their turn
             // Prompt and allow/require them to draw a card from the deck
             // TODO: what if the deck is empty? Theoretically, reshuffle the deck.
-            while(player.wonTerritory){
+            bool player_must_draw = player.wonTerritory;
+            while(player_must_draw){
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
                 int cardsBeforeDraw = player.cardsInHand.Count;
                 player.clickExpected = true; // figure out why we need this line (should be handled by waitforplayer)
+                player.canDraw = true;
                 yield return StartCoroutine(WaitForPlayerToDoMove(player));
                 int cardsAfterDraw = player.cardsInHand.Count;
                 if(cardsBeforeDraw != cardsAfterDraw){
                     // Task accomplished
                     player.canDraw = false;
-                    break; // quit loop now that card has been drawn.
+                    player_must_draw = false;
                 }
                 else{
                     Debug.Log("Must draw a card. Try again.");
@@ -865,7 +868,8 @@ public class MapScript : MonoBehaviour
         }
 
         // Check for a valid set
-        if(selectedCards[1].troop_type != "WILD"){ 
+        if(selectedCards[0].troop_type != "WILD" && selectedCards[1].troop_type != "WILD"
+            && selectedCards[2].troop_type != "WILD"){ 
             // All three match:
             if(selectedCards[0].troop_type == selectedCards[1].troop_type && 
                 selectedCards[1].troop_type == selectedCards[2].troop_type){
@@ -878,7 +882,7 @@ public class MapScript : MonoBehaviour
             }
             else{
                 Debug.Log("Set is invalid.");
-                return; // invalid set. 
+                return;
             }
 
         }
