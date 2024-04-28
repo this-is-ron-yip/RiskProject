@@ -346,6 +346,26 @@ public class MapScript : MonoBehaviour
 
         // Part four: evaluate the outcome of the attack 
         EvaluateAttack(player_id, 2, 2); // TODO: replace hard coded values with player input
+
+        /* From the game rules:
+        If winning them gives you 6 or more cards, you must immediately trade
+        in enough sets to reduce your hand to 4 or fewer cards, but once your
+        hand is reduced to 4,3, or 2 cards, you must stop trading.
+        But if winning them gives you fewer than 6, you must wait until the
+        beginning of your next turn to trade in a set.
+        */
+        bool firstRep = true;
+        while(player.cardsInHand.Count >= 6)
+        {
+            Debug.Log((firstRep? "After eliminating your opponenent, you have more than 6 cards." :
+                "You still have more than 6 cards.") +
+            " Select which cards you would like to turn in.");
+            // Allow player to turn in cards
+            GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
+            // Once display is inactive, assume we are done with this phase.
+            yield return WaitForCardDisplayInactive();
+            firstRep = false;
+        }
     }
 
     private void HandleDiceRollAtStart(int player_id, GameObject die){
@@ -475,12 +495,12 @@ public class MapScript : MonoBehaviour
         List<int> defender_rolls = new List<int>();
         for(int i = 0; i < attacker_dice; i++){
             attacker_rolls.Add(UnityEngine.Random.Range(1, 7));
-            Debug.Log("Attacker Roll " + i + ": " + attacker_rolls[i]); // TODO: delete later?
+            Debug.Log("Attacker Roll " + i + ": " + attacker_rolls[i]);
             
         }
         for(int i = 0; i < defender_dice; i++){
             defender_rolls.Add(UnityEngine.Random.Range(1, 7));
-            Debug.Log("Defender Roll " + i + ": " + defender_rolls[i]); // TODO: delete later?
+            Debug.Log("Defender Roll " + i + ": " + defender_rolls[i]);
         }
 
         // Sort from highest to lowest. Sorts in ascending order by default, so reverse
@@ -491,6 +511,7 @@ public class MapScript : MonoBehaviour
 
         // Determine winner
         int one_v_ones = Math.Min(attacker_dice, defender_dice);
+        int remaining_attackers = attacker_dice;
         for(int i = 0; i < one_v_ones; i++){
             Debug.Log("First match up: Attacker: " +attacker_rolls[i] +
                     " vs Defender: " + defender_rolls[i]);
@@ -503,17 +524,21 @@ public class MapScript : MonoBehaviour
                 // Attacker loses one of the armies they sent to attack
                 Debug.Log("Defender wins this match up!");
                 PlayerTerritory.armyCount--;
+                remaining_attackers--;
             }
         }
 
         // Check if the attacker claimed the territory
         if(EnemyTerritory.armyCount <= 0){ // should not be negative, but just in case
-            player.mustDraw = true; // They won a territory! So they must draw a card. 
+            player.wonTerritory = true;
             EnemyTerritory.occupiedBy = attacker_id; // update territories variables
             player.territoriesOwned.Add(EnemyTerritory);
             player.territoryCountsPerContinent[EnemyTerritory.continent] += 1;
             defender.territoriesOwned.Remove(EnemyTerritory);
             defender.territoryCountsPerContinent[EnemyTerritory.continent] -= 1;
+
+            // Attacker must leave surviving armies on the territory they won
+            EnemyTerritory.armyCount = remaining_attackers;
         }
 
         /* TODO: prompt attacker to fortify position. Game rules state: 
@@ -525,6 +550,7 @@ public class MapScript : MonoBehaviour
             every territory must always be occupied by at least one army
         */
 
+        // Reset member variables
         player.TerritoryAttackingFrom = null;
         player.TerritoryAttackingOn = null;
 
@@ -536,6 +562,8 @@ public class MapScript : MonoBehaviour
         // Check if the defendant has been eliminated (no territories left)
         if(defender.territoriesOwned.Count == 0){
             defender.eliminated = true;
+            // Give defender's cards to the attacker:
+            player.cardsInHand.AddRange<Card>(defender.cardsInHand);
         }
 
         // TODO: delete later. for testing the final game screen only
@@ -660,17 +688,16 @@ public class MapScript : MonoBehaviour
             // Step four: if the player has claimed at least one territory during their turn
             // Prompt and allow/require them to draw a card from the deck
             // TODO: what if the deck is empty? Theoretically, reshuffle the deck.
-            while(player.mustDraw){ // mustDraw will be set during the attack logic
+            while(player.wonTerritory){
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
                 int cardsBeforeDraw = player.cardsInHand.Count;
-                player.canDraw = true;
                 player.isTurn = true; // figure out why we need this line (should be handled by waitforplayer)
                 yield return StartCoroutine(WaitForPlayerToDoMove(player));
                 int cardsAfterDraw = player.cardsInHand.Count;
                 if(cardsBeforeDraw != cardsAfterDraw){
                     // Task accomplished
                     player.canDraw = false;
-                    player.mustDraw = false;
+                    break; // quit loop now that card has been drawn.
                 }
                 else{
                     Debug.Log("Must draw a card. Try again.");

@@ -28,7 +28,7 @@ public class PlayerScript : MonoBehaviour
     public bool canClaimTerritoryAtStart = false;
     public bool canPlaceArmyAtStart = false;
     public bool canDraw = false;
-    public bool mustDraw = false;
+    public bool wonTerritory = false;
     public bool canRollToStart = false;
     public bool canTurnInCards = false;
     public bool canSelectAttackFrom = false;
@@ -175,5 +175,6 @@ public class PlayerScript : MonoBehaviour
         canSelectAttackFrom = false;
         canSelectAttackOn = false;
         canPlaceArmyInGame = false;
+        wonTerritory = false;
     }
 }
