@@ -236,7 +236,7 @@ public class MapScript : MonoBehaviour
     private IEnumerator WaitForDieRoll(){
         Debug.Log($"Player {playerTurn}, click the dice to roll.");
         PlayerScript player = players[playerTurn - 1];
-        player.isTurn = true;
+        player.clickExpected = true;
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
 
@@ -244,7 +244,7 @@ public class MapScript : MonoBehaviour
     {
         Debug.Log($"Player {playerTurn}, click an owned territory to attack from.");
         PlayerScript player = players[playerTurn - 1];
-        player.isTurn = true;
+        player.clickExpected = true;
         player.canSelectAttackFrom = true;
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
@@ -253,7 +253,7 @@ public class MapScript : MonoBehaviour
     {
         Debug.Log($"Player {playerTurn}, click an enemy territory to attack on.");
         PlayerScript player = players[playerTurn - 1];
-        player.isTurn = true;
+        player.clickExpected = true;
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
 
@@ -261,20 +261,20 @@ public class MapScript : MonoBehaviour
     {
         Debug.Log($"Player {playerTurn}, choose a territory to place 1 infantry on.");
         PlayerScript player = players[playerTurn - 1];
-        player.isTurn = true;
+        player.clickExpected = true;
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
 
     private IEnumerator InitialiseStartOfTurnInfantry(int player_id){
         Debug.Log($"Player {player_id}, where would you like to place one infantry?");
         PlayerScript player = players[player_id - 1];
-        player.isTurn = true;
+        player.clickExpected = true;
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
 
     private IEnumerator WaitForPlayerToDoMove(PlayerScript player)
     {
-        yield return new WaitUntil(() => !player.isTurn);
+        yield return new WaitUntil(() => !player.clickExpected);
     }
 
 
@@ -691,7 +691,7 @@ public class MapScript : MonoBehaviour
             while(player.wonTerritory){
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
                 int cardsBeforeDraw = player.cardsInHand.Count;
-                player.isTurn = true; // figure out why we need this line (should be handled by waitforplayer)
+                player.clickExpected = true; // figure out why we need this line (should be handled by waitforplayer)
                 yield return StartCoroutine(WaitForPlayerToDoMove(player));
                 int cardsAfterDraw = player.cardsInHand.Count;
                 if(cardsBeforeDraw != cardsAfterDraw){
