@@ -439,7 +439,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -459,7 +459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 24
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -557,6 +557,38 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[23]
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -633,11 +665,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: continent
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 19
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -657,7 +689,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 29
+      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -774,6 +806,54 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[40]
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -945,11 +1025,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: continent
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 19
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -1184,7 +1264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 17
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -1204,7 +1284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -1330,6 +1410,54 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[40]
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[41]
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[42]
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -1410,7 +1538,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -1430,7 +1558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 29
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -1548,6 +1676,50 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 34
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -1644,7 +1816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 20
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -1725,6 +1897,30 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[19]
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[20]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[21]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[22]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[23]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -1937,7 +2133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -2062,6 +2258,46 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[40]
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -2307,7 +2543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -2433,6 +2669,30 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -2529,7 +2789,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 27
+      value: 39
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -2626,6 +2886,42 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -2903,11 +3199,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_Name
-      value: Malaysia
+      value: Indonesia
       objectReference: {fileID: 0}
     - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_TagString
-      value: Malaysia
+      value: Indonesia
       objectReference: {fileID: 0}
     - target: {fileID: 8731052131184803628, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_Mesh
@@ -2965,7 +3261,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: continent
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
@@ -2989,7 +3285,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -3115,6 +3411,42 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 22
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -3191,11 +3523,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: continent
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 19
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -3215,7 +3547,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 28
+      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -3328,6 +3660,58 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[40]
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -3543,7 +3927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -3563,7 +3947,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 26
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -3668,6 +4052,42 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -3735,224 +4155,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
   m_PrefabInstance: {fileID: 968978341}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &976046322
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1316813153}
-    m_Modifications:
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: territoryEnum
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountries>k__BackingField.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountries>k__BackingField.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountries>k__BackingField.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountries>k__BackingField.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[1]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[2]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[3]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[4]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[5]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[6]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[7]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[8]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[9]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[10]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[11]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[12]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[13]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[14]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[15]
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[16]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[17]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[18]
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[19]
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[20]
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[21]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[22]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[23]
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -5.23
-      objectReference: {fileID: 0}
-    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -7.27
-      objectReference: {fileID: 0}
-    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_Name
-      value: Ontareo
-      objectReference: {fileID: 0}
-    - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_TagString
-      value: Ontareo
-      objectReference: {fileID: 0}
-    - target: {fileID: 8731052131184803628, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
---- !u!4 &976046323 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
-  m_PrefabInstance: {fileID: 976046322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1001272189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3967,7 +4169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -3987,7 +4189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -4112,6 +4314,54 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[40]
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[41]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[42]
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -4213,7 +4463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 39
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -4339,6 +4589,38 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -4419,7 +4701,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -4439,7 +4721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 25
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -4541,6 +4823,30 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -4621,7 +4927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -4641,7 +4947,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 26
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -4746,6 +5052,42 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -4847,7 +5189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 39
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -4973,6 +5315,38 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -5069,7 +5443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 24
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -5165,6 +5539,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[23]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
@@ -5267,7 +5677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 39
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -5392,6 +5802,38 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -5833,7 +6275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -5853,7 +6295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 29
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -5970,6 +6412,42 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -6297,7 +6775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -6423,6 +6901,30 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 29
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -6523,7 +7025,64 @@ Transform:
   - {fileID: 1434847483}
   - {fileID: 861462356}
   - {fileID: 2003206612}
-  - {fileID: 976046323}
+  - {fileID: 1055516577}
+  - {fileID: 615254743}
+  - {fileID: 1422080189}
+  - {fileID: 449040488}
+  - {fileID: 1386811078}
+  - {fileID: 1491406678}
+  - {fileID: 968978342}
+  - {fileID: 1393091938}
+  - {fileID: 1029133052}
+  - {fileID: 1022476408}
+  - {fileID: 1551398869}
+  - {fileID: 611788044}
+  - {fileID: 1001272190}
+  - {fileID: 601453686}
+  - {fileID: 1244792063}
+  - {fileID: 1378926394}
+  - {fileID: 954960590}
+  - {fileID: 482194779}
+  - {fileID: 956818342}
+  - {fileID: 1019888965}
+  - {fileID: 1095512648}
+  - {fileID: 1311674365}
+  - {fileID: 1047260054}
+  - {fileID: 710599743}
+  - {fileID: 753164584}
+  - {fileID: 1711458035}
+  - {fileID: 1318803408}
+  - {fileID: 1211744302}
+  - {fileID: 1250957203}
+  - {fileID: 1882915160}
+  - {fileID: 875971168}
+  - {fileID: 1691384193}
+  - {fileID: 1427536748}
+  - {fileID: 1635010989}
+  - {fileID: 1996591787}
+  - {fileID: 1571045183}
+  - {fileID: 553692767}
+  - {fileID: 1529861634}
+  - {fileID: 1996646592}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1316813154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316813151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34307c31c466964cab028c3bfdc8226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childObjects:
+  - {fileID: 1316813153}
+  - {fileID: 1434847483}
+  - {fileID: 861462356}
+  - {fileID: 2003206612}
   - {fileID: 1055516577}
   - {fileID: 615254743}
   - {fileID: 1422080189}
@@ -6559,49 +7118,6 @@ Transform:
   - {fileID: 553692767}
   - {fileID: 1529861634}
   - {fileID: 1996646592}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1316813154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1316813151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f34307c31c466964cab028c3bfdc8226, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  childObjects:
-  - {fileID: 1316813153}
-  - {fileID: 1434847483}
-  - {fileID: 861462356}
-  - {fileID: 2003206612}
-  - {fileID: 976046323}
-  - {fileID: 1055516577}
-  - {fileID: 615254743}
-  - {fileID: 1422080189}
-  - {fileID: 449040488}
-  - {fileID: 1386811078}
-  - {fileID: 1491406678}
-  - {fileID: 968978342}
-  - {fileID: 1393091938}
-  - {fileID: 1029133052}
-  - {fileID: 1022476408}
-  - {fileID: 1551398869}
-  - {fileID: 611788044}
-  - {fileID: 1001272190}
-  - {fileID: 601453686}
-  - {fileID: 1244792063}
-  - {fileID: 1378926394}
-  - {fileID: 954960590}
-  - {fileID: 482194779}
-  - {fileID: 956818342}
-  - {fileID: 1571045183}
-  - {fileID: 553692767}
-  - {fileID: 1529861634}
-  - {fileID: 1996646592}
   playerPrefab: {fileID: 8898816300779238917, guid: 811b6ababe70ee4418118aa6cbcd94d1, type: 3}
   infantryPrefab: {fileID: 45277284910968522, guid: fa981abfd72273f47a9bff2507c58243, type: 3}
   cavalryPrefab: {fileID: 0}
@@ -6615,7 +7131,6 @@ MonoBehaviour:
   - {fileID: 1434847483}
   - {fileID: 861462356}
   - {fileID: 2003206612}
-  - {fileID: 976046323}
   - {fileID: 1055516577}
   - {fileID: 615254743}
   - {fileID: 1422080189}
@@ -6635,6 +7150,18 @@ MonoBehaviour:
   - {fileID: 954960590}
   - {fileID: 482194779}
   - {fileID: 956818342}
+  - {fileID: 1019888965}
+  - {fileID: 1095512648}
+  - {fileID: 1311674365}
+  - {fileID: 1047260054}
+  - {fileID: 710599743}
+  - {fileID: 753164584}
+  - {fileID: 1711458035}
+  - {fileID: 1318803408}
+  - {fileID: 1211744302}
+  - {fileID: 1250957203}
+  - {fileID: 1882915160}
+  - {fileID: 875971168}
   - {fileID: 1571045183}
   - {fileID: 553692767}
   - {fileID: 1529861634}
@@ -6810,7 +7337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -6935,6 +7462,54 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[40]
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[41]
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[42]
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -7198,7 +7773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -7529,7 +8104,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -7549,7 +8124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 35
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -7690,6 +8265,62 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[40]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[41]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[42]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[43]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[44]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[45]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[46]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[47]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[48]
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -7771,7 +8402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -7791,7 +8422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 35
+      value: 47
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -7932,6 +8563,54 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[40]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[41]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[42]
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[43]
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[44]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[45]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[46]
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -8037,7 +8716,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 24
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -8135,13 +8814,45 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[23]
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.41
+      value: -5.06
       objectReference: {fileID: 0}
     - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8149,7 +8860,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.02
+      value: -6.26
       objectReference: {fileID: 0}
     - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8201,6 +8912,240 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
   m_PrefabInstance: {fileID: 1422080188}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1427536747
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1316813153}
+    m_Modifications:
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: continent
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: territoryEnum
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[3]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[4]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[5]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[6]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[7]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[8]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[9]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[10]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[11]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[12]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[13]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[14]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[15]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[16]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[17]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[18]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[19]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[20]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[21]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[22]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[23]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 12.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_Name
+      value: WestAustralia
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_TagString
+      value: WestAustralia
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731052131184803628, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+--- !u!4 &1427536748 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+  m_PrefabInstance: {fileID: 1427536747}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1434847482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8227,7 +9172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 21
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -8311,6 +9256,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[20]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[21]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[22]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[23]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
@@ -8466,7 +9435,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -8486,7 +9455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 22
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -8576,6 +9545,30 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[21]
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[22]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[23]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -8652,11 +9645,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: continent
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 19
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -8676,7 +9669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 25
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -8777,6 +9770,78 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[40]
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[41]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[42]
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -8964,7 +10029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -8984,7 +10049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 30
+      value: 39
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -9106,6 +10171,42 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -9182,11 +10283,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: continent
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -9206,7 +10307,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 29
+      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -9323,6 +10424,54 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[40]
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -9523,6 +10672,240 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1586796670}
   m_CullTransparentMesh: 1
+--- !u!1001 &1635010988
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1316813153}
+    m_Modifications:
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: continent
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: territoryEnum
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[3]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[4]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[5]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[6]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[7]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[8]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[9]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[10]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[11]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[12]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[13]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[14]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[15]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[16]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[17]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[18]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[19]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[20]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[21]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[22]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[23]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_Name
+      value: EastAustralia
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_TagString
+      value: EastAustralia
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731052131184803628, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+--- !u!4 &1635010989 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+  m_PrefabInstance: {fileID: 1635010988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1653654088
 GameObject:
   m_ObjectHideFlags: 0
@@ -9656,7 +11039,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1653654088}
   m_CullTransparentMesh: 1
---- !u!1001 &1711458034
+--- !u!1001 &1691384192
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9666,11 +11049,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: continent
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 23
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -9690,7 +11073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -9815,6 +11198,276 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_Name
+      value: NewGuinea
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_TagString
+      value: NewGuinea
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731052131184803628, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+--- !u!4 &1691384193 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+  m_PrefabInstance: {fileID: 1691384192}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1711458034
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1316813153}
+    m_Modifications:
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: continent
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: territoryEnum
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[3]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[4]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[5]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[6]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[7]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[8]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[9]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[10]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[11]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[12]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[13]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[14]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[15]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[16]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[17]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[18]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[19]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[20]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[21]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[22]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[23]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[39]
+      value: 37
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[40]
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -10176,7 +11829,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 31
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -10301,6 +11954,22 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
@@ -10513,7 +12182,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1996646591
+--- !u!1001 &1996591786
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10523,11 +12192,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: continent
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: territoryEnum
-      value: 19
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountries>k__BackingField.Array.size
@@ -10547,7 +12216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 25
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -10649,6 +12318,284 @@ PrefabInstance:
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 15.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_Name
+      value: NewZealand
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641679844097860517, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_TagString
+      value: NewZealand
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731052131184803628, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+--- !u!4 &1996591787 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2677403139946804772, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+  m_PrefabInstance: {fileID: 1996591786}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1996646591
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1316813153}
+    m_Modifications:
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: continent
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: territoryEnum
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountries>k__BackingField.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[3]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[4]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[5]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[6]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[7]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[8]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[9]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[10]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[11]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[12]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[13]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[14]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[15]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[16]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[17]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[18]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[19]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[20]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[21]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[22]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[23]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[24]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[25]
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[27]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[31]
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[35]
+      value: 34
+      objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -10745,7 +12692,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.size
-      value: 27
+      value: 39
       objectReference: {fileID: 0}
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[0]
@@ -10842,6 +12789,42 @@ PrefabInstance:
     - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[26]
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[28]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[29]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[30]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[32]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[33]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[34]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[36]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[37]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -4997668238604997199, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
+      propertyPath: <adjacentCountryEnums>k__BackingField.Array.data[38]
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1139469643589873107, guid: 2c7e5181bfe33fc45ab69bea1e7f3688, type: 3}
       propertyPath: m_IsTrigger
