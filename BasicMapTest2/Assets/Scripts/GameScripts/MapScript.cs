@@ -340,9 +340,12 @@ public class MapScript : MonoBehaviour
         player.canSelectAttackOn = false;
 
         // TODO: Part three: roll the dice
+        // Ask attacker how many die they would like to use
+        // Ask defender how many die they would like to use
+        // Execute the "attack"
 
         // Part four: evaluate the outcome of the attack 
-        EvaluateAttack(player_id);
+        EvaluateAttack(player_id, 2, 2); // TODO: replace hard coded values with player input
     }
 
     private void HandleDiceRollAtStart(int player_id, GameObject die){
@@ -405,6 +408,10 @@ public class MapScript : MonoBehaviour
         }
         if (claimed_territory.occupiedBy == player_id)
         {
+            if(claimed_territory.armyCount < 2){
+                Debug.Log("Must attack from a territory with at least two armies.");
+                return;
+            }
             Debug.Log("Attacking from " + claimed_territory.name);
             curr_player.TerritoryAttackingFrom = claimed_territory;
             return;
@@ -455,54 +462,80 @@ public class MapScript : MonoBehaviour
         }
     }
 
-   public void EvaluateAttack(int player_id)
+   public void EvaluateAttack(int attacker_id, int attacker_dice, int defender_dice)
     {
-        PlayerScript player = players[player_id - 1];
+        PlayerScript player = players[attacker_id - 1];
 
-        // TODO: Improve attack evaluation with dice
         TerritoryScript PlayerTerritory = player.TerritoryAttackingFrom;
         TerritoryScript EnemyTerritory = player.TerritoryAttackingOn;
-        PlayerScript defendant = players[EnemyTerritory.occupiedBy - 1];
+        PlayerScript defender = players[EnemyTerritory.occupiedBy - 1];
 
-        // Reduce by 1
-        PlayerScript enemy = players[EnemyTerritory.occupiedBy - 1];
+        // Generate the die rolls.
+        List<int> attacker_rolls = new List<int>();
+        List<int> defender_rolls = new List<int>();
+        for(int i = 0; i < attacker_dice; i++){
+            attacker_rolls.Add(UnityEngine.Random.Range(1, 7));
+            Debug.Log("Attacker Roll " + i + ": " + attacker_rolls[i]); // TODO: delete later?
+            
+        }
+        for(int i = 0; i < defender_dice; i++){
+            defender_rolls.Add(UnityEngine.Random.Range(1, 7));
+            Debug.Log("Defender Roll " + i + ": " + defender_rolls[i]); // TODO: delete later?
+        }
 
-        if (PlayerTerritory.armyCount > EnemyTerritory.armyCount)
-        {
-            // TODO: Improve by letting player select the number of troops to move
-            int troopsToNewTerritory = 1;
-            int consumedTroops = EnemyTerritory.armyCount;
+        // Sort from highest to lowest. Sorts in ascending order by default, so reverse
+        attacker_rolls.Sort();
+        attacker_rolls.Reverse();
+        defender_rolls.Sort();
+        defender_rolls.Reverse();
+
+        // Determine winner
+        int one_v_ones = Math.Min(attacker_dice, defender_dice);
+        for(int i = 0; i < one_v_ones; i++){
+            Debug.Log("First match up: Attacker: " +attacker_rolls[i] +
+                    " vs Defender: " + defender_rolls[i]);
+            if(attacker_rolls[i] > defender_rolls[i]){
+                // Defender loses one army on the territory being attacked.
+                Debug.Log("Attacker wins this match up!");
+                EnemyTerritory.armyCount--;
+            }
+            else{ // Defender wins on a tie
+                // Attacker loses one of the armies they sent to attack
+                Debug.Log("Defender wins this match up!");
+                PlayerTerritory.armyCount--;
+            }
+        }
+
+        // Check if the attacker claimed the territory
+        if(EnemyTerritory.armyCount <= 0){ // should not be negative, but just in case
             player.mustDraw = true; // They won a territory! So they must draw a card. 
-
-            // update territories variables
-            EnemyTerritory.occupiedBy = player_id;
-            PlayerTerritory.armyCount = PlayerTerritory.armyCount - consumedTroops - 1;
-            EnemyTerritory.armyCount = troopsToNewTerritory;
-
-            // update players variables
-            //? Need to update infCount, cavCount, artilCount, armies?
+            EnemyTerritory.occupiedBy = attacker_id; // update territories variables
             player.territoriesOwned.Add(EnemyTerritory);
             player.territoryCountsPerContinent[EnemyTerritory.continent] += 1;
-            enemy.territoriesOwned.Remove(EnemyTerritory);
-            enemy.territoryCountsPerContinent[EnemyTerritory.continent] -= 1;
+            defender.territoriesOwned.Remove(EnemyTerritory);
+            defender.territoryCountsPerContinent[EnemyTerritory.continent] -= 1;
         }
+
+        /* TODO: prompt attacker to fortify position. Game rules state: 
+            As soon as you defeat the last opposing army on
+            a territory, you capture that territory and must occupy it immediately. To
+            do so, move in at least as many armies as the number of dice you rolled in
+            your last battle. Remember you must always leave at least
+            one army behind on the territory you attacked from. During the game,
+            every territory must always be occupied by at least one army
+        */
+
         player.TerritoryAttackingFrom = null;
         player.TerritoryAttackingOn = null;
 
-        // Check if either player have won the game
+        // Check if the attacker has won the game
         if(player.territoriesOwned.Count == TerritoryScript.NUMBER_OF_TERRITORIES){
             OnPlayerConqueredAllTerritories?.Invoke(player.playerNumber);
         }
-        else if(defendant.territoriesOwned.Count == TerritoryScript.NUMBER_OF_TERRITORIES){
-            OnPlayerConqueredAllTerritories?.Invoke(defendant.playerNumber);
-        }
 
-        // Check if either player has been eliminated (no territories left)
-        if(player.territoriesOwned.Count == 0){
-            player.eliminated = true;
-        }
-        else if(defendant.territoriesOwned.Count == 0){
-            defendant.eliminated = true;
+        // Check if the defendant has been eliminated (no territories left)
+        if(defender.territoriesOwned.Count == 0){
+            defender.eliminated = true;
         }
 
         // TODO: delete later. for testing the final game screen only
@@ -643,6 +676,13 @@ public class MapScript : MonoBehaviour
                     Debug.Log("Must draw a card. Try again.");
                 }
             }
+
+            // TODO: Step five: Fortify position
+            /*
+            To fortify your position, move as many armies as you’d like from one (and
+            only one) of your territories into one (and only one) of your adjacent
+            territories. 
+            */
             
 
             Debug.Log("End of Player " + playerTurn + "'s turn");
