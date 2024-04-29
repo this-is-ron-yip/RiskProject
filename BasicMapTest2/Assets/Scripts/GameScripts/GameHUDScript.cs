@@ -74,10 +74,10 @@ public class GameHUDScript : MonoBehaviour
         foreach (Transform child in chooseCardDisplayPanel)
         {
             //destroys the button to return without turning in cards if the player has max number of cards (the player must turn in 3 cards)
-            if (child.tag == "card" || (child.tag == "BackToGameBtn" && currentPlayer.cardsInHand.Count >= 5))
+            if (child.tag == "card")
             {
                 Destroy(child.gameObject);
-            }
+            } // TODO: (child.tag == "BackToGameBtn" && currentPlayer.cardsInHand.Count >= 5)
         }
 
         // Reset card count before displaying new cards
@@ -191,7 +191,7 @@ public class GameHUDScript : MonoBehaviour
         isOnDisplay = false;
         MapScript mapScript = GameObject.FindGameObjectWithTag("Map").GetComponent<MapScript>();
         mapScript.HandleCardTurnIn(null, currentPlayer);
-        mapScript.players[mapScript.playerTurn - 1].clickExpected = false; // Notify board that this sequence is over
+       // TODO: mapScript.players[mapScript.playerTurn - 1].clickExpected = false; // Notify board that this sequence is over
     }
 
     public void ShowEndingPanel(int winnerNum) {
