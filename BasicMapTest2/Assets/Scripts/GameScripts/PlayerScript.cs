@@ -56,10 +56,10 @@ public class PlayerScript : MonoBehaviour
 
         // TODO: delete later. for testing only.
         cardsInHand.Add(new Card("WILD", "WILD", "TEST_CARD_1"));
-        cardsInHand.Add(new Card("Bad", "Bad", "TEST_CARD_2"));
-        cardsInHand.Add(new Card("No match", "No match", "TEST_CARD_3"));
-        cardsInHand.Add(new Card("Bad", "Bad", "TEST_CARD_4"));
-        cardsInHand.Add(new Card("WILD", "WILD", "TEST_CARD_5"));
+        cardsInHand.Add(new Card("NorthEastTerritory", "Infantry", "TEST_CARD_2"));
+        cardsInHand.Add(new Card("Alaska", "Cavalry", "TEST_CARD_3"));
+        cardsInHand.Add(new Card("Qubec", "Infantry", "TEST_CARD_4"));
+        cardsInHand.Add(new Card("NorthWestTerritory", "Cannon", "TEST_CARD_5"));
     }
 
     private void Update()

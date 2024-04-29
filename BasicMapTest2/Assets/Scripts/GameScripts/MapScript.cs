@@ -46,6 +46,12 @@ public class MapScript : MonoBehaviour
             {TerritoryScript.Continents.Africa, 3}, {TerritoryScript.Continents.Australia, 2}
     };
 
+    // Determine how many armies to grant based on how many sets have been turned in.
+    // After six sets, grant 5 more armies: armies = 15 + (turned_in - 6)*5
+    public static int[] ArmiesGrantedForCardSet = {4, 6, 8, 10, 12, 15}; 
+
+    public int sets_turned_in = 0;
+
     private void OnValidate()
     {
         FillTerritoriesList();
@@ -398,8 +404,7 @@ public class MapScript : MonoBehaviour
             curr_player.territoriesOwned.Add(claimed_territory);
             curr_player.territoryCountsPerContinent[claimed_territory.continent] += 1;
 
-            // Add one to the troops on this territory, since this function is only used at the start 
-            // of the game. TODO: Create a similar, but more general function for typical gameplay
+            // Add one to the troops on this territory, since this function is only used at the start
             claimed_territory.armyCount++;
             curr_player.infCount--;
             Debug.Log(territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies." +
@@ -448,8 +453,6 @@ public class MapScript : MonoBehaviour
 
         // Find the territory by name aka tag. If not found, do nothing
         TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
-
-        // TODO: Get all adjacent territories of the attacking territory
 
         if (selected_territory != null)
         {
@@ -686,10 +689,28 @@ public class MapScript : MonoBehaviour
                 yield return StartCoroutine(WaitForChooseCardDisplayInactive());
             }
 
-            // TODO: Require player to place armies earned from card sets
+            // Allow them to turn in more cards as long as they have at least three
+            while (player.cardsInHand.Count >= 3 && !GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().wantsToReturn)
+            {
+                GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
+                // Once display is inactive, assume we are done with this phase.
+                yield return StartCoroutine(WaitForChooseCardDisplayInactive());
+            }
 
-            // Step three: as long as they keep winning, prompt and allow the player to attack
-            // prompt them to attack!
+            // Require player to place armies earned from card sets
+            while(player.GetArmyCountTotal() != 0){
+                player.canPlaceArmyInGame = true;
+                yield return StartCoroutine(InitialiseStartOfTurnInfantry(playerTurn));
+                Debug.Log("Player " + playerTurn + " has " + player.GetArmyCountTotal() + 
+                    " armies left");
+
+                // Revoke permission
+                player.canPlaceArmyInGame = false;
+            }
+
+            // Step three: let the player attack
+            // TODO: let them attack multiple times, until they have no territories that are eligibe to attack from
+            // We can probably just lmake this a button instead of computing if there are elligible territories every time
             yield return LaunchAnAttack(playerTurn);
 
             // Step four: if the player has claimed at least one territory during their turn
@@ -749,7 +770,7 @@ public class MapScript : MonoBehaviour
             newPlayerScript.playerNumber = i+1;
             int infCount = 50 - (playerCount * 5);
             // TODO: DELETE THE LINE BELOW LATER, give less armies for testing
-            infCount = 5;
+            infCount = 3;
             newPlayerScript.GivePlayerArmies(infCount, 0, 0);
 
             // Set color for pieces:
@@ -893,11 +914,34 @@ public class MapScript : MonoBehaviour
 
         }
         // If one card is a wild, then it must be a valid set. Allow the set to be turned in.
-        Debug.Log("Set is valid.");
+        // Grant the proper amount of armies:
+        int armies_granted;
+        if(sets_turned_in < ArmiesGrantedForCardSet.Length){
+            armies_granted = ArmiesGrantedForCardSet[sets_turned_in];
+        }
+        else{
+            armies_granted = 15 + 5*(sets_turned_in - 5);
+        }
+        sets_turned_in++;
+
+        // Does the player own the territory of any of the cards? grant 2 extra armies
+        foreach(Card card in selectedCards){
+            if(card.territory_id == "WILD"){
+                continue;
+            }
+            if(curr_player.territoriesOwned.
+                Contains(GameObject.FindWithTag(card.territory_id).GetComponent<TerritoryScript>())){
+                Debug.Log("Player " + curr_player.playerNumber + " owns " + card.territory_id);
+                armies_granted += 2;
+                break; // only grant up to 2, regardless of how many territories match
+            }
+        }
+        curr_player.infCount += armies_granted;
+        Debug.Log("Set is valid. Player has been granted " + armies_granted + " armies");
 
         //removing the selected cards from the players hand:
         List<Card> updatedHand = new List<Card>();
-        foreach(Card card in players[playerTurn - 1].cardsInHand){
+        foreach(Card card in curr_player.cardsInHand){
             if (!selectedCards.Contains(card)){
                 updatedHand.Add(card);
             }
@@ -908,13 +952,13 @@ public class MapScript : MonoBehaviour
         //Can remove all of the following code. It was just to show that the card selection works correctly
 
         //if selected cards is a null object, it means that the player decided not to turn in any cards
-        string debugString = "Selected Cards: ";
+        /* string debugString = "Selected Cards: ";
         List<Card> playerCards = players[playerTurn - 1].cardsInHand;
         foreach (Card card in selectedCards)
         {
             debugString += "(" + $"{card.territory_id} : {card.troop_type}" + " with status: " + card.status + ") ";
         }
-        Debug.Log(debugString);
+        Debug.Log(debugString); 
 
         // showing the cards that are left in the players hand
         string debugString2 = "Cards remaining in player hand : ";
@@ -922,7 +966,7 @@ public class MapScript : MonoBehaviour
         {
             debugString2 += "(" + $"{card.territory_id} : {card.troop_type}" + " with status: " + card.status + ") ";
         }
-        Debug.Log(debugString2);
+        Debug.Log(debugString2); */
     }
         
 }

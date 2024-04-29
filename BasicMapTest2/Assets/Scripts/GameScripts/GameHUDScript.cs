@@ -10,6 +10,7 @@ public class GameHUDScript : MonoBehaviour
     public Transform chooseCardDisplayPanel;
     public Transform endOfGamePanel;
     public bool isOnDisplay;
+    public bool wantsToReturn = false;
     public PlayerScript currentPlayer;
     public List<Card> selectedCards = new List<Card>();
     private int cardsInDisplay = 0;
@@ -21,6 +22,7 @@ public class GameHUDScript : MonoBehaviour
         cardDisplayPanel.gameObject.SetActive(false);
         endOfGamePanel.gameObject.SetActive(false);
         isOnDisplay = false;
+        wantsToReturn = false;
     }
 
     private void CardClicked(Card card, GameObject cardDisplay)
@@ -46,9 +48,6 @@ public class GameHUDScript : MonoBehaviour
             }
         }
 
-        Debug.Log("Card clicked: " + card.territory_id + " - " + card.troop_type);
-        Debug.Log("Number of Cards Selected: " + selectedCards.Count);
-
         // If three cards are selected, do something
         if (selectedCards.Count == 3)
         {
@@ -70,6 +69,7 @@ public class GameHUDScript : MonoBehaviour
     {
         chooseCardDisplayPanel.gameObject.SetActive(true);
         isOnDisplay = true;
+        wantsToReturn = false;
 
         foreach (Transform child in chooseCardDisplayPanel)
         {
@@ -189,6 +189,7 @@ public class GameHUDScript : MonoBehaviour
         selectedCards.Clear();
         chooseCardDisplayPanel.gameObject.SetActive(false);
         isOnDisplay = false;
+        wantsToReturn = true;
         MapScript mapScript = GameObject.FindGameObjectWithTag("Map").GetComponent<MapScript>();
         mapScript.HandleCardTurnIn(null, currentPlayer);
     }
