@@ -3,6 +3,7 @@ using System.Collections.Generic; // Required for using Lists.
 using UnityEngine.UI;
 
 using TMPro;
+using System;
 
 public class GameHUDScript : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameHUDScript : MonoBehaviour
     public Transform chooseCardDisplayPanel;
     public Transform endOfGamePanel;
     public Button viewCardsBtn;
+    public TextMeshProUGUI eventCardTMP;
+    public TextMeshProUGUI errorCardTMP;
 
     public Transform attackInputPanel;
     public bool cardsAreOnDisplay;
@@ -32,11 +35,11 @@ public class GameHUDScript : MonoBehaviour
         cardsAreOnDisplay = false;
         attackInputIsOnDisplay = false;
         wantsToReturn = false;
-        ShowAttackInputPanel();
     }
 
     private void CardClicked(Card card, GameObject cardDisplay)
     {
+        
         // Toggle selection of the card
         if (selectedCards.Contains(card))
         {
@@ -229,10 +232,10 @@ public class GameHUDScript : MonoBehaviour
         string attackerInput = attacker_army_input.text;
         string defenderInput = defender_army_input.text;
 
-        // If the text in either input field is null, output an error
-        if (attackerInput == null || defenderInput == null)
+        // If the text in either input field is null or is not a number, output an error
+        if (attackerInput == null || defenderInput == null || !int.TryParse(attackerInput, out _) || !int.TryParse(defenderInput, out _))
         {
-            Debug.Log("Must fill in both fields.");
+            Debug.Log("Invalid input.");
         }
         else // Otherwise, print the output to the debug log
         {

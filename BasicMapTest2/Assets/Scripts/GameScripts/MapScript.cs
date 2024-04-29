@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.LowLevel;
@@ -17,6 +18,7 @@ public class MapScript : MonoBehaviour
     public int playerTurn = 1;
     public int playerCount = 3;
     public int startingPlayer = -1;
+    private GameHUDScript gameHUDScript;
 
     public bool gameOver = false;
     public List<PlayerScript> players = new List<PlayerScript>();
@@ -55,6 +57,7 @@ public class MapScript : MonoBehaviour
 
     private void OnValidate()
     {
+        gameHUDScript = GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>();
         FillTerritoriesList();
         FillAdjList();
     }
@@ -162,6 +165,7 @@ public class MapScript : MonoBehaviour
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
         int territories_left = TerritoryScript.NUMBER_OF_TERRITORIES;
         while(territories_left > 0){
+            
             Debug.Log("Territories left: " + territories_left);
             players[playerTurn - 1].canClaimTerritoryAtStart = true;
 
@@ -287,14 +291,14 @@ public class MapScript : MonoBehaviour
     private IEnumerator WaitForChooseCardDisplayInactive()
     {
         yield return new WaitUntil(() => 
-                !GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().cardsAreOnDisplay);
+                !gameHUDScript.cardsAreOnDisplay);
     }
 
     // TODO: change isOnDisplay to be more specific
     private IEnumerator WaitForAttackInputPanelInactive()
     {
         yield return new WaitUntil(() => 
-                !GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().attackInputIsOnDisplay);
+                !gameHUDScript.attackInputIsOnDisplay);
     }
 
     // Responsible for calculating and granting armies based on territories,
@@ -356,7 +360,7 @@ public class MapScript : MonoBehaviour
         // Ask attacker how many die they would like to use
         // Ask defender how many die they would like to use
         // Execute the "attack"
-        GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowAttackInputPanel();
+        gameHUDScript.ShowAttackInputPanel();
         yield return WaitForAttackInputPanelInactive(); // TODO: extract data somehow
 
         // Part four: evaluate the outcome of the attack 
@@ -376,7 +380,7 @@ public class MapScript : MonoBehaviour
                 "You still have more than 6 cards.") +
             " Select which cards you would like to turn in.");
             // Allow player to turn in cards
-            GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
+            gameHUDScript.ShowChooseCardPanel();
             // Once display is inactive, assume we are done with this phase.
             yield return WaitForChooseCardDisplayInactive();
             firstRep = false;
@@ -683,7 +687,7 @@ public class MapScript : MonoBehaviour
                 // Allow player to turn in cards
                 Debug.Log("Player: " +  GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer.playerNumber +
                          " Select cards to turn in.");
-                GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
+                gameHUDScript.ShowChooseCardPanel();
                 // Once display is inactive, assume we are done with this phase.
                 yield return StartCoroutine(WaitForChooseCardDisplayInactive());
             }
@@ -694,15 +698,15 @@ public class MapScript : MonoBehaviour
                 // Allow player to turn in cards
                 Debug.Log("Player: " +  GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer.playerNumber +
                          " Still has more than four cards. Select cards to turn in.");
-                GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
+                gameHUDScript.ShowChooseCardPanel();
                 // Once display is inactive, assume we are done with this phase.
                 yield return StartCoroutine(WaitForChooseCardDisplayInactive());
             }
 
             // Allow them to turn in more cards as long as they have at least three
-            while (player.cardsInHand.Count >= 3 && !GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().wantsToReturn)
+            while (player.cardsInHand.Count >= 3 && !gameHUDScript.wantsToReturn)
             {
-                GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
+                gameHUDScript.ShowChooseCardPanel();
                 // Once display is inactive, assume we are done with this phase.
                 yield return StartCoroutine(WaitForChooseCardDisplayInactive());
             }
@@ -872,7 +876,7 @@ public class MapScript : MonoBehaviour
 
     public void HandlePlayerWonGame(int playerNumber){
         // Show ending screen
-        GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowEndingPanel(playerNumber);
+        gameHUDScript.ShowEndingPanel(playerNumber);
         gameOver = true;
     }
     public void HandleCardTurnIn(List<Card> selectedCards, PlayerScript curr_player)
