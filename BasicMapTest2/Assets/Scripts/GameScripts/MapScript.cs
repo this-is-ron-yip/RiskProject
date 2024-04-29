@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.TextCore.LowLevel;
+using UnityEngine.UI;
 
 public class MapScript : MonoBehaviour
 {
@@ -286,7 +287,14 @@ public class MapScript : MonoBehaviour
     private IEnumerator WaitForChooseCardDisplayInactive()
     {
         yield return new WaitUntil(() => 
-                !GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().isOnDisplay);
+                !GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().cardsAreOnDisplay);
+    }
+
+    // TODO: change isOnDisplay to be more specific
+    private IEnumerator WaitForAttackInputPanelInactive()
+    {
+        yield return new WaitUntil(() => 
+                !GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().attackInputIsOnDisplay);
     }
 
     // Responsible for calculating and granting armies based on territories,
@@ -348,6 +356,8 @@ public class MapScript : MonoBehaviour
         // Ask attacker how many die they would like to use
         // Ask defender how many die they would like to use
         // Execute the "attack"
+        GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowAttackInputPanel();
+        yield return WaitForAttackInputPanelInactive(); // TODO: extract data somehow
 
         // Part four: evaluate the outcome of the attack 
         EvaluateAttack(player_id, 2, 2); // TODO: replace hard coded values with player input

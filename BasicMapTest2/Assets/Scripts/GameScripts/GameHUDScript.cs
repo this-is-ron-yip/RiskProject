@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic; // Required for using Lists.
 using UnityEngine.UI;
+
 using TMPro;
 
 public class GameHUDScript : MonoBehaviour
@@ -9,11 +10,16 @@ public class GameHUDScript : MonoBehaviour
     public Transform cardDisplayPanel;
     public Transform chooseCardDisplayPanel;
     public Transform endOfGamePanel;
-    public bool isOnDisplay;
+
+    public Transform attackInputPanel;
+    public bool cardsAreOnDisplay;
+    public bool attackInputIsOnDisplay;
     public bool wantsToReturn = false;
     public PlayerScript currentPlayer;
     public List<Card> selectedCards = new List<Card>();
     private int cardsInDisplay = 0;
+    [SerializeField] InputField attacker_army_input;
+    [SerializeField] InputField defender_army_input;
 
     [System.Obsolete]
     private void Start()
@@ -21,7 +27,9 @@ public class GameHUDScript : MonoBehaviour
         // Make sure the display panels are not visible at the start.
         cardDisplayPanel.gameObject.SetActive(false);
         endOfGamePanel.gameObject.SetActive(false);
-        isOnDisplay = false;
+        attackInputPanel.gameObject.SetActive(false);
+        cardsAreOnDisplay = false;
+        attackInputIsOnDisplay = false;
         wantsToReturn = false;
     }
 
@@ -57,7 +65,7 @@ public class GameHUDScript : MonoBehaviour
             {
                 mapScript.HandleCardTurnIn(selectedCards, currentPlayer);
                 chooseCardDisplayPanel.gameObject.SetActive(false);
-                isOnDisplay = false;
+                cardsAreOnDisplay = false;
                 selectedCards.Clear();  
             }
         }
@@ -68,7 +76,7 @@ public class GameHUDScript : MonoBehaviour
     public void ShowChooseCardPanel()
     {
         chooseCardDisplayPanel.gameObject.SetActive(true);
-        isOnDisplay = true;
+        cardsAreOnDisplay = true;
         wantsToReturn = false;
 
         foreach (Transform child in chooseCardDisplayPanel)
@@ -98,7 +106,7 @@ public class GameHUDScript : MonoBehaviour
         if (currentPlayer != null)
         {
             cardDisplayPanel.gameObject.SetActive(true);
-            isOnDisplay = true;
+            cardsAreOnDisplay = true;
 
             foreach (Transform child in cardDisplayPanel)
             {
@@ -188,7 +196,7 @@ public class GameHUDScript : MonoBehaviour
     {
         selectedCards.Clear();
         chooseCardDisplayPanel.gameObject.SetActive(false);
-        isOnDisplay = false;
+        cardsAreOnDisplay = false;
         wantsToReturn = true;
         MapScript mapScript = GameObject.FindGameObjectWithTag("Map").GetComponent<MapScript>();
         mapScript.HandleCardTurnIn(null, currentPlayer);
@@ -197,12 +205,17 @@ public class GameHUDScript : MonoBehaviour
     // From the view cards panel
     public void OnBackToGamePressed(){
         cardDisplayPanel.gameObject.SetActive(false);
-        isOnDisplay = false;
+        cardsAreOnDisplay = false;
     }
 
     public void ShowEndingPanel(int winnerNum) {
         endOfGamePanel.gameObject.SetActive(true);
         Debug.Log("Player " + winnerNum + " has conquered all the territories and won the game! GAME OVER.");
+    }
+
+    public void ShowAttackInputPanel() {
+        attackInputIsOnDisplay = true;
+        attackInputPanel.gameObject.SetActive(true);
     }
 
     public void OnQuitGamePressed()
@@ -214,5 +227,21 @@ public class GameHUDScript : MonoBehaviour
          #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #endif
+    }
+
+       public void OnAttackInputSubmitPressed(){
+        if(attacker_army_input == null || defender_army_input == null){
+            Debug.Log("Must fill in both fields.");
+        }
+        else{
+            // TODO: Set member fields.
+            string attacker_army_count = attacker_army_input.text;
+            string defender_army_count = defender_army_input.text;
+            Debug.Log("reached submit. attacker army count: " + 
+            attacker_army_count + " defender army count: " + defender_army_count); // TODO: delete later
+            attackInputIsOnDisplay = false;
+            attackInputPanel.gameObject.SetActive(false);
+        }
+       
     }
 }
