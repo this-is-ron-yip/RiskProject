@@ -98,12 +98,14 @@ public class DeckScript : MonoBehaviour
     }
 
     // Used to create deck. These two arrays should be the same size as the deck.
-    // TODO: update the list to have all 42
-    public string[] all_territories = {"Canada", "EastAmerica", "WestAmerica", "Brazil",
-        "Argentina", "UnitedKingdom", "Peru",  "WestEurope", "NorthEurope",  "SouthEurope", "Egypt",
-         "EastAfrica", "NorthAfrica", "SouthAfrica", "WestAustralia", "EastAustralia", "India", "MiddleEast",
-         "Kazakhstan", "China", "Russia"
-    };
+    // TODO: ensure this list matches the territory enums
+    public string[] all_territories = {"Alaska", "NorthWestTerritory", "NorthEastTerritory", 
+    "Greenland", "Qubec", "Alberta", "EastUSA", "WestUSA", "CentralAmerica", 
+    "Venezuela", "Peru", "Brazil", "Argentina", "NorthAfrica", "Egypt", "Congo", "EastAfrica", 
+    "SouthAfrica", "Madagascar", "Iceland", "UnitedKingdom", "Scandanavia", "Ukraine", 
+    "WestEurope", "NorthEurope", "SouthEurope", "Ural", "Siberia", "Yakutsk", 
+    "Kamchatka", "Mongolia", "China", "Japan", "Afghanistan", "MiddleEast", 
+    "Siam", "Indonesia", "India", "NewGuinea", "WestAustralia", "EastAustralia", "NewZealand"};
     public string[] troop_types = {
         "Infantry", "Calvalry", "Cannon",
     };
