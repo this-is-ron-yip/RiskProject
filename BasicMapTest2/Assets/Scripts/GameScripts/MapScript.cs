@@ -66,7 +66,7 @@ public class MapScript : MonoBehaviour
         UpdateHud();
         OnPlayerConqueredAllTerritories += HandlePlayerWonGame;
 
-        StartCoroutine(AssignStartTerritories());
+        StartCoroutine(AssignStartTerritories()); // Will in turn execute rest of the program.
     }
 
     private void Update()
@@ -621,7 +621,7 @@ public class MapScript : MonoBehaviour
             // Prevent all permissions at start of each loop
             player.ResetAllPermissions();
             // Update gamehud's player
-            GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer = players[playerTurn-1];
+            FindAnyObjectByType<GameHUDScript>().currentPlayer = players[playerTurn-1];
 
             // Check if this player has been eliminated before proceeding: 
             if(player.eliminated){
@@ -752,7 +752,6 @@ public class MapScript : MonoBehaviour
                 // otherwise, simply move to the next player
                 playerTurn++;
             }
-            
         }
     }
 
@@ -822,7 +821,7 @@ public class MapScript : MonoBehaviour
         return terr1.adjacentCountryEnums.Contains(terr2.territoryEnum);
     }
 
-    // This function is only responsible for creating the army piece and visually placing it
+    // TODO: Delete this function? This function is only responsible for creating the army piece and visually placing it
     // in the proper position. Any other functional logic (i.e. number of armies a player has
     // left, or who owns the territory) is handled outside of this function.
     // As such, this function should always be called last, since it may rely on data members
@@ -859,19 +858,6 @@ public class MapScript : MonoBehaviour
                 players[playerTurn - 1].CreateArmy(cavalryPrefab, armyPos);
                 break;
         }
-        
-        //TODO for SITUATION 1: check any other variables that need to be updated when spawning the Army object
-            //(e.g occupiedBy field in the Territory script etc..)
-
-        //SITUATION 2 - Getting and Placing New Armies at the Beginning of Each Turn:
-
-        //SITUATION 3 - During Gameplay:
-
-        // TODO: place army on the given position
-        // TODO: figure out who owns the army objects. Should we store a list
-        // of army game objects in the player, which would include their position? 
-        // TODO: figure out how to represent armies on a territory (maybe just 1 piece?)
-        // And maybe clicking on the piece tells us how many armies it represents.
     }
 
     public void HandlePlayerWonGame(int playerNumber){
@@ -953,25 +939,6 @@ public class MapScript : MonoBehaviour
         if(ds != null){
             ds.discard.AddRange(selectedCards);
         }
-
-        //Can remove all of the following code. It was just to show that the card selection works correctly
-
-        //if selected cards is a null object, it means that the player decided not to turn in any cards
-        /* string debugString = "Selected Cards: ";
-        List<Card> playerCards = players[playerTurn - 1].cardsInHand;
-        foreach (Card card in selectedCards)
-        {
-            debugString += "(" + $"{card.territory_id} : {card.troop_type}" + " with status: " + card.status + ") ";
-        }
-        Debug.Log(debugString); 
-
-        // showing the cards that are left in the players hand
-        string debugString2 = "Cards remaining in player hand : ";
-        foreach (Card card in playerCards)
-        {
-            debugString2 += "(" + $"{card.territory_id} : {card.troop_type}" + " with status: " + card.status + ") ";
-        }
-        Debug.Log(debugString2); */
     }
         
 }

@@ -207,7 +207,12 @@ public class GameHUDScript : MonoBehaviour
 
     public void OnQuitGamePressed()
     {
-        // TODO: add code to quit/kill the game.
-        Debug.Log("Quit game pressed.");
+        Debug.Log("Quitting Game...");
+         #if UNITY_STANDALONE
+            Application.Quit();
+        #endif
+         #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 }
