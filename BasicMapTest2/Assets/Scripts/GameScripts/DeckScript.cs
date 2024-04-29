@@ -10,6 +10,7 @@ using UnityEngine;
 public class DeckScript : MonoBehaviour
 {
     private Queue<Card> deck = new Queue<Card>(); // the actual deck of cards
+    public List<Card> discard = new List<Card>(); // discard, to be recycled
 
     // Start is called before the first frame update
     void Start()
@@ -37,9 +38,15 @@ public class DeckScript : MonoBehaviour
         }
         else
         {
-            Debug.Log("The deck is empty. Can not draw card.");
+            Debug.Log("The deck is empty. Reshuffling...");
+            RecycleDiscard();
+            // draw the card
+            Card result = deck.Dequeue();
+
+            Debug.Log($"Player drew the " + result.territory_id + "-" + result.troop_type + " card");
+            return result;
+
         }
-        return null;
     }
 
     // instantiate unshuffled deck
@@ -57,6 +64,23 @@ public class DeckScript : MonoBehaviour
             // add it to the front of the queue
             deck.Enqueue(next);
         }
+    }
+
+    public void RecycleDiscard(){
+        Debug.Log("Shuffling discard pile");
+
+        // Shuffle:
+        for(int i = discard.Count - 1; i >= 0; i--){
+            // get a random card from the list, and remove it from the unshuffled deck
+            Card next = discard.ElementAt(UnityEngine.Random.Range(0, i + 1));
+            discard.Remove(next);
+
+            // add it to the front of the queue
+            deck.Enqueue(next);
+        }
+
+        // clear discard
+        discard.Clear();
     }
 
     public List<Card> GetUnshuffledDeck(){

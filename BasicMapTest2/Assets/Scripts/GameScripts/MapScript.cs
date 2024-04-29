@@ -715,7 +715,6 @@ public class MapScript : MonoBehaviour
 
             // Step four: if the player has claimed at least one territory during their turn
             // Prompt and allow/require them to draw a card from the deck
-            // TODO: what if the deck is empty? Theoretically, reshuffle the deck.
             bool player_must_draw = player.wonTerritory;
             while(player_must_draw){
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
@@ -948,6 +947,12 @@ public class MapScript : MonoBehaviour
         }
         // players[playerTurn - 1].cardsInHand = updatedHand;
         curr_player.cardsInHand = updatedHand; // For some reason, the above line doesn't update the player hand. We need this line.
+
+        // Add selected cards to the discard pile:
+        DeckScript ds = FindAnyObjectByType<DeckScript>().GetComponent<DeckScript>();
+        if(ds != null){
+            ds.discard.AddRange(selectedCards);
+        }
 
         //Can remove all of the following code. It was just to show that the card selection works correctly
 
