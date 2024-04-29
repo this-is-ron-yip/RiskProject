@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641228, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7114,6 +7114,10 @@ MonoBehaviour:
   - {fileID: 1250957203}
   - {fileID: 1882915160}
   - {fileID: 875971168}
+  - {fileID: 1691384193}
+  - {fileID: 1427536748}
+  - {fileID: 1635010989}
+  - {fileID: 1996591787}
   - {fileID: 1571045183}
   - {fileID: 553692767}
   - {fileID: 1529861634}
@@ -7162,6 +7166,10 @@ MonoBehaviour:
   - {fileID: 1250957203}
   - {fileID: 1882915160}
   - {fileID: 875971168}
+  - {fileID: 1691384193}
+  - {fileID: 1427536748}
+  - {fileID: 1635010989}
+  - {fileID: 1996591787}
   - {fileID: 1571045183}
   - {fileID: 553692767}
   - {fileID: 1529861634}
@@ -10624,7 +10632,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1317397843}
         m_TargetAssemblyTypeName: GameHUDScript, Assembly-CSharp
-        m_MethodName: OnBackToGamePressed
+        m_MethodName: OnDoNotTurnInCardsPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

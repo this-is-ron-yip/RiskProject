@@ -77,7 +77,7 @@ public class GameHUDScript : MonoBehaviour
             if (child.tag == "card")
             {
                 Destroy(child.gameObject);
-            } // TODO: (child.tag == "BackToGameBtn" && currentPlayer.cardsInHand.Count >= 5)
+            }
         }
 
         // Reset card count before displaying new cards
@@ -184,14 +184,19 @@ public class GameHUDScript : MonoBehaviour
     }
 
     // Closes the Cards display panel and returns to the game
-    public void OnBackToGamePressed()
+    public void OnDoNotTurnInCardsPressed()
     {
         selectedCards.Clear();
         chooseCardDisplayPanel.gameObject.SetActive(false);
         isOnDisplay = false;
         MapScript mapScript = GameObject.FindGameObjectWithTag("Map").GetComponent<MapScript>();
         mapScript.HandleCardTurnIn(null, currentPlayer);
-       // TODO: mapScript.players[mapScript.playerTurn - 1].clickExpected = false; // Notify board that this sequence is over
+    }
+
+    // From the view cards panel
+    public void OnBackToGamePressed(){
+        cardDisplayPanel.gameObject.SetActive(false);
+        isOnDisplay = false;
     }
 
     public void ShowEndingPanel(int winnerNum) {
