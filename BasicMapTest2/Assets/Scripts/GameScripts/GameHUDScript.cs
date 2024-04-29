@@ -10,6 +10,7 @@ public class GameHUDScript : MonoBehaviour
     public Transform cardDisplayPanel;
     public Transform chooseCardDisplayPanel;
     public Transform endOfGamePanel;
+    public Button viewCardsBtn;
 
     public Transform attackInputPanel;
     public bool cardsAreOnDisplay;
@@ -31,6 +32,7 @@ public class GameHUDScript : MonoBehaviour
         cardsAreOnDisplay = false;
         attackInputIsOnDisplay = false;
         wantsToReturn = false;
+        ShowAttackInputPanel();
     }
 
     private void CardClicked(Card card, GameObject cardDisplay)
@@ -216,6 +218,43 @@ public class GameHUDScript : MonoBehaviour
     public void ShowAttackInputPanel() {
         attackInputIsOnDisplay = true;
         attackInputPanel.gameObject.SetActive(true);
+        viewCardsBtn.gameObject.SetActive(false);
+    }
+
+    public void OnAttackInputSubmitPressed()    
+    {
+        viewCardsBtn.gameObject.SetActive(false); // Turning this button off so that it looks nicer
+
+        // Getting the inputs from each input field
+        string attackerInput = attacker_army_input.text;
+        string defenderInput = defender_army_input.text;
+
+        // If the text in either input field is null, output an error
+        if (attackerInput == null || defenderInput == null)
+        {
+            Debug.Log("Must fill in both fields.");
+        }
+        else // Otherwise, print the output to the debug log
+        {
+            Debug.Log("Attacker is attacking with " + attackerInput + " armies\n " +
+                        "Defender is defending with " + defenderInput + " armies");
+
+
+            // I left your code here Sophia, in case you wanted to use it again when you came back to this
+
+            /*
+            // TODO: Set member fields.
+            string attacker_army_count = attackerInput;
+            string defender_army_count = defenderInput;
+            Debug.Log("reached submit. attacker army count: " +
+            attacker_army_count + " defender army count: " + defender_army_count); // TODO: delete later
+            */
+
+            // Turn off the display once the submit button has been pressed
+            attackInputIsOnDisplay = false;
+            attackInputPanel.gameObject.SetActive(false);
+            viewCardsBtn.gameObject.SetActive(true);
+        }
     }
 
     public void OnQuitGamePressed()
@@ -227,21 +266,5 @@ public class GameHUDScript : MonoBehaviour
          #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #endif
-    }
-
-       public void OnAttackInputSubmitPressed(){
-        if(attacker_army_input == null || defender_army_input == null){
-            Debug.Log("Must fill in both fields.");
-        }
-        else{
-            // TODO: Set member fields.
-            string attacker_army_count = attacker_army_input.text;
-            string defender_army_count = defender_army_input.text;
-            Debug.Log("reached submit. attacker army count: " + 
-            attacker_army_count + " defender army count: " + defender_army_count); // TODO: delete later
-            attackInputIsOnDisplay = false;
-            attackInputPanel.gameObject.SetActive(false);
-        }
-       
     }
 }
