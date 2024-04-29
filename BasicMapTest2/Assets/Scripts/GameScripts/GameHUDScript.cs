@@ -56,10 +56,10 @@ public class GameHUDScript : MonoBehaviour
             MapScript mapScript = GameObject.FindGameObjectWithTag("Map").GetComponent<MapScript>();
             if (mapScript != null)
             {
+                mapScript.HandleCardTurnIn(selectedCards, currentPlayer);
                 chooseCardDisplayPanel.gameObject.SetActive(false);
                 isOnDisplay = false;
-                mapScript.HandleCardTurnIn(selectedCards);
-                selectedCards.Clear();            
+                selectedCards.Clear();  
             }
         }
     }
@@ -73,9 +73,8 @@ public class GameHUDScript : MonoBehaviour
 
         foreach (Transform child in chooseCardDisplayPanel)
         {
-            //destroys all the existing cards
             //destroys the button to return without turning in cards if the player has max number of cards (the player must turn in 3 cards)
-            if (child.tag != "TitleTxt" && (child.tag != "BackToGameBtn" || currentPlayer.cardsInHand.Count >= 5))
+            if (child.tag == "card" || (child.tag == "BackToGameBtn" && currentPlayer.cardsInHand.Count >= 5))
             {
                 Destroy(child.gameObject);
             }
@@ -86,7 +85,7 @@ public class GameHUDScript : MonoBehaviour
 
         // Create a display for each card in the current player's hand
         Debug.Log("Choose your cards to turn in!");
-        Debug.Log("Cards remaining in player hand: " + currentPlayer.cardsInHand.Count); // TODO: this isn't updating properly
+        Debug.Log("Cards remaining in player hand: " + currentPlayer.cardsInHand.Count);
         foreach (Card card in currentPlayer.cardsInHand)
         {
             CreateChooseCardDisplay(card);
@@ -191,12 +190,11 @@ public class GameHUDScript : MonoBehaviour
         chooseCardDisplayPanel.gameObject.SetActive(false);
         isOnDisplay = false;
         MapScript mapScript = GameObject.FindGameObjectWithTag("Map").GetComponent<MapScript>();
-        mapScript.HandleCardTurnIn(null);
+        mapScript.HandleCardTurnIn(null, currentPlayer);
         mapScript.players[mapScript.playerTurn - 1].clickExpected = false; // Notify board that this sequence is over
     }
 
     public void ShowEndingPanel(int winnerNum) {
-        // TODO: replace with actual end screen
         endOfGamePanel.gameObject.SetActive(true);
         Debug.Log("Player " + winnerNum + " has conquered all the territories and won the game! GAME OVER.");
     }

@@ -277,8 +277,7 @@ public class MapScript : MonoBehaviour
         yield return new WaitUntil(() => !player.clickExpected);
     }
 
-
-    private IEnumerator WaitForCardDisplayInactive()
+    private IEnumerator WaitForChooseCardDisplayInactive()
     {
         yield return new WaitUntil(() => 
                 !GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().isOnDisplay);
@@ -363,7 +362,7 @@ public class MapScript : MonoBehaviour
             // Allow player to turn in cards
             GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
             // Once display is inactive, assume we are done with this phase.
-            yield return WaitForCardDisplayInactive();
+            yield return WaitForChooseCardDisplayInactive();
             firstRep = false;
         }
     }
@@ -666,18 +665,25 @@ public class MapScript : MonoBehaviour
             }
 
             // Step two: allow player to turn in sets of cards. give additional armies accordingly
-             // Update gamehud's player
-            GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer = player;
-            while (player.cardsInHand.Count >= 3)
+            if(player.cardsInHand.Count >= 3)
             {
                 // Allow player to turn in cards
                 Debug.Log("Player: " +  GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer.playerNumber +
                          " Select cards to turn in.");
                 GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
                 // Once display is inactive, assume we are done with this phase.
-                yield return WaitForCardDisplayInactive();
-                // The display won't be inactive until they have chosen to return to the game
-                // Meaning they have four or less cards.
+                yield return StartCoroutine(WaitForChooseCardDisplayInactive());
+            }
+            
+            // Require players to turn in until they have less than 5 cards.
+            while (player.cardsInHand.Count >= 5)
+            {
+                // Allow player to turn in cards
+                Debug.Log("Player: " +  GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer.playerNumber +
+                         " Still has more than four cards. Select cards to turn in.");
+                GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowChooseCardPanel();
+                // Once display is inactive, assume we are done with this phase.
+                yield return StartCoroutine(WaitForChooseCardDisplayInactive());
             }
 
             // TODO: Require player to place armies earned from card sets
@@ -853,7 +859,7 @@ public class MapScript : MonoBehaviour
         GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().ShowEndingPanel(playerNumber);
         gameOver = true;
     }
-    internal void HandleCardTurnIn(List<Card> selectedCards)
+    public void HandleCardTurnIn(List<Card> selectedCards, PlayerScript curr_player)
     {
         if (selectedCards == null)
         {
@@ -891,19 +897,19 @@ public class MapScript : MonoBehaviour
 
         //removing the selected cards from the players hand:
         List<Card> updatedHand = new List<Card>();
-        foreach(Card card in players[playerTurn - 1].GetComponent<PlayerScript>().cardsInHand){
+        foreach(Card card in players[playerTurn - 1].cardsInHand){
             if (!selectedCards.Contains(card)){
                 updatedHand.Add(card);
             }
         }
-        players[playerTurn - 1].GetComponent<PlayerScript>().cardsInHand = updatedHand;
-        
+        // players[playerTurn - 1].cardsInHand = updatedHand;
+        curr_player.cardsInHand = updatedHand; // For some reason, the above line doesn't update the player hand. We need this line.
 
         //Can remove all of the following code. It was just to show that the card selection works correctly
 
         //if selected cards is a null object, it means that the player decided not to turn in any cards
         string debugString = "Selected Cards: ";
-        List<Card> playerCards = players[playerTurn - 1].GetComponent<PlayerScript>().cardsInHand;
+        List<Card> playerCards = players[playerTurn - 1].cardsInHand;
         foreach (Card card in selectedCards)
         {
             debugString += "(" + $"{card.territory_id} : {card.troop_type}" + " with status: " + card.status + ") ";
