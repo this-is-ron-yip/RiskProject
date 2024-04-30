@@ -14,6 +14,7 @@ public class GameHUDScript : MonoBehaviour
     public Button viewCardsBtn;
     public TextMeshProUGUI eventCardTMP;
     public TextMeshProUGUI errorCardTMP;
+    public TextMeshProUGUI infoCardTMP;
 
     public Transform attackInputPanel;
     public bool cardsAreOnDisplay;
@@ -225,6 +226,7 @@ public class GameHUDScript : MonoBehaviour
         attackInputIsOnDisplay = true;
         attackInputPanel.gameObject.SetActive(true);
         viewCardsBtn.gameObject.SetActive(false);
+        infoCardTMP.GetComponentInParent<RawImage>().gameObject.GetComponentInParent<Canvas>().gameObject.SetActive(false); // Deactviating all the info cards
     }
 
     public void OnAttackInputSubmitPressed()    
@@ -256,6 +258,7 @@ public class GameHUDScript : MonoBehaviour
             attackInputIsOnDisplay = false;
             attackInputPanel.gameObject.SetActive(false);
             viewCardsBtn.gameObject.SetActive(true);
+            infoCardTMP.GetComponentInParent<RawImage>().gameObject.GetComponentInParent<Canvas>().gameObject.SetActive(true); // Re-activating all the info cards
         }
     }
 
