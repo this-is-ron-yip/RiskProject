@@ -370,7 +370,7 @@ public class MapScript : MonoBehaviour
         }
         player.canSelectAttackOn = false;
 
-        // art three: roll the dice
+        // Part three: roll the dice
         // Ask the defender and attacker how many armies they would like to use
         int attacker_army_count = -1;
         int defender_army_count = -1;
@@ -378,8 +378,8 @@ public class MapScript : MonoBehaviour
         while(!valid_input){
             gameHUDScript.ShowAttackInputPanel();
             yield return WaitForAttackInputPanelInactive(); // Get input from panel
-            attacker_army_count = FindAnyObjectByType<GameHUDScript>().attacker_army_count;
-            defender_army_count = FindAnyObjectByType<GameHUDScript>().defender_army_count;
+            attacker_army_count = gameHUDScript.attacker_army_count;
+            defender_army_count = gameHUDScript.defender_army_count;
             // Check defender input: 
             if(defender_army_count != 1 && defender_army_count != 2){
                 Debug.Log("Defender must choose to fight with one or two armies.");

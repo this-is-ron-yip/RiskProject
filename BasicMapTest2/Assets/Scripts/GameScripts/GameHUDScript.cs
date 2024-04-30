@@ -258,7 +258,8 @@ public class GameHUDScript : MonoBehaviour
             attackInputIsOnDisplay = false;
             attackInputPanel.gameObject.SetActive(false);
             viewCardsBtn.gameObject.SetActive(true);
-            infoCardTMP.GetComponentInParent<RawImage>().gameObject.GetComponentInParent<Canvas>().gameObject.SetActive(true); // Re-activating all the info cards
+            // TODO: the below is giving a null reference exception. fix. 
+            // infoCardTMP.GetComponentInParent<RawImage>().gameObject.GetComponentInParent<Canvas>().gameObject.SetActive(true); // Re-activating all the info cards
         }
     }
 
