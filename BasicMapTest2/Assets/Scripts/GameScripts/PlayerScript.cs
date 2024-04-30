@@ -106,7 +106,7 @@ public class PlayerScript : MonoBehaviour
                     OnPlayerSelectMoveFrom?.Invoke(playerNumber, clickedObject);
                 }
                 else if(canSelectMoveTo){
-                    OnPlayerSelectMoveFrom?.Invoke(playerNumber, clickedObject);
+                    OnPlayerSelectMoveTo?.Invoke(playerNumber, clickedObject);
                 }
                 else
                 {

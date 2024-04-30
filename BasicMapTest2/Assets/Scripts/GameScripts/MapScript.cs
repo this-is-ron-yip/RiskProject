@@ -372,6 +372,7 @@ public class MapScript : MonoBehaviour
         }
     }
 
+
     /*
     To fortify your position, move as many armies as you’d like from one (and
     only one) of your territories into one (and only one) of your adjacent
@@ -403,15 +404,14 @@ public class MapScript : MonoBehaviour
 
         // Ask how many armies they would like to move.
         int fortify_army_count = -1;
-        while(fortify_army_count != -1){
+        while(fortify_army_count == -1){
             gameHUDScript.ShowFortifyInputPanel();
             yield return WaitForFortifyInputInactive(); // Get input from panel
             fortify_army_count = gameHUDScript.fortify_army_count; // Should be validated
         }
 
-        // TODO: Execute action
-        Debug.Log("Executing fortification.");
-        // Remember to update continent counts. 
+        player.TerritoryMoveFrom.armyCount -= fortify_army_count;
+        player.TerritoryMoveTo.armyCount += fortify_army_count;
     }
 
     private IEnumerator LaunchAnAttack(int player_id)
@@ -616,15 +616,25 @@ public class MapScript : MonoBehaviour
         {
             if (selected_territory.occupiedBy == player_id)
             {
-                Debug.Log("Player " + player_id + " is moving armies from " + selected_territory.name);
                 // Check if the territory has more than one army:
                 if(selected_territory.armyCount <= 1){
                     // invalid
                     Debug.Log("Selected territory has insufficient armies.");
                     return;
                 }
+                
+                selected_territory.FillAdjTerritoriesList();
+                foreach(Transform adj_transform in selected_territory.adjacentCountries){
+                    if(adj_transform.GetComponent<TerritoryScript>().occupiedBy == player_id){
+                        // There is a valid adjacent territory owned by this player
+                        curr_player.TerritoryMoveFrom = selected_territory;
+                        return;
+                    }
+                }
 
-                curr_player.TerritoryMoveFrom = selected_territory;
+                // Otherwise, there are no adjacent territories owned by this player
+                Debug.Log("Selected territory has no neighbors owned by this player. Choose another territory");
+                return;
             }
             else
             {
@@ -649,11 +659,10 @@ public class MapScript : MonoBehaviour
         {
             if (selected_territory.occupiedBy == player_id)
             {
-                Debug.Log("Player " + player_id + " is moving armies to " + selected_territory.name);
-                
                 // Check if territory is adjacent
-                // Allow them to move to the same territory.
-                if(AreAdjacent(selected_territory, curr_player.TerritoryMoveFrom) || selected_territory == curr_player.TerritoryMoveFrom)
+                selected_territory.FillAdjTerritoriesList();
+                selected_territory.FillAdjTerritoriesList();
+                if(AreAdjacent(selected_territory, curr_player.TerritoryMoveFrom))
                 {
                     curr_player.TerritoryMoveTo = selected_territory;
                     return;

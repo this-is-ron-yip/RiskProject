@@ -81,7 +81,7 @@ public class TerritoryScript : MonoBehaviour
         SetContinents();
     }
 
-    private void FillAdjTerritoriesList()
+    public void FillAdjTerritoriesList()
     {
         adjacentCountries.Clear();
         switch (this.gameObject.tag)

@@ -314,10 +314,23 @@ public class GameHUDScript : MonoBehaviour
 
     public void OnFortifyPressed()
     {
-        attackOrForitfyPanel.gameObject.SetActive(false);
-        attackOrFortifyOnDisplay = false;
-        wantsToFortify = true;
-        Debug.Log("Fortify!");
+        // Verify that there is a valid way for the player to fortify:
+        foreach(TerritoryScript terr in currentPlayer.territoriesOwned){
+            if(terr.armyCount > 1){
+                terr.FillAdjTerritoriesList(); // For some reason, the list is empty.
+                // Check that the player owns an adjacent territory: 
+                foreach(Transform adj in terr.adjacentCountries){
+                    if(currentPlayer.territoriesOwned.Contains(adj.GetComponent<TerritoryScript>())){
+                        // valid option exists!
+                        attackOrForitfyPanel.gameObject.SetActive(false);
+                        attackOrFortifyOnDisplay = false;
+                        wantsToFortify = true;
+                        return;
+                    }
+                }
+            }
+        }
+        Debug.Log("This player has no possible way to fortify.");
     }
 
 
