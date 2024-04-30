@@ -13,6 +13,7 @@ public class PlayerScript : MonoBehaviour
 
     public Color color = new Color(0, 0, 0);
     public List<TerritoryScript> territoriesOwned = new List<TerritoryScript>();
+    public SoundEffectsPlayer sfxPlayer;
     // public List<GameObject> armies = new List<GameObject>();
     public List<Card> cardsInHand = new List<Card>();
     public List<Card> cardsPlayed = new List<Card>();
@@ -51,6 +52,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
+        sfxPlayer = GameObject.Find("HUDController").GetComponent<SoundEffectsPlayer>();
         this.gameObject.tag = "player";
         clickExpected = false;
     }
@@ -97,6 +99,7 @@ public class PlayerScript : MonoBehaviour
                 else
                 {
                     GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().errorCardTMP.text = "Error: Illegal Click";
+                    sfxPlayer.PlayErrorSound();
                 }
             }
             else if(clickedObject.GetComponent<DeckScript>() != null){
