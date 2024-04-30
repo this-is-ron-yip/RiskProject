@@ -31,7 +31,7 @@ public class MapScript : MonoBehaviour
 
     // Need 6 colors, for a maximum of 6 players
     public static Color[] colorArray = {Color.red, Color.yellow, Color.green,
-                Color.blue, Color.magenta, Color.black};
+                Color.blue, Color.magenta, Color.cyan};
     
     // Map for how many terrritories correspond to each continent
     public static Dictionary<TerritoryScript.Continents, int> ContinentTerritoryCounts =  
