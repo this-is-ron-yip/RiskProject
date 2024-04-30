@@ -279,6 +279,22 @@ public class MapScript : MonoBehaviour
         player.clickExpected = true;
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
+    private IEnumerator WaitForMoveFromTerritory()
+    {
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an owned territory to move from.";
+        PlayerScript player = players[playerTurn - 1];
+        player.clickExpected = true;
+        player.canSelectMoveFrom = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+    private IEnumerator WaitForMoveToTerritory()
+    {
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an owned territory to move to.";
+        PlayerScript player = players[playerTurn - 1];
+        player.clickExpected = true;
+        player.canSelectMoveTo = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
 
     private IEnumerator InitialiseStartingInfantry()
     {
@@ -306,6 +322,12 @@ public class MapScript : MonoBehaviour
     {
         yield return new WaitUntil(() => 
                 !gameHUDScript.cardsAreOnDisplay);
+    }
+
+    private IEnumerator WaitForFortifyInputInactive()
+    {
+        yield return new WaitUntil(() => 
+                !gameHUDScript.fortifyInputOnDisplay);
     }
 
     private IEnumerator WaitForAttackOrFortifyInactive()
@@ -348,6 +370,48 @@ public class MapScript : MonoBehaviour
                     ArmiesGrantedForContinent[count.Key] + " additional armies");
             }
         }
+    }
+
+    /*
+    To fortify your position, move as many armies as you’d like from one (and
+    only one) of your territories into one (and only one) of your adjacent
+    territories. 
+    */
+    private IEnumerator FortifyPosition(int player_id){
+        PlayerScript player = players[player_id - 1];
+        // Clear past values:
+        player.TerritoryMoveFrom = null;
+        player.TerritoryMoveTo = null;
+
+        // Part one: pick an owned territory to move from
+        player.canSelectMoveFrom = true;
+        while(player.TerritoryMoveFrom == null)
+        {
+            playerTurn = player_id; // We need to reset the playerTurn, which is being updated when it shouldn't be
+            yield return StartCoroutine(WaitForMoveFromTerritory());
+        }
+        player.canSelectMoveFrom = false;
+        Debug.Log("Player chose to move from : " + player.TerritoryMoveFrom);
+
+        player.canSelectMoveTo = true;
+        while(player.TerritoryMoveTo == null) { // Until valid input is received
+            playerTurn = player_id; // Override in case playerTurn has changed unpredictably
+            yield return StartCoroutine(WaitForMoveToTerritory());
+        }
+        player.canSelectMoveTo = false;
+        Debug.Log("Player chose to move to : " + player.TerritoryMoveTo);
+
+        // Ask how many armies they would like to move.
+        int fortify_army_count = -1;
+        while(fortify_army_count != -1){
+            gameHUDScript.ShowFortifyInputPanel();
+            yield return WaitForFortifyInputInactive(); // Get input from panel
+            fortify_army_count = gameHUDScript.fortify_army_count; // Should be validated
+        }
+
+        // TODO: Execute action
+        Debug.Log("Executing fortification.");
+        // Remember to update continent counts. 
     }
 
     private IEnumerator LaunchAnAttack(int player_id)
@@ -540,6 +604,78 @@ public class MapScript : MonoBehaviour
             return;
         }
     }
+
+    private void HandleTerritoryToMoveFrom(int player_id, GameObject territory)
+    {
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
+
+        // Find the territory by name aka tag. If not found, do nothing
+        TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
+
+        if (selected_territory != null)
+        {
+            if (selected_territory.occupiedBy == player_id)
+            {
+                Debug.Log("Player " + player_id + " is moving armies from " + selected_territory.name);
+                // Check if the territory has more than one army:
+                if(selected_territory.armyCount <= 1){
+                    // invalid
+                    Debug.Log("Selected territory has insufficient armies.");
+                    return;
+                }
+
+                curr_player.TerritoryMoveFrom = selected_territory;
+            }
+            else
+            {
+                Debug.Log(selected_territory.name + " does not belong to this player");
+            }
+        }
+        else
+        {
+            Debug.Log("Tag does not match a known territory");
+            return;
+        }
+    }
+
+        private void HandleTerritoryToMoveTo(int player_id, GameObject territory)
+    {
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
+
+        // Find the territory by name aka tag. If not found, do nothing
+        TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
+
+        if (selected_territory != null)
+        {
+            if (selected_territory.occupiedBy == player_id)
+            {
+                Debug.Log("Player " + player_id + " is moving armies to " + selected_territory.name);
+                
+                // Check if territory is adjacent
+                // Allow them to move to the same territory.
+                if(AreAdjacent(selected_territory, curr_player.TerritoryMoveFrom) || selected_territory == curr_player.TerritoryMoveFrom)
+                {
+                    curr_player.TerritoryMoveTo = selected_territory;
+                    return;
+                }
+                else{
+                    Debug.Log("The selected territory: " + selected_territory.name + 
+                            " is not adjacent to the territory you are moving from: " + curr_player.TerritoryAttackingFrom.name);
+                }
+            }
+            else
+            {
+                Debug.Log(selected_territory.name + " does not belong to this player.");
+            }
+        }
+        else
+        {
+            Debug.Log("Tag does not match a known territory");
+            return;
+        }
+    }
+
+
 
    public void EvaluateAttack(int attacker_id, int attacker_dice, int defender_dice)
     {
@@ -775,12 +911,7 @@ public class MapScript : MonoBehaviour
                     yield return LaunchAnAttack(playerTurn);
                 }
                 else if(gameHUDScript.wantsToFortify){
-                    /*
-                    To fortify your position, move as many armies as you’d like from one (and
-                    only one) of your territories into one (and only one) of your adjacent
-                    territories. 
-                    */
-                    Debug.Log("Call fortify function."); // TODO: create this function
+                    yield return FortifyPosition(playerTurn);
                     break; // After one fortification, end the turn. 
                 }
                 // Otherwise, do nothing, aka exit the while loop
@@ -846,6 +977,8 @@ public class MapScript : MonoBehaviour
             newPlayerScript.OnPlayerSelectAttackFrom += HandleTerritoryToAttackFrom;
             newPlayerScript.OnPlayerSelectAttackOn += HandleTerritoryToAttackOn;
             newPlayerScript.OnPlayerSelectAttackOn += HandleTerritoryToAttackOn;
+            newPlayerScript.OnPlayerSelectMoveFrom += HandleTerritoryToMoveFrom;
+            newPlayerScript.OnPlayerSelectMoveTo += HandleTerritoryToMoveTo;
             newPlayerScript.OnRollDiceAtStart += HandleDiceRollAtStart;
             newPlayerScript.OnPlayerDrawsCard += HandleDrawCard;
             players.Add(newPlayerScript);

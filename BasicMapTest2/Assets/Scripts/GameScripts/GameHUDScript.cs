@@ -12,16 +12,17 @@ public class GameHUDScript : MonoBehaviour
     public Transform chooseCardDisplayPanel;
     public Transform endOfGamePanel;
     public Transform attackOrForitfyPanel;
+    public Transform attackInputPanel;
+    public Transform fortifyInputPanel;
     public Button viewCardsBtn;
     public TextMeshProUGUI eventCardTMP;
     public TextMeshProUGUI errorCardTMP;
     public TextMeshProUGUI infoCardTMP;
     public GameObject infoCardsDisplay;
-
-    public Transform attackInputPanel;
     public bool cardsAreOnDisplay;
     public bool attackInputIsOnDisplay;
     public bool attackOrFortifyOnDisplay = false;
+    public bool fortifyInputOnDisplay = false;
     public bool wantsToReturn = false;
     public bool wantsToAttack = false;
     public bool wantsToFortify = false;
@@ -31,9 +32,11 @@ public class GameHUDScript : MonoBehaviour
     private int cardsInDisplay = 0;
     [SerializeField] InputField attacker_army_input;
     [SerializeField] InputField defender_army_input;
+    [SerializeField] InputField fortify_input;
 
     public int attacker_army_count = -1;
     public int defender_army_count = -1;
+    public int fortify_army_count = -1;
 
     [System.Obsolete]
     private void Start()
@@ -43,8 +46,10 @@ public class GameHUDScript : MonoBehaviour
         endOfGamePanel.gameObject.SetActive(false);
         attackInputPanel.gameObject.SetActive(false);
         attackOrForitfyPanel.gameObject.SetActive(false);
+        fortifyInputPanel.gameObject.SetActive(false);
         cardsAreOnDisplay = false;
         attackInputIsOnDisplay = false;
+        fortifyInputOnDisplay = false;
         wantsToReturn = false;
         wantsToAttack = false;
         wantsToFortify = false;
@@ -249,6 +254,11 @@ public class GameHUDScript : MonoBehaviour
         infoCardsDisplay.SetActive(false); // Deactviating all the info cards
     }
 
+    public void ShowFortifyInputPanel(){
+        fortifyInputPanel.gameObject.SetActive(true);
+        fortifyInputOnDisplay = true;
+    }
+
     public void OnAttackInputSubmitPressed()    
     {
         viewCardsBtn.gameObject.SetActive(false); // Turning this button off so that it looks nicer
@@ -307,7 +317,7 @@ public class GameHUDScript : MonoBehaviour
         attackOrForitfyPanel.gameObject.SetActive(false);
         attackOrFortifyOnDisplay = false;
         wantsToFortify = true;
-        Debug.Log("Fortify!");// TODO: delete later
+        Debug.Log("Fortify!");
     }
 
 
@@ -316,7 +326,41 @@ public class GameHUDScript : MonoBehaviour
         attackOrForitfyPanel.gameObject.SetActive(false);
         attackOrFortifyOnDisplay = false;
         wantsToEndTurn = true;
-        Debug.Log("End turn!");// TODO: delete later
+    }
+
+    public void OnSubmitFortifyInputPressed()
+    {
+        // Reset value
+        fortify_army_count = -1;
+
+        // Getting the inputs from each input field
+        string fortifyInput = fortify_input.text;
+
+        // If the text in either input field is null or is not a number, output an error
+        if (fortifyInput == null || !int.TryParse(fortifyInput, out _))
+        {
+            // TODO: check that there are sufficient armies on the source territory
+            Debug.Log("Invalid input.");
+        }
+        else // Otherwise, print the output to the debug log
+        {
+            fortify_army_count = int.Parse(fortify_input.text);
+            // Check that there are sufficient armies on the territory
+            if(currentPlayer.TerritoryMoveFrom.armyCount <= fortify_army_count){
+                Debug.Log("Unable to move "  + fortify_army_count + " armies. Too many. Try again.");
+                return;
+            }
+            else if(fortify_army_count < 0){
+                 Debug.Log("Negative input is invalid. Try again.");
+                 return;
+            }
+
+            // Otherwise, input is vald
+            Debug.Log("Moving " + fortifyInput + " armies\n ");
+            // Turn off the display once the submit button has been pressed
+            fortifyInputPanel.gameObject.SetActive(false);
+            fortifyInputOnDisplay = false;
+        }
     }
 
     public void OnQuitGamePressed()

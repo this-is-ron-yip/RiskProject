@@ -34,6 +34,9 @@ public class PlayerScript : MonoBehaviour
     public bool canTurnInCards = false;
     public bool canSelectAttackFrom = false;
     public bool canSelectAttackOn = false;    
+
+    public bool canSelectMoveFrom = false;
+    public bool canSelectMoveTo = false;  
     public bool canPlaceArmyInGame = false;
 
     // TODO: add more permissoins for different actions
@@ -45,10 +48,13 @@ public class PlayerScript : MonoBehaviour
     public event Action<int, GameObject> OnPlayerPlacesAnArmyInGame;
     public event Action<int, GameObject> OnPlayerSelectAttackFrom;
     public event Action<int, GameObject> OnPlayerSelectAttackOn;
+    public event Action<int, GameObject> OnPlayerSelectMoveFrom;
+    public event Action<int, GameObject> OnPlayerSelectMoveTo;
     public event Action<int, GameObject> OnRollDiceAtStart;
     public event Action<int, GameObject> OnPlayerDrawsCard;
     enum ArmyTypes { Infantry, Cavalry, Artillery };
     public TerritoryScript TerritoryAttackingFrom = null, TerritoryAttackingOn = null;
+    public TerritoryScript TerritoryMoveFrom = null, TerritoryMoveTo = null;
 
     private void Start()
     {
@@ -95,6 +101,12 @@ public class PlayerScript : MonoBehaviour
                 }
                 else if(canSelectAttackOn){
                     OnPlayerSelectAttackOn?.Invoke(playerNumber, clickedObject);
+                }
+                else if(canSelectMoveFrom){
+                    OnPlayerSelectMoveFrom?.Invoke(playerNumber, clickedObject);
+                }
+                else if(canSelectMoveTo){
+                    OnPlayerSelectMoveFrom?.Invoke(playerNumber, clickedObject);
                 }
                 else
                 {
@@ -179,5 +191,7 @@ public class PlayerScript : MonoBehaviour
         canSelectAttackOn = false;
         canPlaceArmyInGame = false;
         wonTerritory = false;
+        canSelectMoveFrom = false;
+        canSelectMoveTo = false;
     }
 }
