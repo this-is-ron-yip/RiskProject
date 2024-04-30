@@ -14,6 +14,7 @@ public class GameHUDScript : MonoBehaviour
     public Button viewCardsBtn;
     public TextMeshProUGUI eventCardTMP;
     public TextMeshProUGUI errorCardTMP;
+    public TextMeshProUGUI infoCardTMP;
 
     public Transform attackInputPanel;
     public bool cardsAreOnDisplay;

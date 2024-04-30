@@ -164,9 +164,19 @@ public class MapScript : MonoBehaviour
         // Step two: Allow players to claim territories to start
         //Player picks unoccupied country to place 1 infantry, therefore occupying that country
         int territories_left = TerritoryScript.NUMBER_OF_TERRITORIES;
-        while(territories_left > 0){
-            
-            Debug.Log("Territories left: " + territories_left);
+        int irrelevantCounter = 0;
+        while (territories_left > 0){
+
+            // Displaying information in the info card correctly
+            if (irrelevantCounter == 0)
+            {
+                gameHUDScript.infoCardTMP.text += "\nTotalterritories left to be placed: " + territories_left;
+                irrelevantCounter = 1;
+            } 
+            else
+            {
+                gameHUDScript.infoCardTMP.text = "Totalterritories left to be placed: " + territories_left;
+            }
             players[playerTurn - 1].canClaimTerritoryAtStart = true;
 
             // store in temp variable for later reference
@@ -245,7 +255,8 @@ public class MapScript : MonoBehaviour
     }
 
     private IEnumerator WaitForDieRoll(){
-        Debug.Log($"Player {playerTurn}, click the dice to roll.");
+        // Debug.Log($"Player {playerTurn}, click the dice to roll.");
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click the dice to roll.";
         PlayerScript player = players[playerTurn - 1];
         player.clickExpected = true;
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
@@ -270,7 +281,8 @@ public class MapScript : MonoBehaviour
 
     private IEnumerator InitialiseStartingInfantry()
     {
-        Debug.Log($"Player {playerTurn}, choose a territory to place 1 infantry on.");
+        //Debug.Log($"Player {playerTurn}, choose a territory to place 1 infantry on.");
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, choose a territory to place 1 infantry on.";
         PlayerScript player = players[playerTurn - 1];
         player.clickExpected = true;
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
@@ -391,7 +403,8 @@ public class MapScript : MonoBehaviour
         DiceRollerScript die_rolled = die.GetComponent<DiceRollerScript>();
         int result = die_rolled.RollDice();
         diceResults[player_id - 1] = result;
-        Debug.Log("Player " + player_id + " rolled a " + result);
+        //Debug.Log("Player " + player_id + " rolled a " + result);
+        gameHUDScript.infoCardTMP.text = "Player " + player_id + " rolled a " + result;
         // TODO: add animation here.
     }
         
