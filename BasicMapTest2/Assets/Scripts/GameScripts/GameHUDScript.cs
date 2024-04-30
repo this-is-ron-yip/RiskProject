@@ -25,6 +25,9 @@ public class GameHUDScript : MonoBehaviour
     [SerializeField] InputField attacker_army_input;
     [SerializeField] InputField defender_army_input;
 
+    public int attacker_army_count = -1;
+    public int defender_army_count = -1;
+
     [System.Obsolete]
     private void Start()
     {
@@ -227,6 +230,10 @@ public class GameHUDScript : MonoBehaviour
     public void OnAttackInputSubmitPressed()    
     {
         viewCardsBtn.gameObject.SetActive(false); // Turning this button off so that it looks nicer
+        
+        // Reset values
+        attacker_army_count = -1;
+        defender_army_count = -1;
 
         // Getting the inputs from each input field
         string attackerInput = attacker_army_input.text;
@@ -242,16 +249,8 @@ public class GameHUDScript : MonoBehaviour
             Debug.Log("Attacker is attacking with " + attackerInput + " armies\n " +
                         "Defender is defending with " + defenderInput + " armies");
 
-
-            // I left your code here Sophia, in case you wanted to use it again when you came back to this
-
-            /*
-            // TODO: Set member fields.
-            string attacker_army_count = attackerInput;
-            string defender_army_count = defenderInput;
-            Debug.Log("reached submit. attacker army count: " +
-            attacker_army_count + " defender army count: " + defender_army_count); // TODO: delete later
-            */
+            attacker_army_count = int.Parse(attacker_army_input.text);
+            defender_army_count = int.Parse(defender_army_input.text);
 
             // Turn off the display once the submit button has been pressed
             attackInputIsOnDisplay = false;

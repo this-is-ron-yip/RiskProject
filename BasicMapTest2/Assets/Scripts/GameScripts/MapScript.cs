@@ -356,15 +356,37 @@ public class MapScript : MonoBehaviour
         }
         player.canSelectAttackOn = false;
 
-        // TODO: Part three: roll the dice
-        // Ask attacker how many die they would like to use
-        // Ask defender how many die they would like to use
-        // Execute the "attack"
-        gameHUDScript.ShowAttackInputPanel();
-        yield return WaitForAttackInputPanelInactive(); // TODO: extract data somehow
+        // art three: roll the dice
+        // Ask the defender and attacker how many armies they would like to use
+        int attacker_army_count = -1;
+        int defender_army_count = -1;
+        bool valid_input = false;
+        while(!valid_input){
+            gameHUDScript.ShowAttackInputPanel();
+            yield return WaitForAttackInputPanelInactive(); // Get input from panel
+            attacker_army_count = FindAnyObjectByType<GameHUDScript>().attacker_army_count;
+            defender_army_count = FindAnyObjectByType<GameHUDScript>().defender_army_count;
+            // Check defender input: 
+            if(defender_army_count != 1 && defender_army_count != 2){
+                Debug.Log("Defender must choose to fight with one or two armies.");
+            }
+            else if(player.TerritoryAttackingOn.armyCount < defender_army_count){
+                Debug.Log("Defender does not have sufficient armies for this input.");
+            } 
+            else if(attacker_army_count !=1 && attacker_army_count != 2 && attacker_army_count != 3)  {
+                Debug.Log("Attacker must choose to fight with one, two, or three armies.");
+            }
+            else if(player.TerritoryAttackingFrom.armyCount <= attacker_army_count){
+                Debug.Log("Attacker has selected too many armies. Must leave one army " + 
+                    " to occupy its starting territory.");
+            }
+            else{
+                valid_input = true;
+            }
+        }
 
         // Part four: evaluate the outcome of the attack 
-        EvaluateAttack(player_id, 2, 2); // TODO: replace hard coded values with player input
+        EvaluateAttack(player_id, attacker_army_count, defender_army_count);
 
         /* From the game rules:
         If winning them gives you 6 or more cards, you must immediately trade
@@ -374,7 +396,7 @@ public class MapScript : MonoBehaviour
         beginning of your next turn to trade in a set.
         */
         bool firstRep = true;
-        while(player.cardsInHand.Count >= 6)
+        while(player.cardsInHand.Count >= 6) // Will only happen if they elimintaed opponent
         {
             Debug.Log((firstRep? "After eliminating your opponenent, you have more than 6 cards." :
                 "You still have more than 6 cards.") +
@@ -529,7 +551,7 @@ public class MapScript : MonoBehaviour
         int one_v_ones = Math.Min(attacker_dice, defender_dice);
         int remaining_attackers = attacker_dice;
         for(int i = 0; i < one_v_ones; i++){
-            Debug.Log("First match up: Attacker: " +attacker_rolls[i] +
+            Debug.Log("Battling... Attacker: " +attacker_rolls[i] +
                     " vs Defender: " + defender_rolls[i]);
             if(attacker_rolls[i] > defender_rolls[i]){
                 // Defender loses one army on the territory being attacked.
