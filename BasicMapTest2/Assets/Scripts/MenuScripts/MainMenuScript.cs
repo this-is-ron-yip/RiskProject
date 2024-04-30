@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
+
+    private void Start()
+    {
+
+    }
+
     public void PlayGame()
     {
         
