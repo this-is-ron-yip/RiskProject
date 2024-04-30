@@ -23,6 +23,9 @@ public class GameHUDScript : MonoBehaviour
     public bool attackInputIsOnDisplay;
     public bool attackOrFortifyOnDisplay = false;
     public bool wantsToReturn = false;
+    public bool wantsToAttack = false;
+    public bool wantsToFortify = false;
+    public bool wantsToEndTurn = false;
     public PlayerScript currentPlayer;
     public List<Card> selectedCards = new List<Card>();
     private int cardsInDisplay = 0;
@@ -43,6 +46,9 @@ public class GameHUDScript : MonoBehaviour
         cardsAreOnDisplay = false;
         attackInputIsOnDisplay = false;
         wantsToReturn = false;
+        wantsToAttack = false;
+        wantsToFortify = false;
+        wantsToEndTurn = false;
     }
 
     private void CardClicked(Card card, GameObject cardDisplay)
@@ -227,6 +233,11 @@ public class GameHUDScript : MonoBehaviour
     }
 
     public void ShowAttackOrFortifyPanel() {
+        // Reset flags.
+        wantsToAttack = false;
+        wantsToFortify = false;
+        wantsToEndTurn = false;
+        // display panel
         attackOrForitfyPanel.gameObject.SetActive(true);
         attackOrFortifyOnDisplay = true;
     }
@@ -275,9 +286,19 @@ public class GameHUDScript : MonoBehaviour
 
     public void OnAttackPressed()
     {
-        Debug.Log("Attack!");// TODO: delete later
-        attackOrForitfyPanel.gameObject.SetActive(false);
-        attackOrFortifyOnDisplay = false;
+        Debug.Log("Attack!");
+        // Verify they have an elligible territory to attack from: 
+        foreach(TerritoryScript territory in currentPlayer.territoriesOwned){
+            if(territory.armyCount > 1){
+                // Valid territory exists.
+                 attackOrForitfyPanel.gameObject.SetActive(false);
+                 attackOrFortifyOnDisplay = false;
+                 wantsToAttack = true;
+                 return;
+            }
+        }
+        // TODO: move this to the screen, not the console
+        Debug.Log("Player has no territories with sufficient armies to attack from");
     }
 
 
@@ -285,6 +306,7 @@ public class GameHUDScript : MonoBehaviour
     {
         attackOrForitfyPanel.gameObject.SetActive(false);
         attackOrFortifyOnDisplay = false;
+        wantsToFortify = true;
         Debug.Log("Fortify!");// TODO: delete later
     }
 
@@ -293,6 +315,7 @@ public class GameHUDScript : MonoBehaviour
     {
         attackOrForitfyPanel.gameObject.SetActive(false);
         attackOrFortifyOnDisplay = false;
+        wantsToEndTurn = true;
         Debug.Log("End turn!");// TODO: delete later
     }
 

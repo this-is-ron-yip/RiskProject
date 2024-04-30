@@ -290,7 +290,7 @@ public class MapScript : MonoBehaviour
     }
 
     private IEnumerator InitialiseStartOfTurnInfantry(int player_id){
-        PlayerScript player = players[playerTurn - 1];
+        PlayerScript player = players[player_id - 1];
         gameHUDScript.eventCardTMP.text = $"Player {player_id}, place your infantries. You have {player.GetArmyCountTotal()} left";
         //Debug.Log($"Player {player_id}, where would you like to place one infantry?");
         player.clickExpected = true;
@@ -314,7 +314,6 @@ public class MapScript : MonoBehaviour
                 !gameHUDScript.attackOrFortifyOnDisplay);
     }
 
-    // TODO: change isOnDisplay to be more specific
     private IEnumerator WaitForAttackInputPanelInactive()
     {
         yield return new WaitUntil(() => 
@@ -353,7 +352,7 @@ public class MapScript : MonoBehaviour
 
     private IEnumerator LaunchAnAttack(int player_id)
     {
-        Debug.Log("Phase two. Player: " + player_id + ", launch an attack.");
+        Debug.Log("Player: " + player_id + ", launch an attack.");
         PlayerScript player = players[player_id - 1];
         // Clear past values:
         player.TerritoryAttackingFrom = null;
@@ -766,15 +765,28 @@ public class MapScript : MonoBehaviour
                 player.canPlaceArmyInGame = false;
             }
 
-            // Step three: let the player attack
-            // TODO: let them attack multiple times, until they have no territories that are eligibe to attack from
-            // We can probably just lmake this a button instead of computing if there are elligible territories every time
-            gameHUDScript.ShowAttackOrFortifyPanel();
-            yield return WaitForAttackOrFortifyInactive();
+            // Step three: let the player attack multiple times
+            gameHUDScript.wantsToEndTurn = false;
+            while(!gameHUDScript.wantsToEndTurn){
+                gameHUDScript.ShowAttackOrFortifyPanel();
+                yield return WaitForAttackOrFortifyInactive();
             
-            yield return LaunchAnAttack(playerTurn);
-
-            // Step four: if the player has claimed at least one territory during their turn
+                if(gameHUDScript.wantsToAttack){
+                    yield return LaunchAnAttack(playerTurn);
+                }
+                else if(gameHUDScript.wantsToFortify){
+                    /*
+                    To fortify your position, move as many armies as you’d like from one (and
+                    only one) of your territories into one (and only one) of your adjacent
+                    territories. 
+                    */
+                    Debug.Log("Call fortify function."); // TODO: create this function
+                    break; // After one fortification, end the turn. 
+                }
+                // Otherwise, do nothing, aka exit the while loop
+            }
+            
+            // If the player has claimed at least one territory during their turn
             // Prompt and allow/require them to draw a card from the deck
             bool player_must_draw = player.wonTerritory;
             while(player_must_draw){
@@ -793,14 +805,6 @@ public class MapScript : MonoBehaviour
                     Debug.Log("Must draw a card. Try again.");
                 }
             }
-
-            // TODO: Step five: Fortify position
-            /*
-            To fortify your position, move as many armies as you’d like from one (and
-            only one) of your territories into one (and only one) of your adjacent
-            territories. 
-            */
-            
 
             Debug.Log("End of Player " + playerTurn + "'s turn");
 
