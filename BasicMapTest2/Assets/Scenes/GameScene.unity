@@ -1722,7 +1722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSrc: {fileID: 87804435}
-  errorSound: {fileID: 8300000, guid: f16b3f5d7c295684bbfc115cc6a8ac02, type: 3}
+  errorSFX: {fileID: 8300000, guid: f16b3f5d7c295684bbfc115cc6a8ac02, type: 3}
 --- !u!1001 &601453685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8445,6 +8445,7 @@ MonoBehaviour:
   eventCardTMP: {fileID: 1972658247}
   errorCardTMP: {fileID: 1699351802}
   infoCardTMP: {fileID: 1129178150}
+  infoCardsDisplay: {fileID: 208487146}
   attackInputPanel: {fileID: 1114426933}
   cardsAreOnDisplay: 0
   attackInputIsOnDisplay: 0
@@ -8452,6 +8453,8 @@ MonoBehaviour:
   currentPlayer: {fileID: 0}
   attacker_army_input: {fileID: 1810163283}
   defender_army_input: {fileID: 352558792}
+  attacker_army_count: -1
+  defender_army_count: -1
 --- !u!1001 &1318803407
 PrefabInstance:
   m_ObjectHideFlags: 0

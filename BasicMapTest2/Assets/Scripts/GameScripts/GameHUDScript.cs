@@ -15,6 +15,7 @@ public class GameHUDScript : MonoBehaviour
     public TextMeshProUGUI eventCardTMP;
     public TextMeshProUGUI errorCardTMP;
     public TextMeshProUGUI infoCardTMP;
+    public GameObject infoCardsDisplay;
 
     public Transform attackInputPanel;
     public bool cardsAreOnDisplay;
@@ -226,7 +227,7 @@ public class GameHUDScript : MonoBehaviour
         attackInputIsOnDisplay = true;
         attackInputPanel.gameObject.SetActive(true);
         viewCardsBtn.gameObject.SetActive(false);
-        infoCardTMP.GetComponentInParent<RawImage>().gameObject.GetComponentInParent<Canvas>().gameObject.SetActive(false); // Deactviating all the info cards
+        infoCardsDisplay.SetActive(false); // Deactviating all the info cards
     }
 
     public void OnAttackInputSubmitPressed()    
@@ -259,7 +260,7 @@ public class GameHUDScript : MonoBehaviour
             attackInputPanel.gameObject.SetActive(false);
             viewCardsBtn.gameObject.SetActive(true);
             // TODO: the below is giving a null reference exception. fix. 
-            // infoCardTMP.GetComponentInParent<RawImage>().gameObject.GetComponentInParent<Canvas>().gameObject.SetActive(true); // Re-activating all the info cards
+            infoCardsDisplay.SetActive(true); // Re-activating all the info cards
         }
     }
 
