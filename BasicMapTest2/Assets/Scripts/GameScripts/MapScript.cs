@@ -469,7 +469,7 @@ public class MapScript : MonoBehaviour
         }
 
         // Part four: evaluate the outcome of the attack 
-        EvaluateAttack(player_id, attacker_army_count, defender_army_count);
+        yield return EvaluateAttack(player_id, attacker_army_count, defender_army_count);
 
         /* From the game rules:
         If winning them gives you 6 or more cards, you must immediately trade
@@ -686,7 +686,7 @@ public class MapScript : MonoBehaviour
 
 
 
-   public void EvaluateAttack(int attacker_id, int attacker_dice, int defender_dice)
+   private IEnumerator EvaluateAttack(int attacker_id, int attacker_dice, int defender_dice)
     {
         PlayerScript player = players[attacker_id - 1];
 
@@ -743,16 +743,29 @@ public class MapScript : MonoBehaviour
 
             // Attacker must leave surviving armies on the territory they won
             EnemyTerritory.armyCount = remaining_attackers;
-        }
 
-        /* TODO: prompt attacker to fortify position. Game rules state: 
-            As soon as you defeat the last opposing army on
-            a territory, you capture that territory and must occupy it immediately. To
-            do so, move in at least as many armies as the number of dice you rolled in
-            your last battle. Remember you must always leave at least
-            one army behind on the territory you attacked from. During the game,
-            every territory must always be occupied by at least one army
-        */
+            if(PlayerTerritory.armyCount > 1){
+                Debug.Log("How many additional armies do you wish to move from the attacking territory to the " +
+                "territory you just conquered? You may select 0.");
+
+                // Ask how many armies they would like to move.
+                int fortify_army_count = -1;
+                player.TerritoryMoveFrom = PlayerTerritory;
+                player.TerritoryMoveTo = EnemyTerritory;
+                while(fortify_army_count == -1){
+                    gameHUDScript.ShowFortifyInputPanel();
+                    yield return WaitForFortifyInputInactive(); // Get input from panel
+                    fortify_army_count = gameHUDScript.fortify_army_count; // Should be validated
+                }
+
+                PlayerTerritory.armyCount -= fortify_army_count;
+                EnemyTerritory.armyCount += fortify_army_count;
+
+                // Reset
+                player.TerritoryMoveFrom = null;
+                player.TerritoryMoveTo = null;
+            }
+        }
 
         // Reset member variables
         player.TerritoryAttackingFrom = null;
@@ -772,9 +785,8 @@ public class MapScript : MonoBehaviour
 
         // TODO: delete later. for testing the final game screen only
         // OnPlayerConqueredAllTerritories?.Invoke(player.playerNumber);
-
-        return;
     }
+
     private void HandlePlacingAnArmy(int player_id, GameObject territory){
         PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
 
