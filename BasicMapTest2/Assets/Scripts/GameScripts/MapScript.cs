@@ -308,6 +308,12 @@ public class MapScript : MonoBehaviour
                 !gameHUDScript.cardsAreOnDisplay);
     }
 
+    private IEnumerator WaitForAttackOrFortifyInactive()
+    {
+        yield return new WaitUntil(() => 
+                !gameHUDScript.attackOrFortifyOnDisplay);
+    }
+
     // TODO: change isOnDisplay to be more specific
     private IEnumerator WaitForAttackInputPanelInactive()
     {
@@ -763,6 +769,9 @@ public class MapScript : MonoBehaviour
             // Step three: let the player attack
             // TODO: let them attack multiple times, until they have no territories that are eligibe to attack from
             // We can probably just lmake this a button instead of computing if there are elligible territories every time
+            gameHUDScript.ShowAttackOrFortifyPanel();
+            yield return WaitForAttackOrFortifyInactive();
+            
             yield return LaunchAnAttack(playerTurn);
 
             // Step four: if the player has claimed at least one territory during their turn

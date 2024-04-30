@@ -11,6 +11,7 @@ public class GameHUDScript : MonoBehaviour
     public Transform cardDisplayPanel;
     public Transform chooseCardDisplayPanel;
     public Transform endOfGamePanel;
+    public Transform attackOrForitfyPanel;
     public Button viewCardsBtn;
     public TextMeshProUGUI eventCardTMP;
     public TextMeshProUGUI errorCardTMP;
@@ -20,6 +21,7 @@ public class GameHUDScript : MonoBehaviour
     public Transform attackInputPanel;
     public bool cardsAreOnDisplay;
     public bool attackInputIsOnDisplay;
+    public bool attackOrFortifyOnDisplay = false;
     public bool wantsToReturn = false;
     public PlayerScript currentPlayer;
     public List<Card> selectedCards = new List<Card>();
@@ -37,6 +39,7 @@ public class GameHUDScript : MonoBehaviour
         cardDisplayPanel.gameObject.SetActive(false);
         endOfGamePanel.gameObject.SetActive(false);
         attackInputPanel.gameObject.SetActive(false);
+        attackOrForitfyPanel.gameObject.SetActive(false);
         cardsAreOnDisplay = false;
         attackInputIsOnDisplay = false;
         wantsToReturn = false;
@@ -223,6 +226,11 @@ public class GameHUDScript : MonoBehaviour
         Debug.Log("Player " + winnerNum + " has conquered all the territories and won the game! GAME OVER.");
     }
 
+    public void ShowAttackOrFortifyPanel() {
+        attackOrForitfyPanel.gameObject.SetActive(true);
+        attackOrFortifyOnDisplay = true;
+    }
+
     public void ShowAttackInputPanel() {
         attackInputIsOnDisplay = true;
         attackInputPanel.gameObject.SetActive(true);
@@ -262,6 +270,30 @@ public class GameHUDScript : MonoBehaviour
             // TODO: the below is giving a null reference exception. fix. 
             infoCardsDisplay.SetActive(true); // Re-activating all the info cards
         }
+    }
+
+
+    public void OnAttackPressed()
+    {
+        Debug.Log("Attack!");// TODO: delete later
+        attackOrForitfyPanel.gameObject.SetActive(false);
+        attackOrFortifyOnDisplay = false;
+    }
+
+
+    public void OnFortifyPressed()
+    {
+        attackOrForitfyPanel.gameObject.SetActive(false);
+        attackOrFortifyOnDisplay = false;
+        Debug.Log("Fortify!");// TODO: delete later
+    }
+
+
+    public void OnEndTurnPressed()
+    {
+        attackOrForitfyPanel.gameObject.SetActive(false);
+        attackOrFortifyOnDisplay = false;
+        Debug.Log("End turn!");// TODO: delete later
     }
 
     public void OnQuitGamePressed()
