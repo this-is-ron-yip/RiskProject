@@ -170,12 +170,12 @@ public class MapScript : MonoBehaviour
             // Displaying information in the info card correctly
             if (irrelevantCounter == 0)
             {
-                gameHUDScript.infoCardTMP.text += "\nTotalterritories left to be placed: " + territories_left;
+                gameHUDScript.infoCardTMP.text += "\nTotal territories left to be placed: " + territories_left;
                 irrelevantCounter = 1;
             } 
             else
             {
-                gameHUDScript.infoCardTMP.text = "Totalterritories left to be placed: " + territories_left;
+                gameHUDScript.infoCardTMP.text = "Total territories left to be placed: " + territories_left;
             }
             players[playerTurn - 1].canClaimTerritoryAtStart = true;
 
@@ -264,7 +264,7 @@ public class MapScript : MonoBehaviour
 
     private IEnumerator WaitForAttackFromTerritory()
     {
-        Debug.Log($"Player {playerTurn}, click an owned territory to attack from.");
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an owned territory to attack from.";
         PlayerScript player = players[playerTurn - 1];
         player.clickExpected = true;
         player.canSelectAttackFrom = true;
@@ -273,6 +273,7 @@ public class MapScript : MonoBehaviour
 
     private IEnumerator WaitForAttackOnTerritory()
     {
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an enemy territory to attack on.";
         Debug.Log($"Player {playerTurn}, click an enemy territory to attack on.");
         PlayerScript player = players[playerTurn - 1];
         player.clickExpected = true;
@@ -289,8 +290,9 @@ public class MapScript : MonoBehaviour
     }
 
     private IEnumerator InitialiseStartOfTurnInfantry(int player_id){
-        Debug.Log($"Player {player_id}, where would you like to place one infantry?");
-        PlayerScript player = players[player_id - 1];
+        PlayerScript player = players[playerTurn - 1];
+        gameHUDScript.eventCardTMP.text = $"Player {player_id}, place your infantries. You have {player.GetArmyCountTotal()} left";
+        //Debug.Log($"Player {player_id}, where would you like to place one infantry?");
         player.clickExpected = true;
         yield return StartCoroutine(WaitForPlayerToDoMove(player));
     }
@@ -463,7 +465,8 @@ public class MapScript : MonoBehaviour
                 Debug.Log("Must attack from a territory with at least two armies.");
                 return;
             }
-            Debug.Log("Attacking from " + claimed_territory.name);
+            gameHUDScript.infoCardTMP.text = $"{curr_player} is attacking from " + claimed_territory.name;
+            Debug.Log($"{curr_player} is attacking from " + claimed_territory.name);
             curr_player.TerritoryAttackingFrom = claimed_territory;
             return;
         }
@@ -639,7 +642,7 @@ public class MapScript : MonoBehaviour
 
     [Obsolete]
     private IEnumerator EnterGamePlay(){
-        Debug.Log("Entered game play!");
+        gameHUDScript.infoCardTMP.text = "Entered game play!";
         int playerTurn = startingPlayer;
 
         while(!gameOver){

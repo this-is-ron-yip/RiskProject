@@ -96,7 +96,7 @@ public class PlayerScript : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Illegal click on territory.");
+                    GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().errorCardTMP.text = "Error: Illegal Click";
                 }
             }
             else if(clickedObject.GetComponent<DeckScript>() != null){
