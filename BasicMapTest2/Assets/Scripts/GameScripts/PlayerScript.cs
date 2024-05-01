@@ -171,6 +171,7 @@ public class PlayerScript : MonoBehaviour
 
         yield return null;
     }
+    
     /// <summary>
     /// Return the number of armies owned by this player.
     /// </summary>

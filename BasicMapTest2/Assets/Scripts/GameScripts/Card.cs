@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// Define a card class, which should contain all of the fields of the RISK card.
+/// </summary>
 public class Card
 {
     public string territory_id = "WILD";
