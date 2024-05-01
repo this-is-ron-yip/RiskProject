@@ -5,35 +5,28 @@ using UnityEngine;
 
 public class TerritoryScript : MonoBehaviour
 {
-
-    /* TODO: 
-     * Re-add countries to TerritoryEnum
-     * Add Adj countries to FillAdjTerritoriesList() method
-     * Add countries to their respective continents in the SetContinents() method
-     * Set territories' enums in the SetTerritoriesEnums method
-     * 
-     * Check if there are any references to countries/territories/continents in other scripts that needs updating
-     */
-
     public int armyCount { get; set; } = 0;
     public int occupiedBy = -1;
 
     public enum Continents {NorthAmerica, SouthAmerica, Europe, Asia, Africa, Australia};
 
-    // TODO: should be a total of 42 territories
-    public enum TerritoryEnum {Alaska, NorthWestTerritory, NorthEastTerritory, Greenland, Qubec, Alberta, EastUSA, WestUSA, CentralAmerica, Venezuela, Peru, Brazil,
-                                Argentina, NorthAfrica, Egypt, Congo, EastAfrica, SouthAfrica, Madagascar, Iceland, UnitedKingdom, Scandanavia, Ukraine, WestEurope, NorthEurope,
-                                SouthEurope, Ural, Siberia, Yakutsk, Kamchatka, Mongolia, China, Japan, Afghanistan, MiddleEast, Siam, Indonesia, India, NewGuinea, WestAustralia,
+    public enum TerritoryEnum {Alaska, NorthWestTerritory, NorthEastTerritory, Greenland, Qubec, Alberta, EastUSA, WestUSA, CentralAmerica, Venezuela, Peru, Brazil, 
+                                Argentina, NorthAfrica, Egypt, Congo, EastAfrica, SouthAfrica, Madagascar, Iceland, UnitedKingdom, Scandanavia, Ukraine, WestEurope, NorthEurope, 
+                                SouthEurope, Ural, Siberia, Yakutsk, Kamchatka, Mongolia, China, Japan, Afghanistan, MiddleEast, Siam, Indonesia, India, NewGuinea, WestAustralia, 
                                 EastAustralia, NewZealand};
 
     public Continents continent; 
     public TerritoryEnum territoryEnum;
     [field: SerializeField] public List<Transform> adjacentCountries { get; set; }
 
-    [field: SerializeField] public List<TerritoryEnum> adjacentCountryEnums { get; set; } // Store id rather than transform
+    [field: SerializeField] public List<TerritoryEnum> adjacentCountryEnums { get; set; }
     private TextMesh armyText; // TextMesh to display the army count.
 
-    public const int NUMBER_OF_TERRITORIES = 8; // TODO: change to proper number after testing is done
+    public const int NUMBER_OF_TERRITORIES = 8; // TODO: change to 42 after testing is done
+    
+    /// <summary>
+    /// Called by unity engine when the script is started. Initialises the game object for this territory.
+    /// </summary>
     public void Start()
     {
         // Ensure there's a child GameObject to hold the TextMesh.
@@ -55,13 +48,12 @@ public class TerritoryScript : MonoBehaviour
         textObj.transform.localEulerAngles = new Vector3(textObj.transform.localEulerAngles.x, textObj.transform.localEulerAngles.y, 90);
     }
 
+    /// <summary>
+    /// On every frame, display the current army count and color corresponding to this territory.
+    /// </summary>
     private void Update()
     {
-        // if (armyText != null && armyCount >= 0)
-        // {
-            armyText.text = armyCount.ToString();
-
-        // }
+        armyText.text = armyCount.ToString();
         if (occupiedBy != -1)
         {
             foreach (PlayerScript player in FindObjectsOfType<PlayerScript>())
@@ -74,6 +66,10 @@ public class TerritoryScript : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Initialises data members for this territory 
+    /// </summary>
     private void OnValidate()
     {
         SetTerritoryEnums();
@@ -81,10 +77,13 @@ public class TerritoryScript : MonoBehaviour
         SetContinents();
     }
 
+    /// <summary>
+    /// According to the object's tag, fill it's adjacent territory list.
+    /// </summary>
     public void FillAdjTerritoriesList()
     {
         adjacentCountries.Clear();
-        switch (this.gameObject.tag)
+        switch (gameObject.tag)
         {
             case "Alaska":
                 adjacentCountries.Add(GameObject.FindWithTag("NorthWestTerritory").GetComponent<Transform>());
@@ -451,10 +450,13 @@ public class TerritoryScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// According to the object's tag, determine which continent it belongs to.
+    /// </summary>
     private void SetContinents()
     {
         adjacentCountries.Clear();
-        switch (this.gameObject.tag)
+        switch (gameObject.tag)
         {
             case "Alaska":
                 continent = Continents.NorthAmerica;
@@ -572,6 +574,10 @@ public class TerritoryScript : MonoBehaviour
                 break;
         }
     }
+
+    /// <summary>
+    /// According to the object's tag, set its enum
+    /// </summary>
     private void SetTerritoryEnums()
     {
         adjacentCountries.Clear();
