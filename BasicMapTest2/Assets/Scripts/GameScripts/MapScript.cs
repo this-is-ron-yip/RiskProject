@@ -10,32 +10,54 @@ using UnityEngine.UI;
 
 public class MapScript : MonoBehaviour
 {
+    /*****************************************************************************
+    Game object data members
+    ******************************************************************************/
     public Transform[] childObjects;
     public GameObject playerPrefab;
     public GameObject infantryPrefab;
     public GameObject cavalryPrefab;
     public GameObject artillaryPrefab;
-    public int playerTurn = 1;
-    public int playerCount = 3;
-    public int startingPlayer = -1;
     private GameHUDScript gameHUDScript;
     public SoundEffectsPlayer sfxPlayer;
+    public List<PlayerScript> players = new List<PlayerScript>(); // List of players in the game
+    public List<Transform> territories = new List<Transform>(); // List of territories on the map
+    /*****************************************************************************
+    End of game object data members
+    ******************************************************************************/
 
-    public bool gameOver = false;
-    public string infoCardText; // just a variable to re-use when printing a message to both the debug log and HUD
-    public List<PlayerScript> players = new List<PlayerScript>();
-    public List<Transform> territories = new List<Transform>();
-    private DiceRollerScript diceRoller;
-    public int[] diceResults;
-    public Dictionary<Transform, List<Transform>> adjacencyList = new Dictionary<Transform, List<Transform>>();
-    public event Action<int> OnPlayerConqueredAllTerritories;
+
+    /*****************************************************************************
+    Game data and trackers
+    ******************************************************************************/
+    public int playerTurn = -1; // Whose turn it is. 1 indexed just like the PlayerScript's playerNumber
+    public int playerCount; // Number of players in the game
+    public int startingPlayer = -1; // Which player starts, based on die rolls.
+    public int sets_turned_in = 0; // Track the number of card sets turned in. 
+    public int[] diceResults; // Stores the initial die rolls to determine play order
+    public bool gameOver = false; // Flag to signal the end of the game.
+    public string infoCardText; // Re-use when printing a message to both the debug log and HUD
+    public event Action<int> OnPlayerConqueredAllTerritories; // An event that shoudl be invoked to end the game
+    /*****************************************************************************
+    End of game data and trackers
+    ******************************************************************************/
+
+
+    /*****************************************************************************
+    Look up tables and enums
+    ******************************************************************************/
     enum ArmyTypes { Infantry, Cavalry, Artillery };
+    public static Color[] colorArray = // To be assigned to each player, for which color their game pieces are
+                {Color.red, Color.yellow, Color.green,
+                        Color.blue, Color.magenta, Color.cyan};
 
-    // Need 6 colors, for a maximum of 6 players
-    public static Color[] colorArray = {Color.red, Color.yellow, Color.green,
-                Color.blue, Color.magenta, Color.cyan};
+    // How many armies to grant based on how many sets have been turned in.
+    public static int[] ArmiesGrantedForCardSet = {4, 6, 8, 10, 12, 15}; 
+
+    public Dictionary<Transform, List<Transform>> adjacencyList = // Tracks which territories are adjacent to each other
+                            new Dictionary<Transform, List<Transform>>();
     
-    // Map for how many terrritories correspond to each continent
+    // How many terrritories correspond to each continent
     public static Dictionary<TerritoryScript.Continents, int> ContinentTerritoryCounts =  
         new Dictionary<TerritoryScript.Continents, int> (){
             {TerritoryScript.Continents.NorthAmerica, 9}, {TerritoryScript.Continents.SouthAmerica, 4},
@@ -43,77 +65,134 @@ public class MapScript : MonoBehaviour
             {TerritoryScript.Continents.Africa, 6}, {TerritoryScript.Continents.Australia, 4}
     };
     
-    // Map for how many armies to grant for controlling a continent
+    // How many armies to grant for controlling a certain continent
     public static Dictionary<TerritoryScript.Continents, int> ArmiesGrantedForContinent =  
         new Dictionary<TerritoryScript.Continents, int> (){
             {TerritoryScript.Continents.NorthAmerica, 5}, {TerritoryScript.Continents.SouthAmerica, 2},
             {TerritoryScript.Continents.Europe, 5}, {TerritoryScript.Continents.Asia, 7}, 
             {TerritoryScript.Continents.Africa, 3}, {TerritoryScript.Continents.Australia, 2}
     };
+    /*****************************************************************************
+    End of look up tables and enums
+    ******************************************************************************/
 
-    // Determine how many armies to grant based on how many sets have been turned in.
-    // After six sets, grant 5 more armies: armies = 15 + (turned_in - 6)*5
-    public static int[] ArmiesGrantedForCardSet = {4, 6, 8, 10, 12, 15}; 
 
-    public int sets_turned_in = 0;
-
+    /*****************************************************************************
+    Unity functions. 
+    Called by the unity game engine, but implemented here.
+    ******************************************************************************/
+    /// <summary>
+    /// Called by unity engine. Initialises the territory objects in the scene.
+    /// </summary>
     private void OnValidate()
     {
         gameHUDScript = GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>();
         FillTerritoriesList();
         FillAdjList();
     }
-
+    /// <summary>
+    /// Called by unity engine at the start of the scene. Initialises the player objects
+    /// and starts the game.
+    /// </summary>
     [Obsolete]
     private void Start()
     {
         sfxPlayer = GameObject.Find("HUDController").GetComponent<SoundEffectsPlayer>();
-        diceRoller = GetComponent<DiceRollerScript>(); //initialising the diceRoller
         CreatePlayers();
-        UpdateHud();
         OnPlayerConqueredAllTerritories += HandlePlayerWonGame;
-
         StartCoroutine(AssignStartTerritories()); // Will in turn execute rest of the program.
     }
+    /*****************************************************************************
+    End of Unity functions.
+    ******************************************************************************/
 
-    private void Update()
+
+    /*****************************************************************************
+    Initialisation functions. 
+    Set up the objects in the scene. 
+    ******************************************************************************/
+    /// <summary>
+    /// Instantiates playerScripts, based on the player count that was provided by the 
+    /// previous scene. Provides handlers for the player's events, sets their data members, 
+    /// and stores the created PlayerScripts in an array.
+    /// </summary>
+    private void CreatePlayers()
     {
+        playerCount = StaticData.playerCount; //StaticData is a class I made inside the MainMenu Scene (used for transferring data between scenes)
+
+        //Create players and instantiate them and give them respective playernumbers and infantry (after creating a player, call it's GivePlayerArmies() function)
+        for (int i = 0; i < playerCount; i++)
+        {
+            GameObject newPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 50), Quaternion.identity);
+            newPlayer.name = $"Player {i+1}";
+            PlayerScript newPlayerScript = newPlayer.GetComponent<PlayerScript>();
+            newPlayerScript.playerNumber = i+1;
+            int infCount = 50 - (playerCount * 5);
+            // TODO: DELETE THE LINE BELOW LATER, give less armies for testing
+            infCount = 3;
+            newPlayerScript.GivePlayerArmies(infCount, 0, 0);
+
+            // Set color for pieces:
+            newPlayerScript.color = colorArray[newPlayerScript.playerNumber - 1];
+
+            // Add listener for when player claims or attacks a territory
+            newPlayerScript.OnPlayerClaimedTerritoryAtStart += HandleTerritoryClaimedAtStart;
+            newPlayerScript.OnPlayerPlacesAnArmyAtStart += HandlePlacingAnArmy;
+            newPlayerScript.OnPlayerPlacesAnArmyInGame += HandlePlacingAnArmy;
+            newPlayerScript.OnPlayerSelectAttackFrom += HandleTerritoryToAttackFrom;
+            newPlayerScript.OnPlayerSelectAttackOn += HandleTerritoryToAttackOn;
+            newPlayerScript.OnPlayerSelectAttackOn += HandleTerritoryToAttackOn;
+            newPlayerScript.OnPlayerSelectMoveFrom += HandleTerritoryToMoveFrom;
+            newPlayerScript.OnPlayerSelectMoveTo += HandleTerritoryToMoveTo;
+            newPlayerScript.OnRollDiceAtStart += HandleDiceRollAtStart;
+            newPlayerScript.OnPlayerDrawsCard += HandleDrawCard;
+            players.Add(newPlayerScript);
+        }
 
     }
-
-    public void OnDrawGizmos()
+    /// <summary>
+    /// Fills adjacency lists (meaning adjacent territories) for each territory object in the scene.
+    /// </summary>
+    private void FillAdjList()
     {
-        //using this function because it executes for every frame inside the unity editor.
-        //this function will draw the lines between the countries (which will indicate the routes the piece will take) using the adjacency list
-        Gizmos.color = Color.green;
-
-        foreach (var pair in adjacencyList)
+        adjacencyList.Clear();
+        foreach (Transform territory in territories)
         {
-            Vector3 startPos = pair.Key.position;
+            adjacencyList.Add(territory, GameObject.FindWithTag(territory.gameObject.tag).GetComponent<TerritoryScript>().adjacentCountries);
+        }
+    }
+    /// <summary>
+    /// Fills the MapScript's transform list for all territories in the scene.
+    /// </summary>
+    private void FillTerritoriesList()
+    {
+        territories.Clear();
+        childObjects = GetComponentsInChildren<Transform>();
 
-            foreach (var adjTerr in pair.Value)
+        foreach (Transform territory in childObjects)
+        {
+            if (territory != this.transform)
             {
-                Vector3 endPos = adjTerr.position;
-                Gizmos.DrawLine(startPos, endPos);
+                territories.Add(territory);
             }
         }
     }
+    /*****************************************************************************
+    End of initialization functions 
+    ******************************************************************************/
 
-    //idk if this works, will check later
-    public List<Transform> GetAdjTerritories(Transform territory)
-    {
-        List<Transform> listOfAdjTerrs = new List<Transform>();
-        foreach (var pair in adjacencyList)
-        {
-            if (pair.Key.gameObject.tag == territory.gameObject.tag)
-            {
-                listOfAdjTerrs = adjacencyList[pair.Key];
-            }
-        }
-        listOfAdjTerrs.Add(null);
-        return listOfAdjTerrs;
-    }
 
+    /*****************************************************************************
+    Player Turn functions.
+    Handle the main logic for executing certain steps of a player's turn.
+    Call on other, smaller functions to achieve this.
+    ******************************************************************************/
+    /// <summary>
+    /// Handles the game setup by determining the play order and requiring players to
+    /// place all of their initial armies, according to the game rules. Then calls
+    /// the EnterGamePlay() function
+    /// </summary>
+    /// <returns> private IEnumerator </returns>
     [Obsolete]
     private IEnumerator AssignStartTerritories()
     {
@@ -217,16 +296,7 @@ public class MapScript : MonoBehaviour
             }
         }
 
-        /* Step three: players place remaining pieces on their claimed territories
-
-        "After all 42 territories are claimed, each player in turn places one
-        additional army onto any territory he or she already occupies. Continue
-        in this way until everyone has run out of armies. There is no limit to the
-        number of armies you may place onto a single territory"
-        
-        */
-    
-        // Entered next phase of the game
+        // Step three: players place remaining pieces on their claimed territories
         while(players[playerTurn - 1].GetArmyCountTotal() != 0){
             players[playerTurn - 1].canPlaceArmyAtStart = true; 
 
@@ -258,657 +328,16 @@ public class MapScript : MonoBehaviour
                 gameHUDScript.playerTurnText.text = $"Player turn: {playerTurn}";
             }
         }
-
-        //TODO: Instantiate army object and place it on the territory OR simply don't spawn
             
         // Completed game set up!
         yield return StartCoroutine(EnterGamePlay());
     }
-
-    private IEnumerator WaitForDieRoll(){
-        Debug.Log($"Player {playerTurn}, click the dice to roll.");
-        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click the dice to roll.";
-        PlayerScript player = players[playerTurn - 1];
-        player.clickExpected = true;
-        yield return StartCoroutine(WaitForPlayerToDoMove(player));
-    }
-
-    private IEnumerator WaitForAttackFromTerritory()
-    {
-        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an owned territory to attack from.";
-        PlayerScript player = players[playerTurn - 1];
-        player.clickExpected = true;
-        player.canSelectAttackFrom = true;
-        yield return StartCoroutine(WaitForPlayerToDoMove(player));
-    }
-
-    private IEnumerator WaitForAttackOnTerritory()
-    {
-        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an enemy territory to attack on.";
-        Debug.Log($"Player {playerTurn}, click an enemy territory to attack on.");
-
-        PlayerScript player = players[playerTurn - 1];
-        player.clickExpected = true;
-        yield return StartCoroutine(WaitForPlayerToDoMove(player));
-    }
-    private IEnumerator WaitForMoveFromTerritory()
-    {
-        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an owned territory to move from.";
-        PlayerScript player = players[playerTurn - 1];
-        player.clickExpected = true;
-        player.canSelectMoveFrom = true;
-        yield return StartCoroutine(WaitForPlayerToDoMove(player));
-    }
-    private IEnumerator WaitForMoveToTerritory()
-    {
-        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an owned territory to move to.";
-        PlayerScript player = players[playerTurn - 1];
-        player.clickExpected = true;
-        player.canSelectMoveTo = true;
-        yield return StartCoroutine(WaitForPlayerToDoMove(player));
-    }
-
-    private IEnumerator InitialiseStartingInfantry()
-    {
-        Debug.Log($"Player {playerTurn}, choose a territory to place 1 infantry on.");
-        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, choose a territory to place 1 infantry on.";
-        PlayerScript player = players[playerTurn - 1];
-        player.clickExpected = true;
-        yield return StartCoroutine(WaitForPlayerToDoMove(player));
-    }
-
-    private IEnumerator InitialiseStartOfTurnInfantry(int player_id){
-        PlayerScript player = players[player_id - 1];
-        gameHUDScript.eventCardTMP.text = $"Player {player_id}, place your infantries. You have {player.GetArmyCountTotal()} left";
-        Debug.Log($"Player {player_id}, where would you like to place one infantry?");
-        player.clickExpected = true;
-        yield return StartCoroutine(WaitForPlayerToDoMove(player));
-    }
-
-    private IEnumerator WaitForPlayerToDoMove(PlayerScript player)
-    {
-        yield return new WaitUntil(() => !player.clickExpected);
-    }
-
-    private IEnumerator WaitForChooseCardDisplayInactive()
-    {
-        yield return new WaitUntil(() => 
-                !gameHUDScript.cardsAreOnDisplay);
-    }
-
-    private IEnumerator WaitForFortifyInputInactive()
-    {
-        yield return new WaitUntil(() => 
-                !gameHUDScript.fortifyInputOnDisplay);
-    }
-
-    private IEnumerator WaitForAttackOrFortifyInactive()
-    {
-        yield return new WaitUntil(() => 
-                !gameHUDScript.attackOrFortifyOnDisplay);
-    }
-
-    private IEnumerator WaitForAttackInputPanelInactive()
-    {
-        yield return new WaitUntil(() => 
-                !gameHUDScript.attackInputIsOnDisplay);
-    }
-
-    // Responsible for calculating and granting armies based on territories,
-    // At the start of each turn.
-    // This function is called by a coroutine, so it must be a coroutine
-    private void GrantArmiesFromTerritories(int player_id){
-        PlayerScript player = players[player_id - 1];
-
-        // Count the number of territories you occupy, divide by three and round down. 
-        player.infCount += Math.Max(player.territoriesOwned.Count / 3, 3);
-
-        gameHUDScript.infoCardTMP.text = "Player " + player_id + " occupies " + player.territoriesOwned.Count +
-        " territories and has been granted " +
-                player.GetArmyCountTotal() + " armies";
-        Debug.Log("Player " + player_id + " occupies " + player.territoriesOwned.Count + 
-        " territories and has been granted " +
-                player.GetArmyCountTotal() + " armies");
-    }
-
-    private void GrantArmiesFromContinents(int player_id){
-        int infantry = 0;
-        PlayerScript player = players[player_id - 1];
-
-        // Add armies for each territory owned
-        foreach(KeyValuePair<TerritoryScript.Continents, int> count in player.territoryCountsPerContinent){
-            // This player controls the continent
-            if(count.Value == ContinentTerritoryCounts[count.Key] ){
-                // Add proper number of armies
-                infantry += ArmiesGrantedForContinent[count.Key];
-                Debug.Log("Player " + player_id + " controls " + count.Key + " and has been granted" + 
-                    ArmiesGrantedForContinent[count.Key] + " additional armies");
-            }
-        }
-    }
-
-
-    /*
-    To fortify your position, move as many armies as you’d like from one (and
-    only one) of your territories into one (and only one) of your adjacent
-    territories. 
-    */
-    private IEnumerator FortifyPosition(int player_id){
-        PlayerScript player = players[player_id - 1];
-        // Clear past values:
-        player.TerritoryMoveFrom = null;
-        player.TerritoryMoveTo = null;
-
-        // Part one: pick an owned territory to move from
-        player.canSelectMoveFrom = true;
-        while(player.TerritoryMoveFrom == null)
-        {
-            playerTurn = player_id; // We need to reset the playerTurn, which is being updated when it shouldn't be
-            gameHUDScript.playerTurnText.text = $"Player turn: {playerTurn}";
-            yield return StartCoroutine(WaitForMoveFromTerritory());
-        }
-        player.canSelectMoveFrom = false;
-        gameHUDScript.infoCardTMP.text = "Player chose to move from : " + player.TerritoryMoveFrom;
-        Debug.Log("Player chose to move from : " + player.TerritoryMoveFrom);
-
-        player.canSelectMoveTo = true;
-        while(player.TerritoryMoveTo == null) { // Until valid input is received
-            playerTurn = player_id; // Override in case playerTurn has changed unpredictably
-            gameHUDScript.playerTurnText.text = $"Player turn: {playerTurn}";
-            yield return StartCoroutine(WaitForMoveToTerritory());
-        }
-        player.canSelectMoveTo = false;
-        Debug.Log("Player chose to move to : " + player.TerritoryMoveTo);
-        gameHUDScript.infoCardTMP.text = "Player chose to move to : " + player.TerritoryMoveFrom;
-
-        // Ask how many armies they would like to move.
-        int fortify_army_count = -1;
-        while(fortify_army_count == -1){
-            gameHUDScript.ShowFortifyInputPanel();
-            yield return WaitForFortifyInputInactive(); // Get input from panel
-            fortify_army_count = gameHUDScript.fortify_army_count; // Should be validated
-        }
-
-        player.TerritoryMoveFrom.armyCount -= fortify_army_count;
-        player.TerritoryMoveTo.armyCount += fortify_army_count;
-    }
-
-    private IEnumerator LaunchAnAttack(int player_id)
-    {
-        Debug.Log("Player: " + player_id + ", launch an attack.");
-        gameHUDScript.eventCardTMP.text = "Player: " + player_id + ", launch an attack.";
-        PlayerScript player = players[player_id - 1];
-        // Clear past values:
-        player.TerritoryAttackingFrom = null;
-        player.TerritoryAttackingOn = null;
-
-        // Part one: pick an owned territory to attack from
-        player.canSelectAttackFrom = true;
-        while(player.TerritoryAttackingFrom == null)
-        {
-            playerTurn = player_id; // We need to reset the playerTurn, which is being updated when it shouldn't be
-            gameHUDScript.playerTurnText.text = $"Player turn: {playerTurn}";
-            // TODO: figure out why the behavior explained above is occuring.
-            yield return StartCoroutine(WaitForAttackFromTerritory());
-        }
-        player.canSelectAttackFrom = false;
-
-        player.canSelectAttackOn = true;
-        while(player.TerritoryAttackingOn == null) { // Until valid input is received
-            playerTurn = player_id; // Override in case playerTurn has changed unpredictably
-            gameHUDScript.playerTurnText.text = $"Player turn: {playerTurn}";
-            yield return StartCoroutine(WaitForAttackOnTerritory());
-        }
-        player.canSelectAttackOn = false;
-
-        // Part three: roll the dice
-        // Ask the defender and attacker how many armies they would like to use
-        int attacker_army_count = -1;
-        int defender_army_count = -1;
-        bool valid_input = false;
-        while(!valid_input){
-            gameHUDScript.ShowAttackInputPanel();
-            yield return WaitForAttackInputPanelInactive(); // Get input from panel
-            attacker_army_count = gameHUDScript.attacker_army_count;
-            defender_army_count = gameHUDScript.defender_army_count;
-            // Check defender input: 
-            if(defender_army_count != 1 && defender_army_count != 2){
-                Debug.Log("Defender must choose to fight with one or two armies.");
-                gameHUDScript.errorCardTMP.text = "Defender must choose to fight with one or two armies.";
-                sfxPlayer.PlayErrorSound();
-            }
-            else if(player.TerritoryAttackingOn.armyCount < defender_army_count){
-                Debug.Log("Defender does not have sufficient armies for this input.");
-                gameHUDScript.errorCardTMP.text = "Defender does not have sufficient armies for this input.";
-                sfxPlayer.PlayErrorSound();
-            } 
-            else if(attacker_army_count !=1 && attacker_army_count != 2 && attacker_army_count != 3)  {
-                Debug.Log("Attacker must choose to fight with one, two, or three armies.");
-                gameHUDScript.errorCardTMP.text = "Attacker must choose to fight with one, two, or three armies.";
-                sfxPlayer.PlayErrorSound();
-            }
-            else if(player.TerritoryAttackingFrom.armyCount <= attacker_army_count){
-                Debug.Log("Attacker has selected too many armies. Must leave one army " + 
-                    " to occupy its starting territory.");
-                gameHUDScript.errorCardTMP.text = "Attacker has selected too many armies. Must leave one army " +
-                    " to occupy its starting territory.";
-                sfxPlayer.PlayErrorSound();
-            }
-            else{
-                valid_input = true;
-            }
-        }
-
-        // Part four: evaluate the outcome of the attack 
-        yield return EvaluateAttack(player_id, attacker_army_count, defender_army_count);
-
-        /* From the game rules:
-        If winning them gives you 6 or more cards, you must immediately trade
-        in enough sets to reduce your hand to 4 or fewer cards, but once your
-        hand is reduced to 4,3, or 2 cards, you must stop trading.
-        But if winning them gives you fewer than 6, you must wait until the
-        beginning of your next turn to trade in a set.
-        */
-        bool firstRep = true;
-        while(player.cardsInHand.Count >= 6) // Will only happen if they elimintaed opponent
-        {
-            Debug.Log((firstRep? "After eliminating your opponenent, you have more than 6 cards." :
-                "You still have more than 6 cards.") +
-            " Select which cards you would like to turn in.");
-            // Allow player to turn in cards
-            gameHUDScript.ShowChooseCardPanel();
-            // Once display is inactive, assume we are done with this phase.
-            yield return WaitForChooseCardDisplayInactive();
-            firstRep = false;
-        }
-    }
-
-    private void HandleDiceRollAtStart(int player_id, GameObject die){
-        DiceRollerScript die_rolled = die.GetComponent<DiceRollerScript>();
-        int result = die_rolled.RollDice();
-        diceResults[player_id - 1] = result;
-        Debug.Log("Player " + player_id + " rolled a " + result);
-        gameHUDScript.infoCardTMP.text = "Player " + player_id + " rolled a " + result;
-        // TODO: add animation here.
-    }
-        
-    // Update territory members
-    private void HandleTerritoryClaimedAtStart(int player_id, GameObject territory){
-        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
-
-        // Find the territory by name aka tag. If not found, do nothing
-        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
-        
-        // Update the territory's owner
-        if(claimed_territory == null){
-            Debug.Log("Tag does not match a known territory");
-            gameHUDScript.errorCardTMP.text = "Tag does not match a known territory";
-            sfxPlayer.PlayErrorSound();
-            return;
-        }
-        if(claimed_territory.occupiedBy != -1){
-            Debug.Log("Territory already claimed. Occupied by Player " + claimed_territory.occupiedBy + ". Returning from handler");
-            gameHUDScript.errorCardTMP.text = "Territory already claimed. Occupied by Player " + claimed_territory.occupiedBy + ". Returning from handler";
-            sfxPlayer.PlayErrorSound();
-            // someone else is occupying, do nothing
-            return;
-        }
-        else{
-            // add territory to player list:
-            claimed_territory.occupiedBy = player_id;
-            curr_player.territoriesOwned.Add(claimed_territory);
-            curr_player.territoryCountsPerContinent[claimed_territory.continent] += 1;
-
-            // Add one to the troops on this territory, since this function is only used at the start
-            claimed_territory.armyCount++;
-            curr_player.infCount--;
-            infoCardText = territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies." +
-               " Player " + player_id + " now has " + curr_player.territoryCountsPerContinent[claimed_territory.continent] + " on " +
-               " territories on the continent of " + claimed_territory.continent + ". Player " + player_id + " has " +
-                curr_player.infCount + " infantry remaining.";
-            Debug.Log(infoCardText);
-            gameHUDScript.eventCardTMP.text = infoCardText;
-            // spawn army (this step should always happen last!!!): 
-            // SpawnArmyPiece(ArmyTypes.Infantry, territory, player_id);
-        }
-    }
-
-    // Select a territory to attack from
-    private void HandleTerritoryToAttackFrom(int player_id, GameObject territory)
-    {
-        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
-
-        // Find the territory by name aka tag. If not found, do nothing
-        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
-
-        // Update the territory's owner
-        if (claimed_territory == null)
-        {
-            Debug.Log("Tag does not match a known territory");
-            gameHUDScript.errorCardTMP.text = "Tag does not match a known territory";
-            sfxPlayer.PlayErrorSound();
-            return;
-        }
-        if (claimed_territory.occupiedBy == player_id)
-        {
-            if(claimed_territory.armyCount < 2){
-                Debug.Log("Must attack from a territory with at least two armies.");
-                return;
-            }
-            gameHUDScript.infoCardTMP.text = $"{curr_player} is attacking from " + claimed_territory.name;
-            Debug.Log($"{curr_player} is attacking from " + claimed_territory.name);
-            curr_player.TerritoryAttackingFrom = claimed_territory;
-            return;
-        }
-        else
-        {
-            Debug.Log("Player " + player_id + " does not own " + claimed_territory.name);
-            gameHUDScript.errorCardTMP.text = "Player " + player_id + " does not own " + claimed_territory.name;
-        }
-    }
-
-    // Select a territory to attack on
-    private void HandleTerritoryToAttackOn(int player_id, GameObject territory)
-    {
-        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
-
-        // Find the territory by name aka tag. If not found, do nothing
-        TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
-
-        if (selected_territory != null)
-        {
-            if (selected_territory.occupiedBy != player_id)
-            {
-                Debug.Log("Player " + player_id + " is launching an attack on " + selected_territory.name);
-                Debug.Log(curr_player.TerritoryAttackingFrom.name);
-                gameHUDScript.infoCardTMP.text = "Player " + player_id + " is launching an attack on " + selected_territory.name;
-
-                // Check if territory is adjacent
-                if (AreAdjacent(selected_territory, curr_player.TerritoryAttackingFrom))
-                {
-                    curr_player.TerritoryAttackingOn = selected_territory;
-                    return;
-                }
-                else{
-                    infoCardText = "The selected territory: " + selected_territory.name +
-                            " is not adjacent to the territory you are attacking from: " + curr_player.TerritoryAttackingFrom.name;
-                    Debug.Log(infoCardText);
-                    gameHUDScript.errorCardTMP.text = infoCardText;
-                    sfxPlayer.PlayErrorSound();
-                }
-            }
-            else
-            {
-                infoCardText = "Attack cannot be launched on " + selected_territory.name + ": Player owns the territory!";
-                Debug.Log(infoCardText);
-                gameHUDScript.errorCardTMP.text = infoCardText;
-                sfxPlayer.PlayErrorSound();
-            }
-        }
-        else
-        {
-            Debug.Log("Tag does not match a known territory");
-            gameHUDScript.errorCardTMP.text = "Tag does not match a known territory";
-            sfxPlayer.PlayErrorSound();
-            return;
-        }
-    }
-
-    private void HandleTerritoryToMoveFrom(int player_id, GameObject territory)
-    {
-        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
-
-        // Find the territory by name aka tag. If not found, do nothing
-        TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
-
-        if (selected_territory != null)
-        {
-            if (selected_territory.occupiedBy == player_id)
-            {
-                // Check if the territory has more than one army:
-                if(selected_territory.armyCount <= 1){
-                    // invalid
-                    Debug.Log("Selected territory has insufficient armies.");
-                    gameHUDScript.errorCardTMP.text = "Selected territory has insufficient armies.";
-                    sfxPlayer.PlayErrorSound();
-                    return;
-                }
-                
-                selected_territory.FillAdjTerritoriesList();
-                foreach(Transform adj_transform in selected_territory.adjacentCountries){
-                    if(adj_transform.GetComponent<TerritoryScript>().occupiedBy == player_id){
-                        // There is a valid adjacent territory owned by this player
-                        curr_player.TerritoryMoveFrom = selected_territory;
-                        return;
-                    }
-                }
-
-                // Otherwise, there are no adjacent territories owned by this player
-                infoCardText = "Selected territory has no neighbors owned by this player. Choose another territory";
-                Debug.Log(infoCardText);
-                gameHUDScript.errorCardTMP.text = infoCardText;
-                sfxPlayer.PlayErrorSound();
-                return;
-            }
-            else
-            {
-                infoCardText = selected_territory.name + " does not belong to this player";
-                Debug.Log(infoCardText);
-                gameHUDScript.errorCardTMP.text = infoCardText;
-                sfxPlayer.PlayErrorSound();
-            }
-        }
-        else
-        {
-            infoCardText = "Tag does not match a known territory";
-            Debug.Log(infoCardText);
-            gameHUDScript.errorCardTMP.text = infoCardText;
-            sfxPlayer.PlayErrorSound();
-            return;
-        }
-    }
-
-        private void HandleTerritoryToMoveTo(int player_id, GameObject territory)
-    {
-        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
-
-        // Find the territory by name aka tag. If not found, do nothing
-        TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
-
-        if (selected_territory != null)
-        {
-            if (selected_territory.occupiedBy == player_id)
-            {
-                // Check if territory is adjacent
-                selected_territory.FillAdjTerritoriesList();
-                selected_territory.FillAdjTerritoriesList();
-                if(AreAdjacent(selected_territory, curr_player.TerritoryMoveFrom))
-                {
-                    curr_player.TerritoryMoveTo = selected_territory;
-                    return;
-                }
-                else{
-                    infoCardText = "The selected territory: " + selected_territory.name +
-                            " is not adjacent to the territory you are moving from: " + curr_player.TerritoryAttackingFrom.name;
-                    Debug.Log(infoCardText);
-                    gameHUDScript.errorCardTMP.text = infoCardText;
-                    sfxPlayer.PlayErrorSound();
-                }
-            }
-            else
-            {
-                infoCardText = selected_territory.name + " does not belong to this player.";
-                Debug.Log(infoCardText);
-                gameHUDScript.errorCardTMP.text = infoCardText;
-                sfxPlayer.PlayErrorSound();
-            }
-        }
-        else
-        {
-            infoCardText = "Tag does not match a known territory";
-            Debug.Log(infoCardText);
-            gameHUDScript.errorCardTMP.text = infoCardText;
-            sfxPlayer.PlayErrorSound();
-            return;
-        }
-    }
-
-
-
-   private IEnumerator EvaluateAttack(int attacker_id, int attacker_dice, int defender_dice)
-    {
-        PlayerScript player = players[attacker_id - 1];
-
-        TerritoryScript PlayerTerritory = player.TerritoryAttackingFrom;
-        TerritoryScript EnemyTerritory = player.TerritoryAttackingOn;
-        PlayerScript defender = players[EnemyTerritory.occupiedBy - 1];
-
-        // Generate the die rolls.
-        List<int> attacker_rolls = new List<int>();
-        List<int> defender_rolls = new List<int>();
-        for(int i = 0; i < attacker_dice; i++){
-            attacker_rolls.Add(UnityEngine.Random.Range(1, 7));
-            Debug.Log("Attacker Roll " + i + ": " + attacker_rolls[i]);
-            gameHUDScript.infoCardTMP.text = "Attacker Roll " + i + ": " + attacker_rolls[i];
-
-
-        }
-        for(int i = 0; i < defender_dice; i++){
-            defender_rolls.Add(UnityEngine.Random.Range(1, 7));
-            Debug.Log("Defender Roll " + i + ": " + defender_rolls[i]);
-            gameHUDScript.infoCardTMP.text = "Attacker Roll " + i + ": " + attacker_rolls[i];
-        }
-
-        // Sort from highest to lowest. Sorts in ascending order by default, so reverse
-        attacker_rolls.Sort();
-        attacker_rolls.Reverse();
-        defender_rolls.Sort();
-        defender_rolls.Reverse();
-
-        // Determine winner
-        int one_v_ones = Math.Min(attacker_dice, defender_dice);
-        int remaining_attackers = attacker_dice;
-        for(int i = 0; i < one_v_ones; i++){
-            infoCardText = "Battling... Attacker: " + attacker_rolls[i] +
-                    " vs Defender: " + defender_rolls[i];
-            Debug.Log(infoCardText);
-            gameHUDScript.infoCardTMP.text = infoCardText;
-            if (attacker_rolls[i] > defender_rolls[i]){
-                // Defender loses one army on the territory being attacked.
-                Debug.Log("Attacker wins this match up!");
-                gameHUDScript.infoCardTMP.text = "Attacker wins this match up!";
-                EnemyTerritory.armyCount--;
-            }
-            else{ // Defender wins on a tie
-                // Attacker loses one of the armies they sent to attack
-                Debug.Log("Defender wins this match up!");
-                gameHUDScript.infoCardTMP.text = "Defender wins this match up!";
-                PlayerTerritory.armyCount--;
-                remaining_attackers--;
-            }
-        }
-
-        // Check if the attacker claimed the territory
-        if(EnemyTerritory.armyCount <= 0){ // should not be negative, but just in case
-            player.wonTerritory = true;
-            EnemyTerritory.occupiedBy = attacker_id; // update territories variables
-            player.territoriesOwned.Add(EnemyTerritory);
-            player.territoryCountsPerContinent[EnemyTerritory.continent] += 1;
-            defender.territoriesOwned.Remove(EnemyTerritory);
-            defender.territoryCountsPerContinent[EnemyTerritory.continent] -= 1;
-
-            // Attacker must leave surviving armies on the territory they won
-            EnemyTerritory.armyCount = remaining_attackers;
-
-            if(PlayerTerritory.armyCount > 1){
-                infoCardText = "How many additional armies do you wish to move from the attacking territory to the " +
-                "territory you just conquered? You may select 0.";
-                Debug.Log(infoCardText);
-                gameHUDScript.eventCardTMP.text = infoCardText;
-
-                // Ask how many armies they would like to move.
-                int fortify_army_count = -1;
-                player.TerritoryMoveFrom = PlayerTerritory;
-                player.TerritoryMoveTo = EnemyTerritory;
-                while(fortify_army_count == -1){
-                    gameHUDScript.ShowFortifyInputPanel();
-                    yield return WaitForFortifyInputInactive(); // Get input from panel
-                    fortify_army_count = gameHUDScript.fortify_army_count; // Should be validated
-                }
-
-                PlayerTerritory.armyCount -= fortify_army_count;
-                EnemyTerritory.armyCount += fortify_army_count;
-
-                // Reset
-                player.TerritoryMoveFrom = null;
-                player.TerritoryMoveTo = null;
-            }
-        }
-
-        // Reset member variables
-        player.TerritoryAttackingFrom = null;
-        player.TerritoryAttackingOn = null;
-
-        // Check if the attacker has won the game
-        if(player.territoriesOwned.Count == TerritoryScript.NUMBER_OF_TERRITORIES){
-            OnPlayerConqueredAllTerritories?.Invoke(player.playerNumber);
-        }
-
-        // Check if the defendant has been eliminated (no territories left)
-        if(defender.territoriesOwned.Count == 0){
-            defender.eliminated = true;
-            // Give defender's cards to the attacker:
-            player.cardsInHand.AddRange<Card>(defender.cardsInHand);
-        }
-
-        // TODO: delete later. for testing the final game screen only
-        // OnPlayerConqueredAllTerritories?.Invoke(player.playerNumber);
-    }
-
-    private void HandlePlacingAnArmy(int player_id, GameObject territory){
-        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
-
-        // Find the territory by name aka tag. If not found, do nothing
-        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
-        
-        // Update the territory's owner
-        if(claimed_territory == null){
-            infoCardText = "Tag does not match a known territory";
-            Debug.Log(infoCardText);
-            gameHUDScript.errorCardTMP.text = infoCardText;
-            sfxPlayer.PlayErrorSound();
-            return;
-        }
-        if(claimed_territory.occupiedBy != player_id){
-            infoCardText = claimed_territory.tag + " is not claimed by this player.";
-            Debug.Log(infoCardText);
-            gameHUDScript.errorCardTMP.text = infoCardText;
-            sfxPlayer.PlayErrorSound();
-            // only allowed to add to already claimed territories
-            return;
-        }
-        else{
-            //update the territory's armyCount
-            claimed_territory.armyCount++;
-            //update the armyCount of the Army that is on the territory so it can display a new number
-            // foreach (GameObject army in curr_player.armies)
-            // {
-            //     if (army.GetComponent<ArmyScript>().currentTerritoryPos = territory.transform)
-            //     {
-            //         army.GetComponent<ArmyScript>().armyCount = claimed_territory.armyCount;
-            //     }
-            // }
-            curr_player.infCount--;
-            Debug.Log(claimed_territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
-            gameHUDScript.infoCardTMP.text = claimed_territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies";
-        }
-    }
-
-    private void HandleDrawCard(int player_id, GameObject deck){
-        Card drawn = deck.GetComponent<DeckScript>().DrawCard();
-        players[player_id - 1].cardsInHand.Add(drawn);
-    }
-
+    /// <summary>
+    /// This function is called after the game set up has been completed. It handles
+    /// rotating through player turns, prompting them for the appropriate action or input.
+    /// Once this function returns, the game is over.
+    /// </summary>
+    /// <returns></returns>
     [Obsolete]
     private IEnumerator EnterGamePlay(){
         gameHUDScript.infoCardTMP.text = "Entered game play!";
@@ -1076,119 +505,796 @@ public class MapScript : MonoBehaviour
             }
         }
     }
-
-    private void CreatePlayers()
+    /// <summary>
+    /// This function is called when a player wishes to launch an attack. It requests and extracts
+    /// wehre the player would like to attack from, where they would like to attack on, and with 
+    /// how many armies they would like to attack. It then executes the attack and updates all 
+    /// appropriate data based on the results.
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <returns></returns>
+    private IEnumerator LaunchAnAttack(int player_id)
     {
-        playerCount = StaticData.playerCount; //StaticData is a class I made inside the MainMenu Scene (used for transferring data between scenes)
+        Debug.Log("Player: " + player_id + ", launch an attack.");
+        gameHUDScript.eventCardTMP.text = "Player: " + player_id + ", launch an attack.";
+        PlayerScript player = players[player_id - 1];
+        // Clear past values:
+        player.TerritoryAttackingFrom = null;
+        player.TerritoryAttackingOn = null;
 
-        //Create players and instantiate them and give them respective playernumbers and infantry (after creating a player, call it's GivePlayerArmies() function)
-        for (int i = 0; i < playerCount; i++)
+        // Part one: pick an owned territory to attack from
+        player.canSelectAttackFrom = true;
+        while(player.TerritoryAttackingFrom == null)
         {
-            GameObject newPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 50), Quaternion.identity);
-            newPlayer.name = $"Player {i+1}";
-            PlayerScript newPlayerScript = newPlayer.GetComponent<PlayerScript>();
-            newPlayerScript.playerNumber = i+1;
-            int infCount = 50 - (playerCount * 5);
-            // TODO: DELETE THE LINE BELOW LATER, give less armies for testing
-            infCount = 3;
-            newPlayerScript.GivePlayerArmies(infCount, 0, 0);
+            playerTurn = player_id; // We need to reset the playerTurn
+            gameHUDScript.playerTurnText.text = $"Player turn: {playerTurn}";
+            yield return StartCoroutine(WaitForAttackFromTerritory());
+        }
+        player.canSelectAttackFrom = false;
 
-            // Set color for pieces:
-            newPlayerScript.color = colorArray[newPlayerScript.playerNumber - 1];
+        player.canSelectAttackOn = true;
+        while(player.TerritoryAttackingOn == null) { // Until valid input is received
+            playerTurn = player_id; // Override in case playerTurn has changed unpredictably
+            gameHUDScript.playerTurnText.text = $"Player turn: {playerTurn}";
+            yield return StartCoroutine(WaitForAttackOnTerritory());
+        }
+        player.canSelectAttackOn = false;
 
-            // Add listener for when player claims or attacks a territory
-            newPlayerScript.OnPlayerClaimedTerritoryAtStart += HandleTerritoryClaimedAtStart;
-            newPlayerScript.OnPlayerPlacesAnArmyAtStart += HandlePlacingAnArmy;
-            newPlayerScript.OnPlayerPlacesAnArmyInGame += HandlePlacingAnArmy;
-            newPlayerScript.OnPlayerSelectAttackFrom += HandleTerritoryToAttackFrom;
-            newPlayerScript.OnPlayerSelectAttackOn += HandleTerritoryToAttackOn;
-            newPlayerScript.OnPlayerSelectAttackOn += HandleTerritoryToAttackOn;
-            newPlayerScript.OnPlayerSelectMoveFrom += HandleTerritoryToMoveFrom;
-            newPlayerScript.OnPlayerSelectMoveTo += HandleTerritoryToMoveTo;
-            newPlayerScript.OnRollDiceAtStart += HandleDiceRollAtStart;
-            newPlayerScript.OnPlayerDrawsCard += HandleDrawCard;
-            players.Add(newPlayerScript);
+        // Part three: roll the dice
+        // Ask the defender and attacker how many armies they would like to use
+        int attacker_army_count = -1;
+        int defender_army_count = -1;
+        bool valid_input = false;
+        while(!valid_input){
+            gameHUDScript.ShowAttackInputPanel();
+            yield return WaitForAttackInputPanelInactive(); // Get input from panel
+            attacker_army_count = gameHUDScript.attacker_army_count;
+            defender_army_count = gameHUDScript.defender_army_count;
+            // Check defender input: 
+            if(defender_army_count != 1 && defender_army_count != 2){
+                Debug.Log("Defender must choose to fight with one or two armies.");
+                gameHUDScript.errorCardTMP.text = "Defender must choose to fight with one or two armies.";
+                sfxPlayer.PlayErrorSound();
+            }
+            else if(player.TerritoryAttackingOn.armyCount < defender_army_count){
+                Debug.Log("Defender does not have sufficient armies for this input.");
+                gameHUDScript.errorCardTMP.text = "Defender does not have sufficient armies for this input.";
+                sfxPlayer.PlayErrorSound();
+            } 
+            else if(attacker_army_count !=1 && attacker_army_count != 2 && attacker_army_count != 3)  {
+                Debug.Log("Attacker must choose to fight with one, two, or three armies.");
+                gameHUDScript.errorCardTMP.text = "Attacker must choose to fight with one, two, or three armies.";
+                sfxPlayer.PlayErrorSound();
+            }
+            else if(player.TerritoryAttackingFrom.armyCount <= attacker_army_count){
+                Debug.Log("Attacker has selected too many armies. Must leave one army " + 
+                    " to occupy its starting territory.");
+                gameHUDScript.errorCardTMP.text = "Attacker has selected too many armies. Must leave one army " +
+                    " to occupy its starting territory.";
+                sfxPlayer.PlayErrorSound();
+            }
+            else{
+                valid_input = true;
+            }
         }
 
-    }
+        // Part four: evaluate the outcome of the attack 
+        yield return EvaluateAttack(player_id, attacker_army_count, defender_army_count);
 
-    private void UpdateHud()
-    {
-        //Update all the huds
-    }
-
-    private void FillAdjList()
-    {
-        adjacencyList.Clear();
-        foreach (Transform territory in territories)
+        /* From the game rules, after eliminating an opponent:
+        You must immediately trade in enough sets to reduce your hand to 4 or fewer cards, 
+        but once your hand is reduced to 4,3, or 2 cards, you must stop trading.
+        But if winning them gives you fewer than 6, you must wait until the
+        beginning of your next turn to trade in a set.
+        */
+        bool firstRep = true;
+        while(player.cardsInHand.Count >= 6) // Will only happen if they elimintaed opponent
         {
-            adjacencyList.Add(territory, GameObject.FindWithTag(territory.gameObject.tag).GetComponent<TerritoryScript>().adjacentCountries);
+            Debug.Log((firstRep? "After eliminating your opponenent, you have more than 6 cards." :
+                "You still have more than 6 cards.") +
+            " Select which cards you would like to turn in.");
+            // Allow player to turn in cards
+            gameHUDScript.ShowChooseCardPanel();
+            // Once display is inactive, assume we are done with this phase.
+            yield return WaitForChooseCardDisplayInactive();
+            firstRep = false;
         }
     }
-
-    private void FillTerritoriesList()
+    /// <summary>
+    /// Given the amount of armies both sides wish to battle with, this function generates
+    /// the die rolls and determines who won each match up. It then modifies the number of armies
+    /// on each territory, and checks to see if the attacker has claimed the territory. In this case,
+    /// it transfers the territory from the defender to the attacker.
+    /// </summary>
+    /// <param name="attacker_id"></param>
+    /// <param name="attacker_dice"></param>
+    /// <param name="defender_dice"></param>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator EvaluateAttack(int attacker_id, int attacker_dice, int defender_dice)
     {
-        territories.Clear();
-        childObjects = GetComponentsInChildren<Transform>();
+        PlayerScript player = players[attacker_id - 1];
 
-        foreach (Transform territory in childObjects)
+        TerritoryScript PlayerTerritory = player.TerritoryAttackingFrom;
+        TerritoryScript EnemyTerritory = player.TerritoryAttackingOn;
+        PlayerScript defender = players[EnemyTerritory.occupiedBy - 1];
+
+        // Generate the die rolls.
+        List<int> attacker_rolls = new List<int>();
+        List<int> defender_rolls = new List<int>();
+        for(int i = 0; i < attacker_dice; i++){
+            attacker_rolls.Add(UnityEngine.Random.Range(1, 7));
+            Debug.Log("Attacker Roll " + i + ": " + attacker_rolls[i]);
+            gameHUDScript.infoCardTMP.text = "Attacker Roll " + i + ": " + attacker_rolls[i];
+
+
+        }
+        for(int i = 0; i < defender_dice; i++){
+            defender_rolls.Add(UnityEngine.Random.Range(1, 7));
+            Debug.Log("Defender Roll " + i + ": " + defender_rolls[i]);
+            gameHUDScript.infoCardTMP.text = "Attacker Roll " + i + ": " + attacker_rolls[i];
+        }
+
+        // Sort from highest to lowest. Sorts in ascending order by default, so reverse
+        attacker_rolls.Sort();
+        attacker_rolls.Reverse();
+        defender_rolls.Sort();
+        defender_rolls.Reverse();
+
+        // Determine winner
+        int one_v_ones = Math.Min(attacker_dice, defender_dice);
+        int remaining_attackers = attacker_dice;
+        for(int i = 0; i < one_v_ones; i++){
+            infoCardText = "Battling... Attacker: " + attacker_rolls[i] +
+                    " vs Defender: " + defender_rolls[i];
+            Debug.Log(infoCardText);
+            gameHUDScript.infoCardTMP.text = infoCardText;
+            if (attacker_rolls[i] > defender_rolls[i]){
+                // Defender loses one army on the territory being attacked.
+                Debug.Log("Attacker wins this match up!");
+                gameHUDScript.infoCardTMP.text = "Attacker wins this match up!";
+                EnemyTerritory.armyCount--;
+            }
+            else{ // Defender wins on a tie
+                // Attacker loses one of the armies they sent to attack
+                Debug.Log("Defender wins this match up!");
+                gameHUDScript.infoCardTMP.text = "Defender wins this match up!";
+                PlayerTerritory.armyCount--;
+                remaining_attackers--;
+            }
+        }
+
+        // Check if the attacker claimed the territory
+        if(EnemyTerritory.armyCount <= 0){ // should not be negative, but just in case
+            player.wonTerritory = true;
+            EnemyTerritory.occupiedBy = attacker_id; // update territories variables
+            player.territoriesOwned.Add(EnemyTerritory);
+            player.territoryCountsPerContinent[EnemyTerritory.continent] += 1;
+            defender.territoriesOwned.Remove(EnemyTerritory);
+            defender.territoryCountsPerContinent[EnemyTerritory.continent] -= 1;
+
+            // Attacker must leave surviving armies on the territory they won
+            EnemyTerritory.armyCount = remaining_attackers;
+
+            if(PlayerTerritory.armyCount > 1){
+                infoCardText = "How many additional armies do you wish to move from the attacking territory to the " +
+                "territory you just conquered? You may select 0.";
+                Debug.Log(infoCardText);
+                gameHUDScript.eventCardTMP.text = infoCardText;
+
+                // Ask how many armies they would like to move.
+                int fortify_army_count = -1;
+                player.TerritoryMoveFrom = PlayerTerritory;
+                player.TerritoryMoveTo = EnemyTerritory;
+                while(fortify_army_count == -1){
+                    gameHUDScript.ShowFortifyInputPanel();
+                    yield return WaitForFortifyInputInactive(); // Get input from panel
+                    fortify_army_count = gameHUDScript.fortify_army_count; // Should be validated
+                }
+
+                PlayerTerritory.armyCount -= fortify_army_count;
+                EnemyTerritory.armyCount += fortify_army_count;
+
+                // Reset
+                player.TerritoryMoveFrom = null;
+                player.TerritoryMoveTo = null;
+            }
+        }
+
+        // Reset member variables
+        player.TerritoryAttackingFrom = null;
+        player.TerritoryAttackingOn = null;
+
+        // Check if the attacker has won the game
+        if(player.territoriesOwned.Count == TerritoryScript.NUMBER_OF_TERRITORIES){
+            OnPlayerConqueredAllTerritories?.Invoke(player.playerNumber);
+        }
+
+        // Check if the defendant has been eliminated (no territories left)
+        if(defender.territoriesOwned.Count == 0){
+            defender.eliminated = true;
+            // Give defender's cards to the attacker:
+            player.cardsInHand.AddRange<Card>(defender.cardsInHand);
+        }
+
+        // TODO: delete later. for testing the final game screen only
+        // OnPlayerConqueredAllTerritories?.Invoke(player.playerNumber);
+    }
+    /// <summary>
+    /// This function is called when a player is fortifying at the end of their turn. It 
+    /// requests and extracts which territory to move from, which territory to move to, and 
+    /// how many armies to move. It then modifies the proper data based on these inputs. The 
+    /// player may only fortify once at the end of their turn.
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <returns></returns>
+    private IEnumerator FortifyPosition(int player_id){
+        PlayerScript player = players[player_id - 1];
+        // Clear past values:
+        player.TerritoryMoveFrom = null;
+        player.TerritoryMoveTo = null;
+
+        // Part one: pick an owned territory to move from
+        player.canSelectMoveFrom = true;
+        while(player.TerritoryMoveFrom == null)
         {
-            if (territory != this.transform)
-            {
-                territories.Add(territory);
+            playerTurn = player_id; // We need to reset the playerTurn, which is being updated when it shouldn't be
+            gameHUDScript.playerTurnText.text = $"Player turn: {playerTurn}";
+            yield return StartCoroutine(WaitForMoveFromTerritory());
+        }
+        player.canSelectMoveFrom = false;
+        gameHUDScript.infoCardTMP.text = "Player chose to move from : " + player.TerritoryMoveFrom;
+        Debug.Log("Player chose to move from : " + player.TerritoryMoveFrom);
+
+        player.canSelectMoveTo = true;
+        while(player.TerritoryMoveTo == null) { // Until valid input is received
+            playerTurn = player_id; // Override in case playerTurn has changed unpredictably
+            gameHUDScript.playerTurnText.text = $"Player turn: {playerTurn}";
+            yield return StartCoroutine(WaitForMoveToTerritory());
+        }
+        player.canSelectMoveTo = false;
+        Debug.Log("Player chose to move to : " + player.TerritoryMoveTo);
+        gameHUDScript.infoCardTMP.text = "Player chose to move to : " + player.TerritoryMoveFrom;
+
+        // Ask how many armies they would like to move.
+        int fortify_army_count = -1;
+        while(fortify_army_count == -1){
+            gameHUDScript.ShowFortifyInputPanel();
+            yield return WaitForFortifyInputInactive(); // Get input from panel
+            fortify_army_count = gameHUDScript.fortify_army_count; // Should be validated
+        }
+
+        player.TerritoryMoveFrom.armyCount -= fortify_army_count;
+        player.TerritoryMoveTo.armyCount += fortify_army_count;
+    }
+    /*****************************************************************************
+    End of player turn functions.
+    ******************************************************************************/
+
+
+    /*****************************************************************************
+    WaitFor (player to do some action) functions. 
+    Set the player permissions according to the expected event and await a valid click. 
+    ******************************************************************************/
+    /// <summary>
+    /// Waits for a player to reset its clickExpected field, meaning the PlayerScript
+    /// has detected a click. Used by many other functions.
+    /// </summary>
+    /// <param name="player"></param>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator WaitForPlayerToDoMove(PlayerScript player)
+    {
+        yield return new WaitUntil(() => !player.clickExpected);
+    }
+    /// <summary>
+    /// Waits for a click on the dice.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator WaitForDieRoll(){
+        Debug.Log($"Player {playerTurn}, click the dice to roll.");
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click the dice to roll.";
+        PlayerScript player = players[playerTurn - 1];
+        player.clickExpected = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+    /// <summary>
+    /// Waits for a click on a territory. Permissions are set before this function is called
+    /// rather than in the function itself, becuase this function is used during two set up steps:
+    /// claiming territories at the start, and placing remaining armies on already claimed territories.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator InitialiseStartingInfantry()
+    {
+        Debug.Log($"Player {playerTurn}, choose a territory to place 1 infantry on.");
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, choose a territory to place 1 infantry on.";
+        PlayerScript player = players[playerTurn - 1];
+        player.clickExpected = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+    /// <summary>
+    /// Waits for player to place one of the armies they were granted at the start of their turn.
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <returns></returns>
+    private IEnumerator InitialiseStartOfTurnInfantry(int player_id){
+        PlayerScript player = players[player_id - 1];
+        gameHUDScript.eventCardTMP.text = $"Player {player_id}, place your infantries. You have {player.GetArmyCountTotal()} left";
+        Debug.Log($"Player {player_id}, where would you like to place one infantry?");
+        player.clickExpected = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+    /// <summary>
+    /// Waits for a click on a territory that the current player can attack from.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator WaitForAttackFromTerritory()
+    {
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an owned territory to attack from.";
+        PlayerScript player = players[playerTurn - 1];
+        player.clickExpected = true;
+        player.canSelectAttackFrom = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+    /// <summary>
+    /// Waits for a click on a territory that the current player can attack on.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator WaitForAttackOnTerritory()
+    {
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an enemy territory to attack on.";
+        Debug.Log($"Player {playerTurn}, click an enemy territory to attack on.");
+
+        PlayerScript player = players[playerTurn - 1];
+        player.clickExpected = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+    /// <summary>
+    /// Waits for a click on a territory that the current player move armies from.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator WaitForMoveFromTerritory()
+    {
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an owned territory to move from.";
+        PlayerScript player = players[playerTurn - 1];
+        player.clickExpected = true;
+        player.canSelectMoveFrom = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+    /// <summary>
+    /// Waits for a click on a territory that the current player move armies to.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator WaitForMoveToTerritory()
+    {
+        gameHUDScript.eventCardTMP.text = $"Player {playerTurn}, click an owned territory to move to.";
+        PlayerScript player = players[playerTurn - 1];
+        player.clickExpected = true;
+        player.canSelectMoveTo = true;
+        yield return StartCoroutine(WaitForPlayerToDoMove(player));
+    }
+    /*****************************************************************************
+    End of WaitFor (player to do some action) functions. 
+    ******************************************************************************/
+
+
+    /*****************************************************************************
+    WaitFor (gamehud displays to become inactive) functions. 
+    If the display is inactive, we know we've received some input and can 
+    move onto the next part of the game.
+    ******************************************************************************/
+    /// <summary>
+    /// Waits for cardsAreOnDisplay to be false
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator WaitForChooseCardDisplayInactive()
+    {
+        yield return new WaitUntil(() => 
+                !gameHUDScript.cardsAreOnDisplay);
+    }
+    /// <summary>
+    /// Waits for fortifyInputOnDisplay to be false, meaning the player has entered
+    /// a valid number of armies to fortify with.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator WaitForFortifyInputInactive()
+    {
+        yield return new WaitUntil(() => 
+                !gameHUDScript.fortifyInputOnDisplay);
+    }
+    /// <summary>
+    /// Waits for attackOrFortifyOnDisplay to be false, meaning the player has
+    /// chosen to attack, fortify, or end their turn.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator WaitForAttackOrFortifyInactive()
+    {
+        yield return new WaitUntil(() => 
+                !gameHUDScript.attackOrFortifyOnDisplay);
+    }
+    /// <summary>
+    /// Waits for attackInputIsOnDisplay to be false, meaning the player has
+    /// entered a valid number of armies to attack with.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator WaitForAttackInputPanelInactive()
+    {
+        yield return new WaitUntil(() => 
+                !gameHUDScript.attackInputIsOnDisplay);
+    }
+    /*****************************************************************************
+    End of WaitFor (gamehud displays to become inactive) functions. 
+    ******************************************************************************/
+
+
+    /*****************************************************************************
+    Grant army functions.
+    ******************************************************************************/
+    /// <summary>
+    /// Calculates and gratns armies based on the terrirotries owned by the current player.
+    /// Called at the start of every turn.
+    /// </summary>
+    /// <param name="player_id"></param>
+    private void GrantArmiesFromTerritories(int player_id){
+        PlayerScript player = players[player_id - 1];
+
+        // Count the number of territories you occupy, divide by three and round down. 
+        player.infCount += Math.Max(player.territoriesOwned.Count / 3, 3);
+
+        gameHUDScript.infoCardTMP.text = "Player " + player_id + " occupies " + player.territoriesOwned.Count +
+        " territories and has been granted " +
+                player.GetArmyCountTotal() + " armies";
+        Debug.Log("Player " + player_id + " occupies " + player.territoriesOwned.Count + 
+        " territories and has been granted " +
+                player.GetArmyCountTotal() + " armies");
+    }
+    /// <summary>
+    /// Calculates and gratns armies based on the continents owned by the current player.
+    /// Called at the start of every turn.
+    /// </summary>
+    /// <param name="player_id"></param>
+    private void GrantArmiesFromContinents(int player_id){
+        int infantry = 0;
+        PlayerScript player = players[player_id - 1];
+
+        // Add armies for each territory owned
+        foreach(KeyValuePair<TerritoryScript.Continents, int> count in player.territoryCountsPerContinent){
+            // This player controls the continent
+            if(count.Value == ContinentTerritoryCounts[count.Key] ){
+                // Add proper number of armies
+                infantry += ArmiesGrantedForContinent[count.Key];
+                Debug.Log("Player " + player_id + " controls " + count.Key + " and has been granted" + 
+                    ArmiesGrantedForContinent[count.Key] + " additional armies");
             }
         }
     }
+    /*****************************************************************************
+    End of grant army functions.
+    ******************************************************************************/
 
-    // Returns whether or not the territories are adjacent. Simply check adjacency list
-    private bool AreAdjacent(TerritoryScript terr1, TerritoryScript terr2){
-        return terr1.adjacentCountryEnums.Contains(terr2.territoryEnum);
+
+    /*****************************************************************************
+    Handle functions.
+    The PlayerScript invokes these functions on events, like clicks.
+    The GameHUDScript invokes these functions on events, like button presses.
+    ******************************************************************************/
+    /// <summary>
+    /// On a dice click at the very start of the game (to determine play order), 
+    /// roll the die and store the results in the diceResults array.
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <param name="die"></param>
+    private void HandleDiceRollAtStart(int player_id, GameObject die){
+        DiceRollerScript die_rolled = die.GetComponent<DiceRollerScript>();
+        int result = die_rolled.RollDice();
+        diceResults[player_id - 1] = result;
+        Debug.Log("Player " + player_id + " rolled a " + result);
+        gameHUDScript.infoCardTMP.text = "Player " + player_id + " rolled a " + result;
     }
+    /// <summary>
+    /// Verify that the given territory is unclaimed, then update the player's data members
+    /// to reflect that they have claimed this territory. To be called during game set up.
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <param name="territory"></param>
+    private void HandleTerritoryClaimedAtStart(int player_id, GameObject territory){
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
 
-    // TODO: Delete this function? This function is only responsible for creating the army piece and visually placing it
-    // in the proper position. Any other functional logic (i.e. number of armies a player has
-    // left, or who owns the territory) is handled outside of this function.
-    // As such, this function should always be called last, since it may rely on data members
-    // that should be modified before it is called. 
-    private void SpawnArmyPiece(ArmyTypes armyType, GameObject territory, int player_id)
-    {
-        /* If a player owns a territory, it will either have an inf object, a cav object or an artil object.
-         * These objects will each have a number attached to them to say how many of its type it represents.
-         * E.g if Player1 owns Peru and has 5 infantry on it, Peru will have 1 infantry Gameobject
-         * on it, and that gameobjcet will have the number 5 attached to it. (to avoid having loads of gameobjects
-         * on a single territory)
-         * 
-         * As a result of this, this method should handle spawning an army differently depending on what situation we're
-         * spawning it in. Refer to the pinned messages in the "game-developments" channel to see these situations
-        */
+        // Find the territory by name aka tag. If not found, do nothing
+        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
+        
+        // Update the territory's owner
+        if(claimed_territory == null){
+            Debug.Log("Tag does not match a known territory");
+            gameHUDScript.errorCardTMP.text = "Tag does not match a known territory";
+            sfxPlayer.PlayErrorSound();
+            return;
+        }
+        if(claimed_territory.occupiedBy != -1){
+            Debug.Log("Territory already claimed. Occupied by Player " + claimed_territory.occupiedBy + ". Returning from handler");
+            gameHUDScript.errorCardTMP.text = "Territory already claimed. Occupied by Player " + claimed_territory.occupiedBy + ". Returning from handler";
+            sfxPlayer.PlayErrorSound();
+            // someone else is occupying, do nothing
+            return;
+        }
+        else{
+            // add territory to player list:
+            claimed_territory.occupiedBy = player_id;
+            curr_player.territoriesOwned.Add(claimed_territory);
+            curr_player.territoryCountsPerContinent[claimed_territory.continent] += 1;
 
-        Debug.Log("SPAWNING ARMY PIECE");
-
-        //SITUATION 1 - Initial Army Placement:
-
-        //setting the position for the army to be in when its spwaned
-        Vector3 armyPos = territory.transform.position;
-        armyPos.Set(armyPos.x, (float)0.4044418, armyPos.z);
-        //creating the correct army piece on the territory that was clicked on for the player who clicked on it
-        switch (armyType)
-        {
-            case ArmyTypes.Infantry:
-                players[playerTurn - 1].CreateArmy(infantryPrefab, armyPos);
-                break;
-            case ArmyTypes.Cavalry:
-                players[playerTurn - 1].CreateArmy(artillaryPrefab, armyPos);
-                break;
-            case ArmyTypes.Artillery:
-                players[playerTurn - 1].CreateArmy(cavalryPrefab, armyPos);
-                break;
+            // Add one to the troops on this territory, since this function is only used at the start
+            claimed_territory.armyCount++;
+            curr_player.infCount--;
+            infoCardText = territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies." +
+               " Player " + player_id + " now has " + curr_player.territoryCountsPerContinent[claimed_territory.continent] + " on " +
+               " territories on the continent of " + claimed_territory.continent + ". Player " + player_id + " has " +
+                curr_player.infCount + " infantry remaining.";
+            Debug.Log(infoCardText);
+            gameHUDScript.eventCardTMP.text = infoCardText;
+            // spawn army (this step should always happen last!!!): 
+            // SpawnArmyPiece(ArmyTypes.Infantry, territory, player_id);
         }
     }
+    /// <summary>
+    /// Given a player and territory, place an army on that territory if it is owned
+    /// by that player. To be called after a player has received new armies at the start
+    /// of their turn.
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <param name="territory"></param>
+    private void HandlePlacingAnArmy(int player_id, GameObject territory){
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
 
+        // Find the territory by name aka tag. If not found, do nothing
+        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
+        
+        // Update the territory's owner
+        if(claimed_territory == null){
+            infoCardText = "Tag does not match a known territory";
+            Debug.Log(infoCardText);
+            gameHUDScript.errorCardTMP.text = infoCardText;
+            sfxPlayer.PlayErrorSound();
+            return;
+        }
+        if(claimed_territory.occupiedBy != player_id){
+            infoCardText = claimed_territory.tag + " is not claimed by this player.";
+            Debug.Log(infoCardText);
+            gameHUDScript.errorCardTMP.text = infoCardText;
+            sfxPlayer.PlayErrorSound();
+            // only allowed to add to already claimed territories
+            return;
+        }
+        else{
+            //update the territory's armyCount
+            claimed_territory.armyCount++;
+            curr_player.infCount--;
+            Debug.Log(claimed_territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
+            gameHUDScript.infoCardTMP.text = claimed_territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies";
+        }
+    }
+    /// <summary>
+    /// Given a player id and deck, draw a card from the deck and add it to the player's hand
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <param name="deck"></param>
+    private void HandleDrawCard(int player_id, GameObject deck){
+        Card drawn = deck.GetComponent<DeckScript>().DrawCard();
+        players[player_id - 1].cardsInHand.Add(drawn);
+    }
+    /// <summary>
+    /// Verify that the given territory can be attacked from by the given player, then set
+    /// the player's TerritoryAttackingFrom field.
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <param name="territory"></param>
+    private void HandleTerritoryToAttackFrom(int player_id, GameObject territory)
+    {
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
+
+        // Find the territory by name aka tag. If not found, do nothing
+        TerritoryScript claimed_territory = territory.GetComponent<TerritoryScript>();
+
+        // Update the territory's owner
+        if (claimed_territory == null)
+        {
+            Debug.Log("Tag does not match a known territory");
+            gameHUDScript.errorCardTMP.text = "Tag does not match a known territory";
+            sfxPlayer.PlayErrorSound();
+            return;
+        }
+        if (claimed_territory.occupiedBy == player_id)
+        {
+            if(claimed_territory.armyCount < 2){
+                Debug.Log("Must attack from a territory with at least two armies.");
+                return;
+            }
+            gameHUDScript.infoCardTMP.text = $"{curr_player} is attacking from " + claimed_territory.name;
+            Debug.Log($"{curr_player} is attacking from " + claimed_territory.name);
+            curr_player.TerritoryAttackingFrom = claimed_territory;
+            return;
+        }
+        else
+        {
+            Debug.Log("Player " + player_id + " does not own " + claimed_territory.name);
+            gameHUDScript.errorCardTMP.text = "Player " + player_id + " does not own " + claimed_territory.name;
+        }
+    }
+    // Select a territory to attack on
+    /// <summary>
+    /// Verify that the given territory can be attacked on by the given player, then set
+    /// the player's TerritoryAttackingOn field.
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <param name="territory"></param>
+    private void HandleTerritoryToAttackOn(int player_id, GameObject territory)
+    {
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
+
+        // Find the territory by name aka tag. If not found, do nothing
+        TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
+
+        if (selected_territory != null)
+        {
+            if (selected_territory.occupiedBy != player_id)
+            {
+                Debug.Log("Player " + player_id + " is launching an attack on " + selected_territory.name);
+                Debug.Log(curr_player.TerritoryAttackingFrom.name);
+                gameHUDScript.infoCardTMP.text = "Player " + player_id + " is launching an attack on " + selected_territory.name;
+
+                // Check if territory is adjacent
+                if (AreAdjacent(selected_territory, curr_player.TerritoryAttackingFrom))
+                {
+                    curr_player.TerritoryAttackingOn = selected_territory;
+                    return;
+                }
+                else{
+                    infoCardText = "The selected territory: " + selected_territory.name +
+                            " is not adjacent to the territory you are attacking from: " + curr_player.TerritoryAttackingFrom.name;
+                    Debug.Log(infoCardText);
+                    gameHUDScript.errorCardTMP.text = infoCardText;
+                    sfxPlayer.PlayErrorSound();
+                }
+            }
+            else
+            {
+                infoCardText = "Attack cannot be launched on " + selected_territory.name + ": Player owns the territory!";
+                Debug.Log(infoCardText);
+                gameHUDScript.errorCardTMP.text = infoCardText;
+                sfxPlayer.PlayErrorSound();
+            }
+        }
+        else
+        {
+            Debug.Log("Tag does not match a known territory");
+            gameHUDScript.errorCardTMP.text = "Tag does not match a known territory";
+            sfxPlayer.PlayErrorSound();
+            return;
+        }
+    }
+    /// <summary>
+    /// Verify that the player can move armies from the given territory, then set
+    /// the player's TerritoryMoveFrom field.
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <param name="territory"></param>
+    private void HandleTerritoryToMoveFrom(int player_id, GameObject territory)
+    {
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
+
+        // Find the territory by name aka tag. If not found, do nothing
+        TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
+
+        if (selected_territory != null)
+        {
+            if (selected_territory.occupiedBy == player_id)
+            {
+                // Check if the territory has more than one army:
+                if(selected_territory.armyCount <= 1){
+                    // invalid
+                    Debug.Log("Selected territory has insufficient armies.");
+                    gameHUDScript.errorCardTMP.text = "Selected territory has insufficient armies.";
+                    sfxPlayer.PlayErrorSound();
+                    return;
+                }
+                
+                selected_territory.FillAdjTerritoriesList();
+                foreach(Transform adj_transform in selected_territory.adjacentCountries){
+                    if(adj_transform.GetComponent<TerritoryScript>().occupiedBy == player_id){
+                        // There is a valid adjacent territory owned by this player
+                        curr_player.TerritoryMoveFrom = selected_territory;
+                        return;
+                    }
+                }
+
+                // Otherwise, there are no adjacent territories owned by this player
+                infoCardText = "Selected territory has no neighbors owned by this player. Choose another territory";
+                Debug.Log(infoCardText);
+                gameHUDScript.errorCardTMP.text = infoCardText;
+                sfxPlayer.PlayErrorSound();
+                return;
+            }
+            else
+            {
+                infoCardText = selected_territory.name + " does not belong to this player";
+                Debug.Log(infoCardText);
+                gameHUDScript.errorCardTMP.text = infoCardText;
+                sfxPlayer.PlayErrorSound();
+            }
+        }
+        else
+        {
+            infoCardText = "Tag does not match a known territory";
+            Debug.Log(infoCardText);
+            gameHUDScript.errorCardTMP.text = infoCardText;
+            sfxPlayer.PlayErrorSound();
+            return;
+        }
+    }
+    /// <summary>
+    /// Verify that the player can move armies to the given territory, then set
+    /// the player's TerritoryMoveTo field.
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <param name="territory"></param>
+    private void HandleTerritoryToMoveTo(int player_id, GameObject territory)
+    {
+        PlayerScript curr_player = players.Single(player => player.playerNumber == player_id);
+
+        // Find the territory by name aka tag. If not found, do nothing
+        TerritoryScript selected_territory = territory.GetComponent<TerritoryScript>();
+
+        if (selected_territory != null)
+        {
+            if (selected_territory.occupiedBy == player_id)
+            {
+                // Check if territory is adjacent
+                selected_territory.FillAdjTerritoriesList();
+                selected_territory.FillAdjTerritoriesList();
+                if(AreAdjacent(selected_territory, curr_player.TerritoryMoveFrom))
+                {
+                    curr_player.TerritoryMoveTo = selected_territory;
+                    return;
+                }
+                else{
+                    infoCardText = "The selected territory: " + selected_territory.name +
+                            " is not adjacent to the territory you are moving from: " + curr_player.TerritoryAttackingFrom.name;
+                    Debug.Log(infoCardText);
+                    gameHUDScript.errorCardTMP.text = infoCardText;
+                    sfxPlayer.PlayErrorSound();
+                }
+            }
+            else
+            {
+                infoCardText = selected_territory.name + " does not belong to this player.";
+                Debug.Log(infoCardText);
+                gameHUDScript.errorCardTMP.text = infoCardText;
+                sfxPlayer.PlayErrorSound();
+            }
+        }
+        else
+        {
+            infoCardText = "Tag does not match a known territory";
+            Debug.Log(infoCardText);
+            gameHUDScript.errorCardTMP.text = infoCardText;
+            sfxPlayer.PlayErrorSound();
+            return;
+        }
+    }
+    /// <summary>
+    /// On the event that one player owns all the territories, this function 
+    /// will end the game and show the ending screen.
+    /// </summary>
+    /// <param name="playerNumber"></param>
     public void HandlePlayerWonGame(int playerNumber){
         // Show ending screen
         gameHUDScript.ShowEndingPanel(playerNumber);
         gameOver = true;
     }
+    /// <summary>
+    /// When a player attempts to turn in a set of cards, this function verifies that the set 
+    /// is valid, then updates the player's army count and card hand appropriately.
+    /// </summary>
+    /// <param name="selectedCards"></param>
+    /// <param name="curr_player"></param>
     public void HandleCardTurnIn(List<Card> selectedCards, PlayerScript curr_player)
     {
         if (selectedCards == null)
@@ -1271,5 +1377,55 @@ public class MapScript : MonoBehaviour
             ds.discard.AddRange(selectedCards);
         }
     }
-        
+    /*****************************************************************************
+    End of handle functions.
+    ******************************************************************************/
+
+
+    /// <summary>
+    /// Utility function. Returns whether two territories are adjacent.
+    /// </summary>
+    /// <param name="terr1"></param>
+    /// <param name="terr2"></param>
+    /// <returns></returns>
+    private bool AreAdjacent(TerritoryScript terr1, TerritoryScript terr2){
+        return terr1.adjacentCountryEnums.Contains(terr2.territoryEnum);
+    }
+
+
+    // TODO: Delete this function?
+    private void SpawnArmyPiece(ArmyTypes armyType, GameObject territory, int player_id)
+    {
+        /* If a player owns a territory, it will either have an inf object, a cav object or an artil object.
+         * These objects will each have a number attached to them to say how many of its type it represents.
+         * E.g if Player1 owns Peru and has 5 infantry on it, Peru will have 1 infantry Gameobject
+         * on it, and that gameobjcet will have the number 5 attached to it. (to avoid having loads of gameobjects
+         * on a single territory)
+         * 
+         * As a result of this, this method should handle spawning an army differently depending on what situation we're
+         * spawning it in. Refer to the pinned messages in the "game-developments" channel to see these situations
+        */
+
+        Debug.Log("SPAWNING ARMY PIECE");
+
+        //SITUATION 1 - Initial Army Placement:
+
+        //setting the position for the army to be in when its spwaned
+        Vector3 armyPos = territory.transform.position;
+        armyPos.Set(armyPos.x, (float)0.4044418, armyPos.z);
+        //creating the correct army piece on the territory that was clicked on for the player who clicked on it
+        switch (armyType)
+        {
+            case ArmyTypes.Infantry:
+                players[playerTurn - 1].CreateArmy(infantryPrefab, armyPos);
+                break;
+            case ArmyTypes.Cavalry:
+                players[playerTurn - 1].CreateArmy(artillaryPrefab, armyPos);
+                break;
+            case ArmyTypes.Artillery:
+                players[playerTurn - 1].CreateArmy(cavalryPrefab, armyPos);
+                break;
+        }
+    }
+
 }
