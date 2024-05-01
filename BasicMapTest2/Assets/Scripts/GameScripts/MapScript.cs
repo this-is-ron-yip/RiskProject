@@ -130,7 +130,7 @@ public class MapScript : MonoBehaviour
             int infCount = 50 - (playerCount * 5);
             // TODO: DELETE THE LINE BELOW LATER, give less armies for testing
             infCount = 3;
-            newPlayerScript.GivePlayerArmies(infCount);
+            newPlayerScript.infCount = infCount;
 
             // Set color for pieces:
             newPlayerScript.color = colorArray[newPlayerScript.playerNumber - 1];
