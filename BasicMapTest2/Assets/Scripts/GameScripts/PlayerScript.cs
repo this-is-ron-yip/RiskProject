@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    public int infCount, cavCount, artilCount;
+    public int infCount;
     public int playerNumber;
     public bool clickExpected = false;
     public bool eliminated = false;
@@ -159,20 +159,14 @@ public class PlayerScript : MonoBehaviour
         // Moving armies across the board in the map script.
     }
 
-    public void GivePlayerArmies(int _infCount, int _cavCount, int _artilCount)
+    public void GivePlayerArmies(int _infCount)
     {
         infCount += _infCount;
-        cavCount += _cavCount;
-        artilCount += _artilCount;
-
-        //Update any necessary Huds
     }
 
     public int GetArmyCountTotal(){
-        // TODO: I think it would be clearer to store as the number of pieces, rather than 
-        // the number of infantry they represent. We can always just call this function
-        // if we want the total number
-        return infCount+cavCount+artilCount;
+        // We only store armies in terms of infantry, so simply return infCount
+        return infCount;
     }
 
     public void CreateArmy(GameObject armyPrefab, Vector3 position)
