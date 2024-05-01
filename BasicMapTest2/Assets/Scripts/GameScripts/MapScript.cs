@@ -1299,8 +1299,6 @@ public class MapScript : MonoBehaviour
     {
         if (selectedCards == null)
         {
-            Debug.Log("Player chose to not turn in any cards");
-            
             return;
         }
 

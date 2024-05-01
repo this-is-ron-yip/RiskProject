@@ -1,21 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
+/// <summary>
+/// The script that is tied to the main menu controller on the opening game scene.
+/// </summary>
 public class MainMenuScript : MonoBehaviour
 {
-
-    private void Start()
-    {
-
-    }
-
-    public void PlayGame()
-    {
-        
-    }
-
     public void QuitGame()
     {
         Debug.Log("Quitting Game...");

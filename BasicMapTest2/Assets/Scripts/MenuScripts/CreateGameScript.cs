@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,7 +6,12 @@ using UnityEngine.UI;
 public class CreateGameScript : MonoBehaviour
 {
     [SerializeField] InputField playerCountInput;
-
+    
+    /// <summary>
+    /// After receiving input on how many players want to play,
+    /// create the game by loading the next scene, and handing off the number of players.
+    /// Do nothing if the input is invalid.
+    /// </summary>
     public void CreateGame()
     {
         string playerCount = playerCountInput.text;
