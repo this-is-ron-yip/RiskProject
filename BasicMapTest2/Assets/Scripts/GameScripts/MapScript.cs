@@ -22,6 +22,7 @@ public class MapScript : MonoBehaviour
     public SoundEffectsPlayer sfxPlayer;
 
     public bool gameOver = false;
+    public string infoCardText; // just a variable to re-use when printing a message to both the debug log and HUD
     public List<PlayerScript> players = new List<PlayerScript>();
     public List<Transform> territories = new List<Transform>();
     private DiceRollerScript diceRoller;
@@ -561,12 +562,12 @@ public class MapScript : MonoBehaviour
             // Add one to the troops on this territory, since this function is only used at the start
             claimed_territory.armyCount++;
             curr_player.infCount--;
-            string eventText = territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies." +
+            infoCardText = territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies." +
                " Player " + player_id + " now has " + curr_player.territoryCountsPerContinent[claimed_territory.continent] + " on " +
                " territories on the continent of " + claimed_territory.continent + ". Player " + player_id + " has " +
                 curr_player.infCount + " infantry remaining.";
-            Debug.Log(eventText);
-            gameHUDScript.eventCardTMP.text = eventText;
+            Debug.Log(infoCardText);
+            gameHUDScript.eventCardTMP.text = infoCardText;
             // spawn army (this step should always happen last!!!): 
             // SpawnArmyPiece(ArmyTypes.Infantry, territory, player_id);
         }
@@ -629,18 +630,26 @@ public class MapScript : MonoBehaviour
                     return;
                 }
                 else{
-                    Debug.Log("The selected territory: " + selected_territory.name + 
-                            " is not adjacent to the territory you are attacking from: " + curr_player.TerritoryAttackingFrom.name);
+                    infoCardText = "The selected territory: " + selected_territory.name +
+                            " is not adjacent to the territory you are attacking from: " + curr_player.TerritoryAttackingFrom.name;
+                    Debug.Log(infoCardText);
+                    gameHUDScript.errorCardTMP.text = infoCardText;
+                    sfxPlayer.PlayErrorSound();
                 }
             }
             else
             {
-                Debug.Log("Attack cannot be launched on " + selected_territory.name + ": Player owns the territory!");
+                infoCardText = "Attack cannot be launched on " + selected_territory.name + ": Player owns the territory!";
+                Debug.Log(infoCardText);
+                gameHUDScript.errorCardTMP.text = infoCardText;
+                sfxPlayer.PlayErrorSound();
             }
         }
         else
         {
             Debug.Log("Tag does not match a known territory");
+            gameHUDScript.errorCardTMP.text = "Tag does not match a known territory";
+            sfxPlayer.PlayErrorSound();
             return;
         }
     }
@@ -660,6 +669,8 @@ public class MapScript : MonoBehaviour
                 if(selected_territory.armyCount <= 1){
                     // invalid
                     Debug.Log("Selected territory has insufficient armies.");
+                    gameHUDScript.errorCardTMP.text = "Selected territory has insufficient armies.";
+                    sfxPlayer.PlayErrorSound();
                     return;
                 }
                 
@@ -673,17 +684,26 @@ public class MapScript : MonoBehaviour
                 }
 
                 // Otherwise, there are no adjacent territories owned by this player
-                Debug.Log("Selected territory has no neighbors owned by this player. Choose another territory");
+                infoCardText = "Selected territory has no neighbors owned by this player. Choose another territory";
+                Debug.Log(infoCardText);
+                gameHUDScript.errorCardTMP.text = infoCardText;
+                sfxPlayer.PlayErrorSound();
                 return;
             }
             else
             {
-                Debug.Log(selected_territory.name + " does not belong to this player");
+                infoCardText = selected_territory.name + " does not belong to this player";
+                Debug.Log(infoCardText);
+                gameHUDScript.errorCardTMP.text = infoCardText;
+                sfxPlayer.PlayErrorSound();
             }
         }
         else
         {
-            Debug.Log("Tag does not match a known territory");
+            infoCardText = "Tag does not match a known territory";
+            Debug.Log(infoCardText);
+            gameHUDScript.errorCardTMP.text = infoCardText;
+            sfxPlayer.PlayErrorSound();
             return;
         }
     }
@@ -708,18 +728,27 @@ public class MapScript : MonoBehaviour
                     return;
                 }
                 else{
-                    Debug.Log("The selected territory: " + selected_territory.name + 
-                            " is not adjacent to the territory you are moving from: " + curr_player.TerritoryAttackingFrom.name);
+                    infoCardText = "The selected territory: " + selected_territory.name +
+                            " is not adjacent to the territory you are moving from: " + curr_player.TerritoryAttackingFrom.name;
+                    Debug.Log(infoCardText);
+                    gameHUDScript.errorCardTMP.text = infoCardText;
+                    sfxPlayer.PlayErrorSound();
                 }
             }
             else
             {
-                Debug.Log(selected_territory.name + " does not belong to this player.");
+                infoCardText = selected_territory.name + " does not belong to this player.";
+                Debug.Log(infoCardText);
+                gameHUDScript.errorCardTMP.text = infoCardText;
+                sfxPlayer.PlayErrorSound();
             }
         }
         else
         {
-            Debug.Log("Tag does not match a known territory");
+            infoCardText = "Tag does not match a known territory";
+            Debug.Log(infoCardText);
+            gameHUDScript.errorCardTMP.text = infoCardText;
+            sfxPlayer.PlayErrorSound();
             return;
         }
     }
@@ -740,11 +769,14 @@ public class MapScript : MonoBehaviour
         for(int i = 0; i < attacker_dice; i++){
             attacker_rolls.Add(UnityEngine.Random.Range(1, 7));
             Debug.Log("Attacker Roll " + i + ": " + attacker_rolls[i]);
-            
+            gameHUDScript.infoCardTMP.text = "Attacker Roll " + i + ": " + attacker_rolls[i];
+
+
         }
         for(int i = 0; i < defender_dice; i++){
             defender_rolls.Add(UnityEngine.Random.Range(1, 7));
             Debug.Log("Defender Roll " + i + ": " + defender_rolls[i]);
+            gameHUDScript.infoCardTMP.text = "Attacker Roll " + i + ": " + attacker_rolls[i];
         }
 
         // Sort from highest to lowest. Sorts in ascending order by default, so reverse
@@ -757,16 +789,20 @@ public class MapScript : MonoBehaviour
         int one_v_ones = Math.Min(attacker_dice, defender_dice);
         int remaining_attackers = attacker_dice;
         for(int i = 0; i < one_v_ones; i++){
-            Debug.Log("Battling... Attacker: " +attacker_rolls[i] +
-                    " vs Defender: " + defender_rolls[i]);
-            if(attacker_rolls[i] > defender_rolls[i]){
+            infoCardText = "Battling... Attacker: " + attacker_rolls[i] +
+                    " vs Defender: " + defender_rolls[i];
+            Debug.Log(infoCardText);
+            gameHUDScript.infoCardTMP.text = infoCardText;
+            if (attacker_rolls[i] > defender_rolls[i]){
                 // Defender loses one army on the territory being attacked.
                 Debug.Log("Attacker wins this match up!");
+                gameHUDScript.infoCardTMP.text = "Attacker wins this match up!";
                 EnemyTerritory.armyCount--;
             }
             else{ // Defender wins on a tie
                 // Attacker loses one of the armies they sent to attack
                 Debug.Log("Defender wins this match up!");
+                gameHUDScript.infoCardTMP.text = "Defender wins this match up!";
                 PlayerTerritory.armyCount--;
                 remaining_attackers--;
             }
@@ -785,8 +821,10 @@ public class MapScript : MonoBehaviour
             EnemyTerritory.armyCount = remaining_attackers;
 
             if(PlayerTerritory.armyCount > 1){
-                Debug.Log("How many additional armies do you wish to move from the attacking territory to the " +
-                "territory you just conquered? You may select 0.");
+                infoCardText = "How many additional armies do you wish to move from the attacking territory to the " +
+                "territory you just conquered? You may select 0.";
+                Debug.Log(infoCardText);
+                gameHUDScript.eventCardTMP.text = infoCardText;
 
                 // Ask how many armies they would like to move.
                 int fortify_army_count = -1;
@@ -835,11 +873,17 @@ public class MapScript : MonoBehaviour
         
         // Update the territory's owner
         if(claimed_territory == null){
-            Debug.Log("Tag does not match a known territory");
+            infoCardText = "Tag does not match a known territory";
+            Debug.Log(infoCardText);
+            gameHUDScript.errorCardTMP.text = infoCardText;
+            sfxPlayer.PlayErrorSound();
             return;
         }
         if(claimed_territory.occupiedBy != player_id){
-            Debug.Log(claimed_territory.tag + " is not claimed by this player.");
+            infoCardText = claimed_territory.tag + " is not claimed by this player.";
+            Debug.Log(infoCardText);
+            gameHUDScript.errorCardTMP.text = infoCardText;
+            sfxPlayer.PlayErrorSound();
             // only allowed to add to already claimed territories
             return;
         }
@@ -856,6 +900,7 @@ public class MapScript : MonoBehaviour
             // }
             curr_player.infCount--;
             Debug.Log(claimed_territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies");
+            gameHUDScript.infoCardTMP.text = claimed_territory.tag + " is occupied by Player " + player_id + " and has " + claimed_territory.armyCount + " armies";
         }
     }
 
@@ -881,8 +926,9 @@ public class MapScript : MonoBehaviour
             // Check if this player has been eliminated before proceeding: 
             if(player.eliminated){
                 Debug.Log("Player " + playerTurn + " is out of the game. Skipping their turn.");
+                gameHUDScript.infoCardTMP.text = "Player " + playerTurn + " is out of the game. Skipping their turn.";
                 // update the player
-                if(playerTurn == playerCount){
+                if (playerTurn == playerCount){
                     // cycle back to start of player list
                     playerTurn = 1;
                     gameHUDScript.playerTurnText.text = $"Player turn: {playerTurn}";
@@ -905,6 +951,8 @@ public class MapScript : MonoBehaviour
                 yield return StartCoroutine(InitialiseStartOfTurnInfantry(playerTurn));
                 Debug.Log("Player " + playerTurn + " has " + player.GetArmyCountTotal() + 
                     " armies left");
+                gameHUDScript.infoCardTMP.text = "Player " + playerTurn + " has " + player.GetArmyCountTotal() +
+                    " armies left";
 
                 // Revoke permission
                 player.canPlaceArmyInGame = false;
@@ -919,6 +967,8 @@ public class MapScript : MonoBehaviour
                 yield return StartCoroutine(InitialiseStartOfTurnInfantry(playerTurn));
                 Debug.Log("Player " + playerTurn + " has " + player.GetArmyCountTotal() + 
                     " armies left");
+                gameHUDScript.infoCardTMP.text = ("Player " + playerTurn + " has " + player.GetArmyCountTotal() +
+                    " armies left");
 
                 // Revoke permission
                 player.canPlaceArmyInGame = false;
@@ -928,8 +978,10 @@ public class MapScript : MonoBehaviour
             if(player.cardsInHand.Count >= 3)
             {
                 // Allow player to turn in cards
-                Debug.Log("Player: " +  GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer.playerNumber +
-                         " Select cards to turn in.");
+                infoCardText = "Player: " + GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer.playerNumber +
+                         " Select cards to turn in.";
+                Debug.Log(infoCardText);
+                gameHUDScript.eventCardTMP.text = infoCardText;
                 gameHUDScript.ShowChooseCardPanel();
                 // Once display is inactive, assume we are done with this phase.
                 yield return StartCoroutine(WaitForChooseCardDisplayInactive());
@@ -939,8 +991,10 @@ public class MapScript : MonoBehaviour
             while (player.cardsInHand.Count >= 5)
             {
                 // Allow player to turn in cards
-                Debug.Log("Player: " +  GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer.playerNumber +
-                         " Still has more than four cards. Select cards to turn in.");
+                infoCardText = "Player: " + GameObject.FindAnyObjectByType<GameHUDScript>().currentPlayer.playerNumber +
+                         " Still has more than four cards. Select cards to turn in.";
+                Debug.Log(infoCardText);
+                gameHUDScript.eventCardTMP.text = infoCardText;
                 gameHUDScript.ShowChooseCardPanel();
                 // Once display is inactive, assume we are done with this phase.
                 yield return StartCoroutine(WaitForChooseCardDisplayInactive());
@@ -960,6 +1014,8 @@ public class MapScript : MonoBehaviour
                 yield return StartCoroutine(InitialiseStartOfTurnInfantry(playerTurn));
                 Debug.Log("Player " + playerTurn + " has " + player.GetArmyCountTotal() + 
                     " armies left");
+                gameHUDScript.infoCardTMP.text = "Player " + playerTurn + " has " + player.GetArmyCountTotal() +
+                    " armies left";
 
                 // Revoke permission
                 player.canPlaceArmyInGame = false;
@@ -986,6 +1042,7 @@ public class MapScript : MonoBehaviour
             bool player_must_draw = player.wonTerritory;
             while(player_must_draw){
                 Debug.Log("Player " + playerTurn + " won a territory this round. Draw a card from the deck");
+                gameHUDScript.eventCardTMP.text = "Player " + playerTurn + " won a territory this round. Draw a card from the deck";
                 int cardsBeforeDraw = player.cardsInHand.Count;
                 player.clickExpected = true; // figure out why we need this line (should be handled by waitforplayer)
                 player.canDraw = true;
@@ -998,13 +1055,16 @@ public class MapScript : MonoBehaviour
                 }
                 else{
                     Debug.Log("Must draw a card. Try again.");
+                    gameHUDScript.errorCardTMP.text = "Must draw a card. Try again.";
+                    sfxPlayer.PlayErrorSound();
                 }
             }
 
             Debug.Log("End of Player " + playerTurn + "'s turn");
+            gameHUDScript.infoCardTMP.text = "End of Player " + playerTurn + "'s turn";
 
             // update the player
-            if(playerTurn == playerCount){
+            if (playerTurn == playerCount){
                 // cycle back to start of player list
                 playerTurn = 1;
                 gameHUDScript.playerTurnText.text = $"Player turn: {playerTurn}";
@@ -1141,6 +1201,8 @@ public class MapScript : MonoBehaviour
         // Otherwise, must have selected 3 to turn in. Verify the match is valid. If not, return early.
         if(selectedCards.Count != 3){
             Debug.Log("Insufficient cards");
+            gameHUDScript.errorCardTMP.text = "Insufficient cards";
+            sfxPlayer.PlayErrorSound();
             return; // Should never be reached, but just in case.
         }
 
@@ -1159,6 +1221,8 @@ public class MapScript : MonoBehaviour
             }
             else{
                 Debug.Log("Set is invalid.");
+                gameHUDScript.errorCardTMP.text = "Set is invalid.";
+                sfxPlayer.PlayErrorSound();
                 return;
             }
 
@@ -1182,12 +1246,14 @@ public class MapScript : MonoBehaviour
             if(curr_player.territoriesOwned.
                 Contains(GameObject.FindWithTag(card.territory_id).GetComponent<TerritoryScript>())){
                 Debug.Log("Player " + curr_player.playerNumber + " owns " + card.territory_id);
+                gameHUDScript.infoCardTMP.text = "Player " + curr_player.playerNumber + " owns " + card.territory_id;
                 armies_granted += 2;
                 break; // only grant up to 2, regardless of how many territories match
             }
         }
         curr_player.infCount += armies_granted;
         Debug.Log("Set is valid. Player has been granted " + armies_granted + " armies");
+        gameHUDScript.infoCardTMP.text = "Set is valid. Player has been granted " + armies_granted + " armies";
 
         //removing the selected cards from the players hand:
         List<Card> updatedHand = new List<Card>();

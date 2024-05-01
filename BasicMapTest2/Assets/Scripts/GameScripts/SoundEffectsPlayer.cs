@@ -9,6 +9,11 @@ public class SoundEffectsPlayer : MonoBehaviour
     public AudioClip errorSFX;
     public AudioClip correctClickSFX;
 
+    private void Start()
+    {
+        audioSrc.volume = 0.2f;
+    }
+
     public void PlayErrorSound()
     {
         audioSrc.clip = errorSFX;

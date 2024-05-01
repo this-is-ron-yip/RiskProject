@@ -34,6 +34,7 @@ public class DeckScript : MonoBehaviour
             Card result = deck.Dequeue();
 
             Debug.Log($"Player drew the " + result.territory_id + "-" + result.troop_type + " card");
+            GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().infoCardTMP.text = $"Player drew the " + result.territory_id + "-" + result.troop_type + " card";
             return result;
         }
         else
@@ -44,6 +45,7 @@ public class DeckScript : MonoBehaviour
             Card result = deck.Dequeue();
 
             Debug.Log($"Player drew the " + result.territory_id + "-" + result.troop_type + " card");
+            GameObject.FindWithTag("GameHUD").GetComponent<GameHUDScript>().infoCardTMP.text = $"Player drew the " + result.territory_id + "-" + result.troop_type + " card";
             return result;
 
         }
