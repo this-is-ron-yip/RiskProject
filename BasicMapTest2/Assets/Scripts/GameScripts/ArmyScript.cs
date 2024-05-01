@@ -35,16 +35,6 @@ public class ArmyScript : MonoBehaviour
         UpdateNumberDisplay(); // Initialize the display.
     }
 
-    public void GoToStartTerritory() 
-    {
-        //maybe, in the Map class where this object was instantiated, we could have already set the currentTerritoryPos field to the correct field that it was chosen to start at
-    }
-
-    public void Update()
-    {
-        UpdateNumberDisplay();
-    }
-
     //army 65
     public Transform GetAndUpdateCurrentTerritoryPos()
     {
@@ -73,8 +63,4 @@ public class ArmyScript : MonoBehaviour
         }
     }
 
-    public void MoveIfMouseClicked()
-    {
-        //code to move the correct army to the correct place under the correct circumstances (does not need to be implemented right now)
-    }
 }

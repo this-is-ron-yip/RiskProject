@@ -61,6 +61,7 @@ TagManager:
   - WestAustralia
   - EastAustralia
   - NewZealand
+  - OptionsMenu
   layers:
   - Default
   - TransparentFX

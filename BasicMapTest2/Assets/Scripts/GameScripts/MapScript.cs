@@ -47,9 +47,7 @@ public class MapScript : MonoBehaviour
     Look up tables and enums
     ******************************************************************************/
     enum ArmyTypes { Infantry, Cavalry, Artillery };
-    public static Color[] colorArray = // To be assigned to each player, for which color their game pieces are
-                {Color.red, Color.yellow, Color.green,
-                        Color.blue, Color.magenta, Color.cyan};
+    public Color[] colorArray;
 
     // How many armies to grant based on how many sets have been turned in.
     public static int[] ArmiesGrantedForCardSet = {4, 6, 8, 10, 12, 15}; 
@@ -97,6 +95,7 @@ public class MapScript : MonoBehaviour
     [Obsolete]
     private void Start()
     {
+        colorArray = StaticData.colorArray;
         sfxPlayer = GameObject.Find("HUDController").GetComponent<SoundEffectsPlayer>();
         CreatePlayers();
         OnPlayerConqueredAllTerritories += HandlePlayerWonGame;
@@ -1391,7 +1390,10 @@ public class MapScript : MonoBehaviour
     }
 
 
-    // TODO: Delete this function?
+
+    /* This function would have been used if we had more time. It could be implemented in future updates when 
+     * implementing the actual army pieces into the game
+     */
     private void SpawnArmyPiece(ArmyTypes armyType, GameObject territory, int player_id)
     {
         /* If a player owns a territory, it will either have an inf object, a cav object or an artil object.
