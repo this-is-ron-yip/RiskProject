@@ -347,11 +347,17 @@ public class GameHUDScript : MonoBehaviour
         // Verify they have an elligible territory to attack from: 
         foreach(TerritoryScript territory in currentPlayer.territoriesOwned){
             if(territory.armyCount > 1){
-                // Valid territory exists.
-                 attackOrForitfyPanel.gameObject.SetActive(false);
-                 attackOrFortifyOnDisplay = false;
-                 wantsToAttack = true;
-                 return;
+                territory.FillAdjTerritoriesList(); // For some reason, the list is empty.
+                // check that there is an adjacent territory that doesn't belong to this player
+                foreach(Transform adj in territory.adjacentCountries){
+                    if(adj.GetComponent<TerritoryScript>().occupiedBy != currentPlayer.playerNumber){
+                        // Valid territory exists.
+                        attackOrForitfyPanel.gameObject.SetActive(false);
+                        attackOrFortifyOnDisplay = false;
+                        wantsToAttack = true;
+                        return;
+                    }
+                }
             }
         }
         Debug.Log("Player has no territories with sufficient armies to attack from");
