@@ -30,6 +30,7 @@ public class GameHUDScript : MonoBehaviour
     public PlayerScript currentPlayer;
     public List<Card> selectedCards = new List<Card>();
     private int cardsInDisplay = 0;
+    public TextMeshProUGUI playerTurnText;
     [SerializeField] InputField attacker_army_input;
     [SerializeField] InputField defender_army_input;
     [SerializeField] InputField fortify_input;

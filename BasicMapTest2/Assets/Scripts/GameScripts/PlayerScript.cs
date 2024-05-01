@@ -120,6 +120,7 @@ public class PlayerScript : MonoBehaviour
                 }
                 else{
                     Debug.Log("Illegal click on deck.");
+                    sfxPlayer.PlayErrorSound();
                 }
             }
             else if(clickedObject.GetComponent<DiceRollerScript>() != null){
@@ -129,6 +130,7 @@ public class PlayerScript : MonoBehaviour
                 }
                 else{
                     Debug.Log("Illegal click on dice.");
+                    sfxPlayer.PlayErrorSound();
                 }
             }
             else if(clickedObject.GetComponent<GameHUDScript>() != null){
@@ -137,6 +139,7 @@ public class PlayerScript : MonoBehaviour
             else {
                 // replace with other game object possibilities. Like dice, for esample.
                 Debug.Log("Illegal click.");
+                sfxPlayer.PlayErrorSound();
             }
               
             clickExpected = false; // Player relinquishes its turn. Map decides whether to give the turn
