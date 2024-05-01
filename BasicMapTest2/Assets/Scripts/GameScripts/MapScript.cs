@@ -95,7 +95,7 @@ public class MapScript : MonoBehaviour
     [Obsolete]
     private void Start()
     {
-        colorArray = StaticData.colorArray;
+        SetColorKey(); // Set colors and gamehud key
         sfxPlayer = GameObject.Find("HUDController").GetComponent<SoundEffectsPlayer>();
         CreatePlayers();
         OnPlayerConqueredAllTerritories += HandlePlayerWonGame;
@@ -174,6 +174,60 @@ public class MapScript : MonoBehaviour
             {
                 territories.Add(territory);
             }
+        }
+    }
+    /// <summary>
+    /// Set the color array based on options inputs from the prevoius scene. 
+    /// Also update the game hud player key to display the proper colors
+    /// </summary>
+    private void SetColorKey(){
+        colorArray = StaticData.colorArray; // Set the array
+
+        // After color array is set, gray out the unused players:
+        for(int i =  StaticData.playerCount; i < 6; i++){
+            colorArray[i] = Color.gray;
+        }
+
+        if(GameObject.Find("Player1Key") != null){
+             GameObject.Find("Player1Key").GetComponent<RawImage>().color = colorArray[0];
+        }
+        else{
+            Debug.Log("Player1Key is null");
+        }
+
+        if(GameObject.Find("Player2Key") != null){
+             GameObject.Find("Player2Key").GetComponent<RawImage>().color = colorArray[1];
+        }
+        else{
+            Debug.Log("Player2Key is null");
+        }
+
+        if(GameObject.Find("Player3Key") != null){
+             GameObject.Find("Player3Key").GetComponent<RawImage>().color = colorArray[2];
+        }
+        else{
+            Debug.Log("Player3Key is null");
+        }
+
+        if(GameObject.Find("Player4Key") != null){
+             GameObject.Find("Player4Key").GetComponent<RawImage>().color = colorArray[3];
+        }
+        else{
+            Debug.Log("Player4Key is null");
+        }
+
+        if(GameObject.Find("Player5Key") != null){
+             GameObject.Find("Player5Key").GetComponent<RawImage>().color = colorArray[4];
+        }
+        else{
+            Debug.Log("Player5Key is null");
+        }
+
+        if(GameObject.Find("Player6Key") != null){
+             GameObject.Find("Player6Key").GetComponent<RawImage>().color = colorArray[5];
+        }
+        else{
+            Debug.Log("Player6Key is null");
         }
     }
     /*****************************************************************************

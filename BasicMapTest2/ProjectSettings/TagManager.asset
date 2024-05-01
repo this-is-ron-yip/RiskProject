@@ -62,6 +62,7 @@ TagManager:
   - EastAustralia
   - NewZealand
   - OptionsMenu
+  - InfoCardsCanvas
   layers:
   - Default
   - TransparentFX
