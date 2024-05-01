@@ -35,8 +35,6 @@ public class OptionsBackBtnPressed : MonoBehaviour
             {
                 if (array[i].Equals(array[j]))
                 {
-                    // If we find a match, the array doesn't have all unique elements
-                    Debug.Log($"colours at position {i} ({array[i]}) and position {j} ({array[j]}) are the same");
                     return false;
                 }
             }

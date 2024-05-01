@@ -12,8 +12,6 @@ public class SubmitOption : MonoBehaviour
 
     public void HandleInputData(int option)
     {
-        Debug.Log("Option index: " + option);
-        Debug.Log("Player Num: " + playerNum);
         switch (option)
         {
             case 0:
