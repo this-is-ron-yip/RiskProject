@@ -767,6 +767,9 @@ public class MapScript : MonoBehaviour
             defender.eliminated = true;
             // Give defender's cards to the attacker:
             player.cardsInHand.AddRange<Card>(defender.cardsInHand);
+            // Reset their color on the game hud: 
+            GameObject.Find("Player" + defender.playerNumber + "Key").GetComponent<RawImage>().color = Color.gray;
+
         }
 
         // TODO: delete later. for testing the final game screen only
