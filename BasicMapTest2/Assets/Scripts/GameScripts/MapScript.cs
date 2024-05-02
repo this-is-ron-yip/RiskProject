@@ -144,6 +144,7 @@ public class MapScript : MonoBehaviour
             newPlayerScript.OnPlayerSelectMoveFrom += HandleTerritoryToMoveFrom;
             newPlayerScript.OnPlayerSelectMoveTo += HandleTerritoryToMoveTo;
             newPlayerScript.OnRollDiceAtStart += HandleDiceRollAtStart;
+            newPlayerScript.OnRollToBattle += HandleRollToBattle;
             newPlayerScript.OnPlayerDrawsCard += HandleDrawCard;
             players.Add(newPlayerScript);
         }
@@ -674,17 +675,37 @@ public class MapScript : MonoBehaviour
         // Generate the die rolls.
         List<int> attacker_rolls = new List<int>();
         List<int> defender_rolls = new List<int>();
+
         for(int i = 0; i < attacker_dice; i++){
-            attacker_rolls.Add(UnityEngine.Random.Range(1, 7));
-            Debug.Log("Attacker Roll " + i + ": " + attacker_rolls[i]);
-            gameHUDScript.infoCardTMP.text = "Attacker Roll " + i + ": " + attacker_rolls[i];
-
-
+            // Reset die result
+            player.battleDiceResults = -1;
+            // permit this player to roll
+            player.canRollToBattle = true;
+            // Wait for the player to take an action
+            while(player.battleDiceResults == -1){
+                yield return StartCoroutine(WaitForDieRoll());
+            }
+            // Remove permission
+            player.canRollToBattle = false;
+            // Set the result array
+            attacker_rolls.Add(player.battleDiceResults);
         }
         for(int i = 0; i < defender_dice; i++){
-            defender_rolls.Add(UnityEngine.Random.Range(1, 7));
-            Debug.Log("Defender Roll " + i + ": " + defender_rolls[i]);
-            gameHUDScript.infoCardTMP.text = "Attacker Roll " + i + ": " + attacker_rolls[i];
+            // Reset die roll arrays
+            defender.battleDiceResults = -1;
+            // permit this player to roll
+            defender.canRollToBattle = true;
+            // Wait for the player to take an action
+            while(defender.battleDiceResults == -1){
+                Debug.Log($"Player {defender.playerNumber}, click the dice to roll.");
+                gameHUDScript.eventCardTMP.text = $"Player {defender.playerNumber}, click the dice to roll.";
+                defender.clickExpected = true;
+                yield return StartCoroutine(WaitForPlayerToDoMove(defender));
+            }
+            // Remove permission
+            defender.canRollToBattle = false;
+            // Set the result array
+            defender_rolls.Add(player.battleDiceResults);
         }
 
         // Sort from highest to lowest. Sorts in ascending order by default, so reverse
@@ -695,26 +716,26 @@ public class MapScript : MonoBehaviour
 
         // Determine winner
         int one_v_ones = Math.Min(attacker_dice, defender_dice);
+        infoCardText = "Evaluating...\n";
         int remaining_attackers = attacker_dice;
         for(int i = 0; i < one_v_ones; i++){
-            infoCardText = "Battling... Attacker: " + attacker_rolls[i] +
-                    " vs Defender: " + defender_rolls[i];
-            Debug.Log(infoCardText);
-            gameHUDScript.infoCardTMP.text = infoCardText;
+            infoCardText += attacker_rolls[i] +
+                    " vs " + defender_rolls[i];
             if (attacker_rolls[i] > defender_rolls[i]){
                 // Defender loses one army on the territory being attacked.
                 Debug.Log("Attacker wins this match up!");
-                gameHUDScript.infoCardTMP.text = "Attacker wins this match up!";
+                infoCardText += ": W\n";
                 EnemyTerritory.armyCount--;
             }
             else{ // Defender wins on a tie
                 // Attacker loses one of the armies they sent to attack
                 Debug.Log("Defender wins this match up!");
-                gameHUDScript.infoCardTMP.text = "Defender wins this match up!";
+                infoCardText += ": L\n";
                 PlayerTerritory.armyCount--;
                 remaining_attackers--;
             }
         }
+        gameHUDScript.infoCardTMP.text = infoCardText;
 
         // Check if the attacker claimed the territory
         if(EnemyTerritory.armyCount <= 0){ // should not be negative, but just in case
@@ -1038,10 +1059,22 @@ public class MapScript : MonoBehaviour
     /// </summary>
     /// <param name="player_id"></param>
     /// <param name="die"></param>
-    private void HandleDiceRollAtStart(int player_id, GameObject die){
-        DiceRollerScript die_rolled = die.GetComponent<DiceRollerScript>();
-        int result = die_rolled.RollDice();
+    private void HandleDiceRollAtStart(int player_id, GameObject dice){
+        DiceRollerScript dice_rolled = dice.GetComponent<DiceRollerScript>();
+        int result = dice_rolled.RollDice();
         diceResults[player_id - 1] = result;
+        Debug.Log("Player " + player_id + " rolled a " + result);
+        gameHUDScript.infoCardTMP.text = "Player " + player_id + " rolled a " + result;
+    }
+    /// <summary>
+    /// On a dice click during at attack, set the player's data member for dice result
+    /// </summary>
+    /// <param name="player_id"></param>
+    /// <param name="dice"></param>
+    private void HandleRollToBattle(int player_id, GameObject dice){
+        DiceRollerScript dice_rolled = dice.GetComponent<DiceRollerScript>();
+        int result = dice_rolled.RollDice();
+        players[player_id - 1].battleDiceResults = result;
         Debug.Log("Player " + player_id + " rolled a " + result);
         gameHUDScript.infoCardTMP.text = "Player " + player_id + " rolled a " + result;
     }
@@ -1065,8 +1098,8 @@ public class MapScript : MonoBehaviour
             return;
         }
         if(claimed_territory.occupiedBy != -1){
-            Debug.Log("Territory already claimed. Occupied by Player " + claimed_territory.occupiedBy + ". Returning from handler");
-            gameHUDScript.errorCardTMP.text = "Territory already claimed. Occupied by Player " + claimed_territory.occupiedBy + ". Returning from handler";
+            Debug.Log("Territory already claimed. Occupied by Player " + claimed_territory.occupiedBy);
+            gameHUDScript.errorCardTMP.text = "Territory already claimed. Occupied by Player " + claimed_territory.occupiedBy;
             sfxPlayer.PlayErrorSound();
             // someone else is occupying, do nothing
             return;

@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour
     public bool clickExpected = false; // If true, the game is waiting for this player to click.
     public bool eliminated = false; // flag to be checked by MapScript
     public bool wonTerritory = false; // Flag to be checked by MapScript
+    public int battleDiceResults = -1; // To store battle dice results
     public Color color = new Color(0, 0, 0);
     public List<TerritoryScript> territoriesOwned = new List<TerritoryScript>();
     public SoundEffectsPlayer sfxPlayer;
@@ -40,6 +41,7 @@ public class PlayerScript : MonoBehaviour
     public bool canSelectMoveFrom = false; // During fortification, when selecting where to move armies from
     public bool canSelectMoveTo = false; // During fortification, when selecting where to move armies to
     public bool canPlaceArmyInGame = false; // During player's turn, when selecting where to place granted armies
+    public bool canRollToBattle = false; // Used during an attack sequences
     /*****************************************************************************
     End of permissions
     ******************************************************************************/
@@ -58,6 +60,7 @@ public class PlayerScript : MonoBehaviour
     public event Action<int, GameObject> OnPlayerSelectMoveFrom;
     public event Action<int, GameObject> OnPlayerSelectMoveTo;
     public event Action<int, GameObject> OnRollDiceAtStart;
+    public event Action<int, GameObject> OnRollToBattle;
     public event Action<int, GameObject> OnPlayerDrawsCard;
     /*****************************************************************************
     End of events.
@@ -150,6 +153,9 @@ public class PlayerScript : MonoBehaviour
                     // Call handler.
                     OnRollDiceAtStart?.Invoke(playerNumber, clickedObject);
                 }
+                else if(canRollToBattle){
+                    OnRollToBattle?.Invoke(playerNumber, clickedObject);
+                }
                 else{
                     Debug.Log("Illegal click on dice.");
                     sfxPlayer.PlayErrorSound();
@@ -211,5 +217,6 @@ public class PlayerScript : MonoBehaviour
         wonTerritory = false;
         canSelectMoveFrom = false;
         canSelectMoveTo = false;
+        canRollToBattle = false;
     }
 }
