@@ -762,6 +762,7 @@ public class MapScript : MonoBehaviour
 
             // Attacker must leave surviving armies on the territory they won
             EnemyTerritory.armyCount = remaining_attackers;
+            PlayerTerritory.armyCount-= attacker_dice;
 
             if(PlayerTerritory.armyCount > 1){
                 infoCardText = "How many additional armies do you wish to move from the attacking territory to the " +
