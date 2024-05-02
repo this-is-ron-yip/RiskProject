@@ -9,10 +9,10 @@ public class MenuSoundEffectsPlayer : MonoBehaviour
 
     private void Start()
     {
+        audioSrc.volume = 0f;
         audioSrc.clip = introMusic;
         audioSrc = GetComponent<AudioSource>();
-        audioSrc.volume = 0f;
-        StartCoroutine(Fade(true, audioSrc, 2f, 1f));
+        StartCoroutine(Fade(true, audioSrc, 2f, 0.1f));
     }
 
     private void Update()
@@ -20,7 +20,7 @@ public class MenuSoundEffectsPlayer : MonoBehaviour
         if (!audioSrc.isPlaying)
         {
             audioSrc.Play();
-            StartCoroutine(Fade(true, audioSrc, 2f, 1f));
+            StartCoroutine(Fade(true, audioSrc, 2f, 0.1f));
         }
     }
 
