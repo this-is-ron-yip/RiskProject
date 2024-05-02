@@ -268,6 +268,8 @@ public class TerritoryScript : MonoBehaviour
                 adjacentCountryEnums.Add(TerritoryEnum.Ukraine);
                 adjacentCountries.Add(GameObject.FindWithTag("NorthEurope").GetComponent<Transform>());
                 adjacentCountryEnums.Add(TerritoryEnum.NorthEurope);
+                adjacentCountries.Add(GameObject.FindWithTag("SouthEurope").GetComponent<Transform>());
+                adjacentCountryEnums.Add(TerritoryEnum.SouthEurope);
                 break;
             case "Ukraine":
                 adjacentCountries.Add(GameObject.FindWithTag("Scandanavia").GetComponent<Transform>());
@@ -296,10 +298,16 @@ public class TerritoryScript : MonoBehaviour
                 adjacentCountryEnums.Add(TerritoryEnum.WestEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("Ukraine").GetComponent<Transform>());
                 adjacentCountryEnums.Add(TerritoryEnum.Ukraine);
-                adjacentCountries.Add(GameObject.FindWithTag("NorthEurope").GetComponent<Transform>());
-                adjacentCountryEnums.Add(TerritoryEnum.NorthEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("Iceland").GetComponent<Transform>());
                 adjacentCountryEnums.Add(TerritoryEnum.Iceland);
+                adjacentCountries.Add(GameObject.FindWithTag("UnitedKingdom").GetComponent<Transform>());
+                adjacentCountryEnums.Add(TerritoryEnum.UnitedKingdom);
+                adjacentCountries.Add(GameObject.FindWithTag("Scandanavia").GetComponent<Transform>());
+                adjacentCountryEnums.Add(TerritoryEnum.Scandanavia);
+                break;
+            case "WestEurope":
+                adjacentCountries.Add(GameObject.FindWithTag("WestEurope").GetComponent<Transform>());
+                adjacentCountryEnums.Add(TerritoryEnum.NorthEurope);
                 adjacentCountries.Add(GameObject.FindWithTag("UnitedKingdom").GetComponent<Transform>());
                 adjacentCountryEnums.Add(TerritoryEnum.UnitedKingdom);
                 adjacentCountries.Add(GameObject.FindWithTag("Scandanavia").GetComponent<Transform>());
