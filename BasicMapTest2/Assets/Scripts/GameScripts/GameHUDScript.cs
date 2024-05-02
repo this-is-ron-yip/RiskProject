@@ -21,6 +21,7 @@ public class GameHUDScript : MonoBehaviour
     public TextMeshProUGUI errorCardTMP;
     public TextMeshProUGUI infoCardTMP;
     public GameObject infoCardsDisplay;
+    public SoundEffectsPlayer sfxPlayer;
     /*****************************************************************************
     End of game objects
     ******************************************************************************/
@@ -93,6 +94,11 @@ public class GameHUDScript : MonoBehaviour
             CreateChooseCardDisplay(card);
         }
     }
+    private void Start()
+    {
+        sfxPlayer = GameObject.Find("HUDController").GetComponent<SoundEffectsPlayer>();
+    }
+
     /// <summary>
     /// Called by ShowChooseCardPanel to create and show a given card.
     /// </summary>
@@ -160,6 +166,7 @@ public class GameHUDScript : MonoBehaviour
        public void ShowEndingPanel(int winnerNum) {
         endOfGamePanel.gameObject.SetActive(true);
         Debug.Log("Player " + winnerNum + " has conquered all the territories and won the game! GAME OVER.");
+        sfxPlayer.PlayVictorySound();
     }
     /// <summary>
     /// Displays the panel that asks the player to attack, fortify, or end their turn.
@@ -275,6 +282,8 @@ public class GameHUDScript : MonoBehaviour
         else
         {
             Debug.Log("Game has not started yet!");
+            sfxPlayer.PlayErrorSound();
+
         }
     }
     /// <summary>
@@ -288,6 +297,7 @@ public class GameHUDScript : MonoBehaviour
         cardsAreOnDisplay = false;
         wantsToReturn = true;
         Debug.Log("Player chose to not turn in any cards");
+        sfxPlayer.PlayCorrectClickSFX();
     }
     /// <summary>
     /// This function is called when the player clicks the button to return to the game after
@@ -318,9 +328,11 @@ public class GameHUDScript : MonoBehaviour
         if (attackerInput == null || defenderInput == null || !int.TryParse(attackerInput, out _) || !int.TryParse(defenderInput, out _))
         {
             Debug.Log("Invalid input.");
+            sfxPlayer.PlayErrorSound();
         }
         else // Otherwise, print the output to the debug log
         {
+            sfxPlayer.PlaySwordClashingSFX();
             Debug.Log("Attacker is attacking with " + attackerInput + " armies\n " +
                         "Defender is defending with " + defenderInput + " armies");
 
@@ -330,9 +342,9 @@ public class GameHUDScript : MonoBehaviour
             // Turn off the display once the submit button has been pressed
             attackInputIsOnDisplay = false;
             attackInputPanel.gameObject.SetActive(false);
-            viewCardsBtn.gameObject.SetActive(true);
-            // TODO: the below is giving a null reference exception. fix. 
+            viewCardsBtn.gameObject.SetActive(true); 
             infoCardsDisplay.SetActive(true); // Re-activating all the info cards
+            //sfxPlayer.PlayCorrectClickSFX();
         }
     }
     /// <summary>
@@ -347,7 +359,7 @@ public class GameHUDScript : MonoBehaviour
         // Verify they have an elligible territory to attack from: 
         foreach(TerritoryScript territory in currentPlayer.territoriesOwned){
             if(territory.armyCount > 1){
-                territory.FillAdjTerritoriesList(); // For some reason, the list is empty.
+                territory.FillAdjTerritoriesList();
                 // check that there is an adjacent territory that doesn't belong to this player
                 foreach(Transform adj in territory.adjacentCountries){
                     if(adj.GetComponent<TerritoryScript>().occupiedBy != currentPlayer.playerNumber){
@@ -355,6 +367,7 @@ public class GameHUDScript : MonoBehaviour
                         attackOrForitfyPanel.gameObject.SetActive(false);
                         attackOrFortifyOnDisplay = false;
                         wantsToAttack = true;
+                        sfxPlayer.PlaySwordClashingSFX();
                         return;
                     }
                 }
@@ -382,6 +395,7 @@ public class GameHUDScript : MonoBehaviour
                         attackOrForitfyPanel.gameObject.SetActive(false);
                         attackOrFortifyOnDisplay = false;
                         wantsToFortify = true;
+                        sfxPlayer.PlayFortifySFX();
                         return;
                     }
                 }
@@ -433,6 +447,7 @@ public class GameHUDScript : MonoBehaviour
 
             // Otherwise, input is vald
             Debug.Log("Moving " + fortifyInput + " armies\n ");
+            sfxPlayer.PlayFortifySFX();
             // Turn off the display once the submit button has been pressed
             fortifyInputPanel.gameObject.SetActive(false);
             fortifyInputOnDisplay = false;
