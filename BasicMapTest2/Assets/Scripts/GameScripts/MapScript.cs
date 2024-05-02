@@ -1402,6 +1402,7 @@ public class MapScript : MonoBehaviour
     public void HandlePlayerWonGame(int playerNumber){
         // Show ending screen
         gameHUDScript.ShowEndingPanel(playerNumber);
+        gameHUDScript.attackOrForitfyPanel.gameObject.SetActive(false);
         gameOver = true;
     }
     /// <summary>
